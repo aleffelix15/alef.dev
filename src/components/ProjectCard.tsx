@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ImageIcon, Github, ArrowRight } from 'lucide-react'
+import { Github, ArrowRight } from 'lucide-react'
 
 export interface Project {
   name: string
