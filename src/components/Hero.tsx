@@ -140,10 +140,10 @@ export const Hero: React.FC = () => {
           {/* Photo */}
           <motion.div 
             style={{ y: photoY }}
-            className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 w-[140px] h-[170px] sm:w-[170px] sm:h-[210px] md:w-[200px] md:h-[240px] rounded-xl sm:rounded-2xl border border-[#1C1C20] overflow-hidden shadow-2xl z-10 bg-[#0A0A0C]"
+            className="absolute top-1/2 left-0 sm:left-4 -translate-y-1/2 w-[120px] h-[150px] sm:w-[170px] sm:h-[210px] md:w-[200px] md:h-[240px] rounded-xl sm:rounded-2xl border border-[#1C1C20] overflow-hidden shadow-2xl z-10 bg-[#0A0A0C]"
           >
             <img
-              src="/assets/alef.jpg"
+              src="/assets/alef2.png"
               alt="Alef Felix"
               className="w-full h-full object-cover grayscale-[20%]"
             />
@@ -152,12 +152,12 @@ export const Hero: React.FC = () => {
           {/* Code Snippet Card with parallax and floating motion */}
           <motion.div 
             style={{ y: codeY }}
-            className="absolute top-2 sm:top-4 right-0 w-[220px] sm:w-[250px] md:w-[280px] z-20"
+            className="absolute top-2 sm:top-4 right-0 w-[190px] sm:w-[250px] md:w-[280px] z-20"
           >
             <motion.div
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-3 sm:p-4 shadow-2xl"
+              className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-2.5 sm:p-4 shadow-2xl"
             >
               <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF5F56] opacity-60" />
@@ -165,7 +165,7 @@ export const Hero: React.FC = () => {
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#27C93F] opacity-60" />
               </div>
               
-              <div className="font-mono text-[0.7rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
+              <div className="font-mono text-[0.6rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
                 <motion.div
                   initial="hidden"
                   animate="visible"

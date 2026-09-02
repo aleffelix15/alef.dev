@@ -80,7 +80,7 @@ export const About: React.FC = () => {
               <motion.div
                 key={index}
                 variants={statsVariants}
-                className="bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl p-6 transition-all duration-300 group shadow-lg"
+                className="bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl p-4 sm:p-6 transition-all duration-300 group shadow-lg"
               >
                 <div className="font-display text-2xl font-bold text-[#F5F5F5] group-hover:text-white transition-colors">
                   {stat.isNumber ? (
