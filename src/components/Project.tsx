@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Github } from 'lucide-react';
 
+import { TiltCard } from './TiltCard';
+
 export const Project: React.FC = () => {
   return (
-    <section id="projeto" className="bg-[#050505] py-24">
+    <section id="projeto" className="bg-[#050505] py-24 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -21,7 +23,7 @@ export const Project: React.FC = () => {
           </div>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-12 items-start">
+        <div className="flex flex-col lg:flex-row gap-12 items-start" style={{ perspective: 1000 }}>
           {/* Info Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -66,34 +68,36 @@ export const Project: React.FC = () => {
                 href="https://decode-ochre.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#0066FF] hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.15)] hover:-translate-y-[1px] text-white font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg transition-all duration-300 group"
+                className="relative overflow-hidden inline-flex items-center gap-2 bg-[#0066FF] hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.15)] hover:-translate-y-[1px] text-white font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg transition-all duration-300 group"
               >
-                Acessar Projeto
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
+                <span className="relative z-10">Acessar Projeto</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
               </a>
               
               <a 
                 href="https://github.com/aleffelix15/decode"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-transparent border border-[#2E2E38] hover:border-[#4D94FF] hover:text-white text-[#9A9A9A] font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg transition-all duration-300 group"
+                className="inline-flex items-center gap-2 bg-transparent border border-[#2E2E38] hover:border-[#4D94FF] hover:text-white text-[#9A9A9A] font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg transition-all duration-300 group relative overflow-hidden"
               >
-                <Github className="w-4 h-4" />
-                Repositório
+                <div className="absolute inset-0 bg-[#0066FF]/10 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
+                <Github className="w-4 h-4 relative z-10" />
+                <span className="relative z-10">Repositório</span>
               </a>
             </div>
           </motion.div>
 
           {/* Image/Visual Column */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.97, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
             className="flex-1 w-full flex flex-col gap-6"
           >
             {/* Main Image */}
-            <div className="group rounded-2xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-2xl relative flex flex-col select-none aspect-video">
+            <TiltCard className="group rounded-2xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-2xl relative flex flex-col select-none aspect-video">
               <div className="relative z-10 flex items-center justify-between w-full border-b border-[#1C1C24] px-4 py-2.5 bg-[#0D0D11]/90 backdrop-blur-md">
                 <div className="flex items-center gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80" />
@@ -111,10 +115,10 @@ export const Project: React.FC = () => {
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
-            </div>
+            </TiltCard>
 
             {/* Secondary Image */}
-            <div className="group rounded-2xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-xl relative select-none aspect-video">
+            <TiltCard className="group rounded-2xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-xl relative select-none aspect-video">
               <div className="relative w-full h-full overflow-hidden">
                 <img 
                   src="/assets/decode_landing.png" 
@@ -122,7 +126,7 @@ export const Project: React.FC = () => {
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
         </div>
       </div>

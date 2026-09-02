@@ -1,20 +1,55 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const codeY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const badgeY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+
+  // Reactive Grid state
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const { clientX, clientY } = e;
+    setMousePosition({ x: clientX, y: clientY });
+  };
+
   return (
     <section
       id="hero"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
       className="relative min-h-screen bg-[#050505] pt-16 flex items-center justify-center overflow-hidden"
     >
       {/* Atmospheric gradient */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
         style={{
-          background: 'radial-gradient(ellipse 600px 400px at 50% 0%, rgba(0,102,255,0.03) 0%, transparent 70%)',
+          background: `radial-gradient(ellipse 600px 400px at 50% 0%, rgba(0,102,255,0.03) 0%, transparent 70%)`,
         }}
       />
+      
+      {/* Reactive Glow Grid */}
+      {isHovering && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-50"
+          style={{
+            background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0,102,255,0.06), transparent 40%)`,
+          }}
+        />
+      )}
 
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-[55fr_45fr] gap-12 items-center z-10">
         
@@ -55,16 +90,18 @@ export const Hero: React.FC = () => {
           >
             <a
               href="#projeto"
-              className="group flex items-center justify-center gap-2 bg-[#0066FF] text-white font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.1)] hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300"
+              className="relative overflow-hidden group flex items-center justify-center gap-2 bg-[#0066FF] text-white font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.1)] hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300"
             >
-              Conhecer o projeto
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
+              <span className="relative z-10">Conhecer o projeto</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
             </a>
             <a
               href="#contato"
-              className="flex items-center justify-center bg-transparent text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-6 py-3 rounded-lg border border-[#1C1C20] hover:border-[#2A2A30] hover:bg-[#0D0D0F] hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300"
+              className="relative overflow-hidden group flex items-center justify-center bg-transparent text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-6 py-3 rounded-lg border border-[#1C1C20] hover:border-[#2A2A30] hover:bg-[#0D0D0F] hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300"
             >
-              Entrar em contato
+              <div className="absolute inset-0 bg-[#0066FF]/10 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
+              <span className="relative z-10">Entrar em contato</span>
             </a>
           </motion.div>
 
@@ -101,48 +138,68 @@ export const Hero: React.FC = () => {
           />
 
           {/* Photo */}
-          <div className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 w-[140px] h-[170px] sm:w-[170px] sm:h-[210px] md:w-[200px] md:h-[240px] rounded-xl sm:rounded-2xl border border-[#1C1C20] overflow-hidden shadow-2xl z-10 bg-[#0A0A0C]">
+          <motion.div 
+            style={{ y: photoY }}
+            className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 w-[140px] h-[170px] sm:w-[170px] sm:h-[210px] md:w-[200px] md:h-[240px] rounded-xl sm:rounded-2xl border border-[#1C1C20] overflow-hidden shadow-2xl z-10 bg-[#0A0A0C]"
+          >
             <img
               src="/assets/alef.jpg"
               alt="Alef Felix"
               className="w-full h-full object-cover grayscale-[20%]"
             />
-          </div>
+          </motion.div>
 
-          {/* Code Snippet Card with subtle floating motion */}
+          {/* Code Snippet Card with parallax and floating motion */}
           <motion.div 
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-2 sm:top-4 right-0 w-[220px] sm:w-[250px] md:w-[280px] bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-3 sm:p-4 shadow-2xl z-20"
+            style={{ y: codeY }}
+            className="absolute top-2 sm:top-4 right-0 w-[220px] sm:w-[250px] md:w-[280px] z-20"
           >
-            <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF5F56] opacity-60" />
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FFBD2E] opacity-60" />
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#27C93F] opacity-60" />
-            </div>
-            <div className="font-mono text-[0.7rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
-              <div className="text-[#71717A]">// alef.config.ts</div>
-              <div>
-                <span className="text-[#4D94FF]">const</span> developer = &#123;
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-3 sm:p-4 shadow-2xl"
+            >
+              <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF5F56] opacity-60" />
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FFBD2E] opacity-60" />
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#27C93F] opacity-60" />
               </div>
-              <div className="pl-2 sm:pl-3">
-                name: <span className="text-[#E0E0E0]">"Alef Felix"</span>,
+              
+              <div className="font-mono text-[0.7rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.05, delayChildren: 1.2 } }
+                  }}
+                >
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-[#71717A]">// alef.config.ts</motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
+                    <span className="text-[#4D94FF]">const</span> developer = &#123;
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                    name: <span className="text-[#E0E0E0]">"Alef Felix"</span>,
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                    focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"Web"</span>],
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                    status: <span className="text-[#E0E0E0]">"building"</span> <span className="text-[#71717A]">// sempre</span>
+                  </motion.div>
+                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>&#125;;</motion.div>
+                </motion.div>
               </div>
-              <div className="pl-2 sm:pl-3">
-                focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"Web"</span>],
-              </div>
-              <div className="pl-2 sm:pl-3">
-                status: <span className="text-[#E0E0E0]">"building"</span> <span className="text-[#71717A]">// sempre</span>
-              </div>
-              <div>&#125;;</div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Badge */}
-          <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-4 bg-[#0D0D0F] border border-[#1C1C20] rounded-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-1.5 shadow-[0_0_15px_rgba(28,28,32,0.5)] z-20">
+          <motion.div 
+            style={{ y: badgeY }}
+            className="absolute bottom-4 right-2 sm:bottom-8 sm:right-4 bg-[#0D0D0F] border border-[#1C1C20] rounded-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-1.5 shadow-[0_0_15px_rgba(28,28,32,0.5)] z-20"
+          >
             <span className="text-xs">⚡</span>
             <span className="font-mono text-[10px] sm:text-xs text-[#9A9A9A]">2025.latest</span>
-          </div>
+          </motion.div>
 
           {/* Decorative dots */}
           <div className="absolute top-10 left-10 w-1.5 h-1.5 rounded-full bg-[#0066FF] opacity-30" />

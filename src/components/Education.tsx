@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,6 +19,14 @@ const itemVariants = {
 };
 
 export const Education: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 80%", "end 50%"]
+  });
+  
+  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <section id="formacao" className="bg-[#0A0A0C] py-24">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
@@ -36,14 +44,20 @@ export const Education: React.FC = () => {
           </div>
 
           <motion.div
+            ref={ref}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
             className="relative"
           >
-            {/* Timeline line */}
-            <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#1C1C20] via-[#1C1C20] to-transparent" />
+            {/* Timeline line background */}
+            <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-[#1C1C20]" />
+            {/* Timeline line fill (animated) */}
+            <motion.div 
+              style={{ height }}
+              className="absolute left-6 top-0 w-[2px] bg-[#0066FF] origin-top" 
+            />
 
             <motion.div
               variants={itemVariants}

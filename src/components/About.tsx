@@ -18,11 +18,23 @@ const itemVariants = {
   }
 };
 
+const statsVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }
+  }
+};
+
+import { Counter } from './Counter';
+
 const stats = [
-  { value: 'Engenharia', label: 'Formação' },
-  { value: 'Software', label: 'Foco' },
-  { value: 'Em evolução', label: 'Carreira' },
-  { value: 'DECODE', label: 'Projeto Atual' }
+  { value: 'Engenharia', label: 'Formação', isNumber: false, prefix: '' },
+  { value: 10, prefix: '+', label: 'Tecnologias', isNumber: true },
+  { value: 'Em evolução', label: 'Carreira', isNumber: false, prefix: '' },
+  { value: 10, prefix: '+', label: 'Projetos', isNumber: true }
 ];
 
 export const About: React.FC = () => {
@@ -67,11 +79,15 @@ export const About: React.FC = () => {
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
+                variants={statsVariants}
                 className="bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl p-6 transition-all duration-300 group shadow-lg"
               >
                 <div className="font-display text-2xl font-bold text-[#F5F5F5] group-hover:text-white transition-colors">
-                  {stat.value}
+                  {stat.isNumber ? (
+                    <Counter from={0} to={stat.value as number} duration={2} suffix={stat.prefix} />
+                  ) : (
+                    stat.value
+                  )}
                 </div>
                 <div className="font-body text-[0.8125rem] font-medium text-[#71717A] mt-1">
                   {stat.label}

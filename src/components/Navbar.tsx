@@ -89,9 +89,10 @@ export const Navbar: React.FC = () => {
                   <a
                     key={link.name}
                     href={link.href}
-                    className="font-body font-medium text-xs uppercase tracking-wider text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] hover:bg-[#111114] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] px-3.5 py-1.5 rounded-lg transition-all"
+                    className="relative overflow-hidden group font-body font-medium text-xs uppercase tracking-wider text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] hover:bg-[#111114] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] px-3.5 py-1.5 rounded-lg transition-all"
                   >
-                    Contato
+                    <div className="absolute inset-0 bg-[#0066FF]/10 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
+                    <span className="relative z-10">Contato</span>
                   </a>
                 );
               }

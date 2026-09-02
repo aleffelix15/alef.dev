@@ -28,12 +28,20 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+const categoryContainerVariants = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' }
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const chipVariants = {
+  hidden: { opacity: 0, x: -15 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.4, ease: 'easeOut' }
   }
 };
 
@@ -65,21 +73,22 @@ export const Stack: React.FC = () => {
           className="flex flex-col gap-8 mt-12"
         >
           {categories.map((category, index) => (
-            <motion.div key={index} variants={itemVariants}>
+            <motion.div key={index} variants={categoryContainerVariants}>
               <h3 className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A] mb-4">
                 {category.name}
               </h3>
               <div className="flex flex-wrap gap-3">
                 {category.techs.map((tech, techIndex) => (
-                  <div
+                  <motion.div
                     key={techIndex}
+                    variants={chipVariants}
                     className="flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl px-4 sm:px-5 py-3 transition-all duration-200 group shadow-md"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-[#0066FF] group-hover:scale-125 transition-transform" />
                     <span className="font-body text-[0.9375rem] font-medium text-[#F5F5F5] group-hover:text-white transition-colors">
                       {tech}
                     </span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
