@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Github, ArrowRight } from 'lucide-react'
 
 export interface Project {

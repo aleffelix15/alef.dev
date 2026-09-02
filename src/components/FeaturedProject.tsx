@@ -74,7 +74,7 @@ export function FeaturedProject() {
             </p>
             
             <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7] mt-5">
-              DECODE é um projeto interativo que usa tecnologia e narrativa para conscientizar jovens sobre a violência contra a mulher, mostrando situações do dia a dia e como agir para ajudar e prevenir.
+              DECODE é um projeto interativo que usa tecnologia e narrativa para conscientizar jovens sobre a violência contra a mulher.
             </p>
             
             <div className="mt-6 flex flex-wrap gap-2">

@@ -5,13 +5,29 @@ import { ProjectCard, Project } from './ProjectCard'
 const PROJECTS: Project[] = [
   {
     name: 'DECODE',
-    description: 'Projeto interativo que usa tecnologia e narrativa para conscientizar jovens sobre a violência contra a mulher, mostrando situações do dia a dia e como agir para ajudar e prevenir.',
+    description: 'DECODE é um projeto interativo que usa tecnologia e narrativa para conscientizar jovens sobre a violência contra a mulher.',
     techs: ['React', 'TypeScript', 'Tailwind'],
     status: 'concluido',
     statusLabel: 'Online',
     projectUrl: 'https://decode-ochre.vercel.app',
     githubUrl: 'https://github.com/aleffelix15/decode',
     imageUrl: '/assets/decode_dashboard.png',
+  },
+  {
+    name: 'Hub Harmony',
+    description: 'Plataforma multi-tenant para gestão de equipes de louvor e técnicas: escalas, banco de cifras com motor próprio de transposição e controle de acesso por RLS.',
+    techs: ['TanStack Start', 'Supabase', 'PostgreSQL', 'Tailwind v4'],
+    status: 'em-desenvolvimento',
+    statusLabel: 'Em desenvolvimento',
+    imageUrl: '/assets/hub_harmony_preview.png',
+  },
+  {
+    name: 'FitSync',
+    description: 'App de fitness mobile com biblioteca de exercícios e alimentos, treinos guiados, timer de descanso e integração de IA para orientação segura.',
+    techs: ['React Native', 'Expo', 'Supabase', 'Zustand'],
+    status: 'em-desenvolvimento',
+    statusLabel: 'Em desenvolvimento',
+    imageUrl: '/assets/fitsync_preview.png',
   },
 ]
 
