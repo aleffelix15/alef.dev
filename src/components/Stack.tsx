@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const categories = [
   {
@@ -20,36 +20,23 @@ const categories = [
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const categoryContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
-const chipVariants = {
-  hidden: { opacity: 0, x: -15 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.4, ease: 'easeOut' }
-  }
-};
-
 export const Stack: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100 });
+
+  // Pinned horizontal scrolling for desktop
+  const x = useTransform(smoothProgress, [0, 1], ["0%", "-60%"]);
+
   return (
-    <section id="stack" className="bg-[#050505] py-24">
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+    <section id="stack" className="bg-[#050505]">
+      
+      {/* MOBILE LAYOUT (Normal Vertical) */}
+      <div className="md:hidden py-24 px-6">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2">
             <span className="text-[#0066FF]">·</span>
@@ -58,42 +45,67 @@ export const Stack: React.FC = () => {
             </span>
           </div>
           <h2 className="font-display text-4xl font-bold text-[#F5F5F5] mt-3">
-            Ferramentas que uso para criar
+            Ferramentas que uso
           </h2>
-          <p className="font-body text-[0.9375rem] text-[#9A9A9A] max-w-[480px] mx-auto mt-4">
-            As tecnologias e ferramentas que fazem parte do meu dia a dia de desenvolvimento.
-          </p>
         </div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="flex flex-col gap-8 mt-12"
-        >
+        
+        <div className="flex flex-col gap-8">
           {categories.map((category, index) => (
-            <motion.div key={index} variants={categoryContainerVariants}>
+            <div key={index}>
               <h3 className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A] mb-4">
                 {category.name}
               </h3>
               <div className="flex flex-wrap gap-3">
                 {category.techs.map((tech, techIndex) => (
-                  <motion.div
-                    key={techIndex}
-                    variants={chipVariants}
-                    className="flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl px-4 sm:px-5 py-3 transition-all duration-200 group shadow-md"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#0066FF] group-hover:scale-125 transition-transform" />
-                    <span className="font-body text-[0.9375rem] font-medium text-[#F5F5F5] group-hover:text-white transition-colors">
-                      {tech}
-                    </span>
-                  </motion.div>
+                  <div key={techIndex} className="flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] rounded-xl px-4 py-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+                    <span className="font-body text-[0.9375rem] font-medium text-[#F5F5F5]">{tech}</span>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
+      </div>
+
+      {/* DESKTOP LAYOUT (Horizontal Scroll) */}
+      <div ref={containerRef} className="hidden md:block h-[300vh] relative">
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+          
+          <div className="absolute left-16 top-1/4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[#0066FF]">·</span>
+              <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
+                Tecnologias
+              </span>
+            </div>
+            <h2 className="font-display text-5xl font-bold text-[#F5F5F5] leading-tight">
+              O ecossistema <br/> que utilizo
+            </h2>
+          </div>
+
+          <motion.div style={{ x }} className="flex gap-16 pl-[40vw] pr-[20vw] items-center w-max">
+            {categories.map((category, index) => (
+              <div key={index} className="w-[400px] flex-shrink-0 bg-[#0A0A0C] border border-[#1C1C20] p-8 rounded-3xl hover:border-[#2A2A30] transition-colors duration-500">
+                <h3 className="font-display text-2xl font-bold text-[#F5F5F5] mb-6">
+                  {category.name}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {category.techs.map((tech, techIndex) => (
+                    <div
+                      key={techIndex}
+                      className="flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl px-4 py-3 transition-all duration-300 group shadow-md"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#0066FF] group-hover:scale-125 transition-transform" />
+                      <span className="font-body text-[0.9375rem] font-medium text-[#F5F5F5] group-hover:text-white transition-colors">
+                        {tech}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

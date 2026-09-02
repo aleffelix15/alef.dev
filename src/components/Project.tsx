@@ -108,24 +108,36 @@ export const Project: React.FC = () => {
                   decode-ochre.vercel.app
                 </div>
               </div>
-              <div className="relative w-full h-full overflow-hidden">
+              <motion.div 
+                className="relative w-full h-full overflow-hidden"
+                initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
+                whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+              >
                 <img 
                   src="/assets/decode_dashboard.png" 
                   alt="DECODE Dashboard" 
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
-              </div>
+              </motion.div>
             </TiltCard>
 
             {/* Secondary Image */}
             <TiltCard className="group rounded-2xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-xl relative select-none aspect-video">
-              <div className="relative w-full h-full overflow-hidden">
+              <motion.div 
+                className="relative w-full h-full overflow-hidden"
+                initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
+                whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.4 }}
+              >
                 <img 
                   src="/assets/decode_landing.png" 
                   alt="DECODE Landing Page" 
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
-              </div>
+              </motion.div>
             </TiltCard>
           </motion.div>
         </div>
