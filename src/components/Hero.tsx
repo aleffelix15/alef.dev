@@ -26,7 +26,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#4D94FF] mb-4"
           >
-            DESENVOLVEDOR FULLSTACK & ENTUSIASTA DE IA
+            DESENVOLVEDOR & ESTUDANTE DE ENGENHARIA DE SOFTWARE
           </motion.p>
 
           <motion.h1
@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="font-display font-bold text-[#F5F5F5] text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.05] tracking-[-0.03em] mb-6"
           >
-            Transformando ideias em experiências <span className="text-[#0066FF]">digitais</span>.
+            Transformando ideias em soluções <span className="text-[#0066FF]">digitais</span>.
           </motion.h1>
 
           <motion.p
@@ -44,7 +44,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7] max-w-[520px] mb-8"
           >
-            Desenvolvedor apaixonado por tecnologia, software e inteligência artificial. Construo produtos digitais, experiências web e soluções que transformam ideias em realidade.
+            Construindo minha carreira em Engenharia de Software e desenvolvendo projetos próprios para impactar pessoas através da tecnologia.
           </motion.p>
 
           <motion.div
@@ -54,10 +54,10 @@ export const Hero: React.FC = () => {
             className="flex flex-wrap gap-4"
           >
             <a
-              href="#projetos"
+              href="#projeto"
               className="group flex items-center justify-center gap-2 bg-[#0066FF] text-white font-body text-[0.9375rem] font-semibold px-6 py-3 rounded-lg hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.1)] hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300"
             >
-              Ver projetos
+              Conhecer o projeto
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
             </a>
             <a
@@ -79,7 +79,7 @@ export const Hero: React.FC = () => {
               <span className="relative h-2 w-2 rounded-full bg-[#00C853]" />
             </div>
             <span className="font-body text-[0.8125rem] font-medium text-[#9A9A9A]">
-              Disponível para novos projetos
+              Disponível para novos desafios
             </span>
           </motion.div>
         </div>
@@ -129,7 +129,7 @@ export const Hero: React.FC = () => {
                 name: <span className="text-[#E0E0E0]">"Alef Felix"</span>,
               </div>
               <div className="pl-2 sm:pl-3">
-                focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"IA"</span>],
+                focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"Web"</span>],
               </div>
               <div className="pl-2 sm:pl-3">
                 status: <span className="text-[#E0E0E0]">"building"</span> <span className="text-[#71717A]">// sempre</span>

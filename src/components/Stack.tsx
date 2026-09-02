@@ -7,24 +7,16 @@ const categories = [
     techs: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React']
   },
   {
-    name: 'Backend',
-    techs: ['Python', 'Java', 'APIs']
+    name: 'Backend & APIs',
+    techs: ['Node.js', 'Express', 'Python']
   },
   {
-    name: 'Mobile',
-    techs: ['React Native']
+    name: 'Styling & UI',
+    techs: ['Tailwind CSS', 'Framer Motion', 'Figma']
   },
   {
-    name: 'Database',
-    techs: ['Supabase']
-  },
-  {
-    name: 'AI & APIs',
-    techs: ['Inteligência Artificial']
-  },
-  {
-    name: 'Tools',
-    techs: ['Git', 'GitHub']
+    name: 'Tools & DevOps',
+    techs: ['Git', 'GitHub', 'Vite', 'Vercel']
   }
 ];
 

@@ -19,10 +19,10 @@ const itemVariants = {
 };
 
 const stats = [
-  { value: '10+', label: 'Projetos' },
-  { value: '10+', label: 'Tecnologias' },
-  { value: 'Em evolução', label: 'Experiência' },
-  { value: 'Software & IA', label: 'Foco' }
+  { value: 'Engenharia', label: 'Formação' },
+  { value: 'Software', label: 'Foco' },
+  { value: 'Em evolução', label: 'Carreira' },
+  { value: 'DECODE', label: 'Projeto Atual' }
 ];
 
 export const About: React.FC = () => {

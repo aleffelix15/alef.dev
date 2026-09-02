@@ -2,9 +2,8 @@ import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
 import { Stack } from './components/Stack'
-import { Projects } from './components/Projects'
-import { FeaturedProject } from './components/FeaturedProject'
-import { Journey } from './components/Journey'
+import { Project } from './components/Project'
+import { Education } from './components/Education'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 
@@ -24,10 +23,9 @@ export default function App() {
       <main>
         <Hero />
         <About />
+        <Education />
+        <Project />
         <Stack />
-        <Projects />
-        <FeaturedProject />
-        <Journey />
         <Contact />
       </main>
 
