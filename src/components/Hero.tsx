@@ -1,10 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import gsap from 'gsap';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const avatarVideoRef = useRef<HTMLVideoElement>(null);
+  const codePullRef = useRef<HTMLDivElement>(null);
+  const pullGlowRef = useRef<HTMLDivElement>(null);
+  const energyLineRef = useRef<SVGPathElement>(null);
+
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -23,6 +29,123 @@ export const Hero: React.FC = () => {
     const { clientX, clientY } = e;
     setMousePosition({ x: clientX, y: clientY });
   };
+
+  // -------------------------------------------------------------------
+  // Avatar "puxão": o mascote 3D puxa o card de código pra dentro da tela.
+  // Coreografia mapeada quadro a quadro no vídeo real (10s a 30fps):
+  //   0.0 – 0.9s   idle
+  //   0.9 – 2.0s   percebe o card (surpresa)
+  //   2.0 – 2.9s   estende as mãos em direção a ele
+  //   2.9 – 3.4s   fecha a mão / agarra (pequena resistência)
+  //   3.4 – 6.6s   platô de esforço (puxando, quase sem ceder)
+  //   6.6 – 7.0s   o puxão real — o card "voa" pro lugar
+  //   7.0 – 7.8s   acomodação elástica
+  //   7.8 – 10s    avatar se vira pra câmera e sorri
+  // Dispara apenas quando a Hero entra na viewport (IntersectionObserver);
+  // pausa vídeo + timeline quando sai de tela, pra não gastar processamento.
+  // -------------------------------------------------------------------
+  useEffect(() => {
+    const video = avatarVideoRef.current;
+    const cardPull = codePullRef.current;
+    const glow = pullGlowRef.current;
+    const line = energyLineRef.current;
+    if (!video || !cardPull) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      gsap.set(cardPull, { xPercent: 0, yPercent: 0, rotate: 0, opacity: 1 });
+      if (line) gsap.set(line, { opacity: 0 });
+      return;
+    }
+
+    // Estado inicial do card: levemente afastado e "não conquistado" ainda.
+    gsap.set(cardPull, { xPercent: 13, yPercent: -8, rotate: 5, opacity: 0.45 });
+    if (glow) gsap.set(glow, { opacity: 0, scale: 0.85 });
+    if (line) gsap.set(line, { opacity: 0, strokeDashoffset: 40 });
+
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'sine.inOut' } });
+
+    // percebe — pequeno "aceno" de atenção no card
+    tl.to(cardPull, { opacity: 0.62, scale: 1.03, duration: 0.35 }, 0.9);
+    tl.to(cardPull, { scale: 1, duration: 0.35 }, 1.25);
+
+    // estende as mãos — card se inclina em direção ao avatar
+    tl.to(
+      cardPull,
+      { xPercent: 9, yPercent: -5, rotate: 3.5, opacity: 0.8, duration: 0.9, ease: 'power1.out' },
+      2.0,
+    );
+    if (glow) tl.to(glow, { opacity: 0.9, scale: 1, duration: 0.55, ease: 'power1.out' }, 2.05);
+    if (line) tl.to(line, { opacity: 0.4, duration: 0.5, ease: 'power1.out' }, 2.05);
+
+    // agarra — pequeno tremor de resistência (a força sendo feita)
+    tl.to(
+      cardPull,
+      { xPercent: '+=1.3', rotate: '+=1', duration: 0.055, repeat: 5, yoyo: true },
+      2.9,
+    );
+    if (line) tl.to(line, { opacity: 0.8, duration: 0.1 }, 2.9);
+
+    // platô de esforço — avanço lento e contínuo
+    tl.to(
+      cardPull,
+      { xPercent: 4.5, yPercent: -2.5, rotate: 1.5, opacity: 0.92, duration: 3.15, ease: 'sine.inOut' },
+      3.4,
+    );
+    if (line) tl.to(line, { strokeDashoffset: 0, duration: 3.15, ease: 'none' }, 3.4);
+
+    // O PUXÃO — o card "voa" pro lugar
+    tl.to(
+      cardPull,
+      { xPercent: -1.2, yPercent: 0.6, rotate: -0.8, opacity: 1, duration: 0.3, ease: 'power3.out' },
+      6.6,
+    );
+    if (glow) tl.to(glow, { opacity: 0, duration: 0.5, ease: 'power1.out' }, 6.75);
+    if (line) tl.to(line, { opacity: 0, duration: 0.3, ease: 'power3.out' }, 6.6);
+
+    // acomodação — pequena sobra elástica até o repouso final
+    tl.to(cardPull, { xPercent: 0, yPercent: 0, rotate: 0, duration: 0.65, ease: 'elastic.out(1, 0.55)' }, 6.9);
+
+    const onLoaded = () => {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play().catch(() => {});
+              tl.play();
+            } else {
+              video.pause();
+              tl.pause();
+            }
+          });
+        },
+        { threshold: 0.3 },
+      );
+      io.observe(video);
+      return io;
+    };
+
+    let observer: IntersectionObserver | undefined;
+    if (video.readyState >= 1) {
+      observer = onLoaded();
+    } else {
+      const handle = () => {
+        observer = onLoaded();
+      };
+      video.addEventListener('loadedmetadata', handle, { once: true });
+      return () => {
+        video.removeEventListener('loadedmetadata', handle);
+        observer?.disconnect();
+        tl.kill();
+      };
+    }
+
+    return () => {
+      observer?.disconnect();
+      tl.kill();
+    };
+  }, []);
 
   return (
     <section
@@ -126,7 +249,7 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="relative w-full aspect-[4/3] sm:aspect-square max-w-[360px] sm:max-w-[420px] md:max-w-[480px] mx-auto mt-6 md:mt-0 block"
+          className="relative w-full aspect-[4/3] sm:aspect-square max-w-[360px] sm:max-w-[420px] md:max-w-[480px] mx-auto mt-6 md:mt-0 block overflow-hidden"
         >
           {/* Grid Background Pattern */}
           <div
@@ -136,6 +259,49 @@ export const Hero: React.FC = () => {
               backgroundSize: '40px 40px',
             }}
           />
+
+          {/* Avatar 3D — "puxa" o card de código pra dentro da tela */}
+          <div
+            className="absolute bottom-0 left-[6%] sm:left-[8%] h-[88%] sm:h-[92%] w-auto max-w-[55%] z-0"
+            style={{
+              maskImage: 'radial-gradient(ellipse 78% 92% at 50% 56%, black 58%, transparent 100%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 78% 92% at 50% 56%, black 58%, transparent 100%)',
+            }}
+          >
+            <video
+              ref={avatarVideoRef}
+              className="h-full w-auto max-w-full object-contain mix-blend-screen"
+              muted
+              playsInline
+              preload="metadata"
+              poster="/assets/avatar/hero-avatar-poster.jpg"
+              aria-hidden="true"
+            >
+              <source src="/assets/avatar/hero-avatar-pull.webm" type="video/webm" />
+              <source src="/assets/avatar/hero-avatar-pull.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          {/* Energy line connection */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none z-10">
+            <path
+              ref={energyLineRef}
+              d="M 45 55 Q 65 45 90 20"
+              vectorEffect="non-scaling-stroke"
+              stroke="url(#energyGradient)"
+              strokeWidth="4"
+              fill="none"
+              strokeDasharray="4 4"
+              style={{ opacity: 0 }}
+            />
+            <defs>
+              <linearGradient id="energyGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#0066FF" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="#0066FF" stopOpacity="1" />
+                <stop offset="100%" stopColor="#4D94FF" stopOpacity="0.8" />
+              </linearGradient>
+            </defs>
+          </svg>
 
           {/* Photo */}
           <motion.div 
@@ -154,42 +320,51 @@ export const Hero: React.FC = () => {
             style={{ y: codeY }}
             className="absolute top-2 sm:top-4 right-0 w-[190px] sm:w-[250px] md:w-[280px] z-20"
           >
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-2.5 sm:p-4 shadow-2xl"
-            >
-              <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF5F56] opacity-60" />
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FFBD2E] opacity-60" />
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#27C93F] opacity-60" />
-              </div>
-              
-              <div className="font-mono text-[0.6rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: { transition: { staggerChildren: 0.05, delayChildren: 1.2 } }
-                  }}
-                >
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-[#71717A]">// alef.config.ts</motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
-                    <span className="text-[#4D94FF]">const</span> developer = &#123;
+            {/* Brilho sutil que sugere força/energia sendo aplicada durante o puxão */}
+            <div
+              ref={pullGlowRef}
+              className="absolute -inset-6 rounded-full bg-[#0066FF] blur-2xl pointer-events-none"
+              aria-hidden="true"
+            />
+
+            <div ref={codePullRef} className="relative will-change-transform">
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-2.5 sm:p-4 shadow-2xl"
+              >
+                <div className="flex gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF5F56] opacity-60" />
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FFBD2E] opacity-60" />
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#27C93F] opacity-60" />
+                </div>
+
+                <div className="font-mono text-[0.6rem] sm:text-[0.775rem] md:text-[0.8125rem] leading-relaxed select-none">
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      visible: { transition: { staggerChildren: 0.05, delayChildren: 1.2 } }
+                    }}
+                  >
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="text-[#71717A]">// alef.config.ts</motion.div>
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
+                      <span className="text-[#4D94FF]">const</span> developer = &#123;
+                    </motion.div>
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                      name: <span className="text-[#E0E0E0]">"Alef Felix"</span>,
+                    </motion.div>
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                      focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"Web"</span>],
+                    </motion.div>
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
+                      status: <span className="text-[#E0E0E0]">"building"</span> <span className="text-[#71717A]">// sempre</span>
+                    </motion.div>
+                    <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>&#125;;</motion.div>
                   </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
-                    name: <span className="text-[#E0E0E0]">"Alef Felix"</span>,
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
-                    focus: [<span className="text-[#E0E0E0]">"Software"</span>, <span className="text-[#E0E0E0]">"Web"</span>],
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }} className="pl-2 sm:pl-3">
-                    status: <span className="text-[#E0E0E0]">"building"</span> <span className="text-[#71717A]">// sempre</span>
-                  </motion.div>
-                  <motion.div variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>&#125;;</motion.div>
-                </motion.div>
-              </div>
-            </motion.div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Badge */}
