@@ -12,7 +12,7 @@ import { ScrollProgress } from './components/ScrollProgress'
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F5F5F5]">
+    <div className="min-h-screen bg-[#050505] text-[#F5F5F5] overflow-x-hidden w-full relative">
       <CustomCursor />
       <ScrollProgress />
       {/* Grain texture overlay */}
