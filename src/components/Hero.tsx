@@ -7,10 +7,6 @@ export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const fadeUpProps = shouldReduceMotion 
-    ? { initial: { opacity: 1 }, animate: { opacity: 1 }, transition: { duration: 0 } }
-    : { initial: { opacity: 0, y: 15 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, ease: "easeOut" } };
-
   return (
     <section
       id="hero"
@@ -29,11 +25,22 @@ export const Hero: React.FC = () => {
 
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center justify-center z-10 text-center">
         
-        <div className="flex flex-col items-center max-w-3xl pt-12 md:pt-0 relative z-10">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={shouldReduceMotion ? {} : {
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+          }}
+          className="flex flex-col items-center max-w-3xl pt-12 md:pt-0 relative z-10"
+        >
           
           {/* Status */}
           <motion.div
-            {...fadeUpProps}
+            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+              hidden: { opacity: 0, y: -10, filter: 'blur(4px)' },
+              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+            }}
             className="flex items-center gap-3 mb-10"
           >
             <div className="relative flex h-2 w-2 items-center justify-center">
@@ -49,9 +56,10 @@ export const Hero: React.FC = () => {
 
           {/* Nome e Especialidade */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.1, duration: 0.8 }}
+            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+              hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
+              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] } }
+            }}
             className="flex flex-col items-center gap-4 mb-8 w-full"
           >
             <p className="font-mono text-[0.8125rem] md:text-sm text-[#0066FF] tracking-wide uppercase">
@@ -67,9 +75,10 @@ export const Hero: React.FC = () => {
 
           {/* Proposta Principal */}
           <motion.h1
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2, duration: 0.8 }}
+            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+              hidden: { opacity: 0, y: 15, filter: 'blur(4px)' },
+              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+            }}
             className="font-body font-medium text-[#71717A] text-[clamp(1.125rem,2vw,1.375rem)] leading-snug tracking-tight mb-10 max-w-2xl"
           >
             Transformando ideias em soluções digitais confiáveis.
@@ -77,9 +86,10 @@ export const Hero: React.FC = () => {
 
           {/* Descrição Longa */}
           <motion.p
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.3, duration: 0.8 }}
+            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+              hidden: { opacity: 0, y: 15, filter: 'blur(4px)' },
+              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+            }}
             className="font-body text-[1rem] sm:text-[1.0625rem] text-[#71717A] leading-relaxed max-w-[540px] mb-12"
           >
             {SITE_DATA.profile.heroDesc}
@@ -87,35 +97,41 @@ export const Hero: React.FC = () => {
 
           {/* Chamadas para ação */}
           <motion.div
-            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.4, duration: 0.8 }}
+            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+              hidden: { opacity: 0, y: 15, filter: 'blur(4px)' },
+              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] } }
+            }}
             className="flex flex-col sm:flex-row gap-4 sm:items-center w-full sm:w-auto"
           >
             <a
               href="#projeto"
-              className="inline-flex items-center justify-center bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-8 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
+              className="inline-flex items-center justify-center bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-8 py-3.5 rounded-lg transition-all hover:-translate-y-1 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
             >
               Conhecer projetos
             </a>
             <a
               href="#contato"
-              className="inline-flex items-center justify-center bg-transparent text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-8 py-3.5 rounded-lg border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
+              className="inline-flex items-center justify-center bg-transparent text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-8 py-3.5 rounded-lg border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] transition-all hover:-translate-y-1 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
             >
               Entrar em contato
             </a>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex justify-center w-full pointer-events-none">
+      <motion.div 
+        initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex justify-center w-full pointer-events-none"
+      >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, 8, 0], opacity: [0.2, 0.6, 0.2] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         >
           <ChevronDown size={24} className="text-[#4D4D55]" />
         </motion.div>
-      </div>
+      </motion.div>
 
       <style>{`
         @keyframes pulse-dot {

@@ -44,8 +44,11 @@ export const Project: React.FC = () => {
               key={project.id}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={fadeUpVariant}
+              viewport={{ once: true, margin: '-100px' }}
+              variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+              }}
               className="flex flex-col gap-12"
             >
               
@@ -53,20 +56,20 @@ export const Project: React.FC = () => {
                 
                 {/* Info Column */}
                 <div className="flex-1 w-full flex flex-col">
-                  <div className="flex items-center gap-3 mb-6">
+                  <motion.div variants={fadeUpVariant} className="flex items-center gap-3 mb-6">
                     <span className="inline-flex font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#0066FF] border border-[#0066FF]/30 bg-[#0066FF]/10 px-3 py-1 rounded-full w-fit">
                       {project.category}
                     </span>
-                  </div>
+                  </motion.div>
                   
-                  <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                  <motion.h3 variants={fadeUpVariant} className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
                     {project.name}
-                  </h3>
-                  <p className="font-display text-lg sm:text-xl text-[#4D94FF] mb-8 font-light">
+                  </motion.h3>
+                  <motion.p variants={fadeUpVariant} className="font-display text-lg sm:text-xl text-[#4D94FF] mb-8 font-light">
                     {project.subtitle}
-                  </p>
+                  </motion.p>
 
-                  <div className="space-y-8">
+                  <motion.div variants={fadeUpVariant} className="space-y-8">
                     <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-relaxed">
                       {project.desc}
                     </p>
@@ -110,15 +113,15 @@ export const Project: React.FC = () => {
                       </p>
                     </div>
 
-                  </div>
+                  </motion.div>
 
-                  <div className="mt-10 flex flex-wrap gap-4">
+                  <motion.div variants={fadeUpVariant} className="mt-10 flex flex-wrap gap-4">
                     {project.demoUrl && (
                       <a 
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative overflow-hidden inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-7 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                        className="relative overflow-hidden inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-7 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
                       >
                         <span>Ver Projeto</span>
                         <ExternalLink className="w-4 h-4" />
@@ -129,30 +132,30 @@ export const Project: React.FC = () => {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                        className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
                       >
                         <Github className="w-4 h-4 text-[#9A9A9A]" />
                         <span>Repositório</span>
                       </a>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Demo / Visual Column */}
-                <div className="flex-1 w-full flex flex-col justify-center">
+                <motion.div variants={fadeUpVariant} className="flex-1 w-full flex flex-col justify-center group">
                   <div className="mb-4">
-                    <span className="font-mono text-[0.65rem] tracking-[0.1em] text-[#71717A] uppercase">
+                    <span className="font-mono text-[0.65rem] tracking-[0.1em] text-[#71717A] uppercase transition-colors group-hover:text-[#9A9A9A]">
                       / DEMONSTRAÇÃO
                     </span>
                   </div>
-                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/20 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/20 to-transparent' : project.demoType === 'geekfilme' ? 'from-red-600/20 to-transparent' : 'from-[#1C1C20] to-transparent'}`}>
+                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/20 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/20 to-transparent' : project.demoType === 'geekfilme' ? 'from-red-600/20 to-transparent' : 'from-[#1C1C20] to-transparent'} transition-transform duration-500 group-hover:scale-[1.02]`}>
                     <div className="rounded-xl overflow-hidden bg-[#0A0A0C]">
                       {project.demoType === 'decode' && <DecodeDemo />}
                       {project.demoType === 'banking' && <BankingDemo />}
                       {project.demoType === 'geekfilme' && <GeekFilmeDemo />}
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
               </div>
 

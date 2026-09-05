@@ -58,7 +58,7 @@ export const Stack: React.FC = () => {
                 {category.techs.map((tech, techIndex) => (
                   <span
                     key={techIndex}
-                    className="font-body text-[0.875rem] text-[#9A9A9A] bg-[#050505] border border-[#1C1C20] px-3 py-1.5 rounded-md hover:text-[#F5F5F5] hover:border-[#4D4D55] cursor-default transition-colors"
+                    className="font-body text-[0.875rem] text-[#9A9A9A] bg-[#050505] border border-[#1C1C20] px-3 py-1.5 rounded-md hover:text-[#F5F5F5] hover:border-[#4D94FF]/50 hover:bg-[#4D94FF]/5 cursor-default transition-all duration-300 hover:-translate-y-0.5"
                   >
                     {tech}
                   </span>
