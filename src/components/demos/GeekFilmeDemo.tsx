@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Search, ChevronRight, Pause, X } from 'lucide-react';
 
+type Movie = {
+  id: number;
+  title: string;
+  image: string;
+  banner: string;
+  desc: string;
+};
+
+const movies: Movie[] = [
+  { id: 1, title: 'Iron Man', image: '/geekfilme/ironman-poster.webp', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo.' },
+  { id: 2, title: 'WandaVision', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-poster.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.' },
+  { id: 3, title: 'Thor', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-poster.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.' },
+  { id: 4, title: 'B99', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-poster.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.' },
+];
+
 export const GeekFilmeDemo: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hoveredMovie, setHoveredMovie] = useState<number | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const movies = [
-    { id: 1, title: 'Iron Man', image: '/geekfilme/ironman-poster.webp', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo.' },
-    { id: 2, title: 'WandaVision', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-poster.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.' },
-    { id: 3, title: 'Thor', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-poster.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.' },
-    { id: 4, title: 'B99', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-poster.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.' },
-  ];
-
-  const [activeMovie, setActiveMovie] = useState(movies[0]);
+  const [activeMovie, setActiveMovie] = useState<Movie>(movies[0]);
 
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -56,14 +63,19 @@ export const GeekFilmeDemo: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-transparent text-[10px] text-white w-full outline-none px-1"
+                  aria-label="Buscar títulos"
                 />
-                <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white" onClick={() => { setIsSearching(false); setSearchQuery(''); }} />
+                <button aria-label="Fechar busca" onClick={() => { setIsSearching(false); setSearchQuery(''); }} className="focus:outline-none">
+                  <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white" />
+                </button>
               </motion.div>
             ) : (
-              <Search className="w-3 h-3 cursor-pointer hidden sm:block hover:text-white" onClick={() => setIsSearching(true)} />
+              <button aria-label="Abrir busca" className="hidden sm:block focus:outline-none" onClick={() => setIsSearching(true)}>
+                <Search className="w-3 h-3 cursor-pointer hover:text-white" />
+              </button>
             )}
           </AnimatePresence>
-          <div className="w-5 h-5 rounded bg-[#333] border border-[#444] overflow-hidden" />
+          <div className="w-5 h-5 rounded bg-[#333] border border-[#444] overflow-hidden" aria-label="Avatar" />
         </div>
       </motion.div>
 
@@ -80,7 +92,7 @@ export const GeekFilmeDemo: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className="h-[150px] sm:h-[160px] w-full relative flex items-end px-4 pb-3"
                 >
-                  <img src={activeMovie.banner} alt="Banner" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+                  <img src={activeMovie.banner} alt={`Banner ${activeMovie.title}`} className="absolute inset-0 w-full h-full object-cover opacity-50" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/60 to-transparent" />
                   <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/40 to-transparent opacity-90" />
                   
@@ -90,7 +102,7 @@ export const GeekFilmeDemo: React.FC = () => {
                       {activeMovie.desc}
                     </motion.p>
                     <motion.div variants={fadeUp} className="flex items-center gap-2">
-                      <button onClick={() => setIsPlaying(true)} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 transition-all">
+                      <button onClick={() => setIsPlaying(true)} aria-label={`Assistir ${activeMovie.title}`} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 transition-all focus:outline-none">
                         <Play className="w-2.5 h-2.5 fill-current" /> Assistir
                       </button>
                     </motion.div>
@@ -118,7 +130,7 @@ export const GeekFilmeDemo: React.FC = () => {
                         onClick={() => setActiveMovie(movie)}
                         className={`relative w-[75px] sm:w-[85px] aspect-[2/3] rounded overflow-hidden bg-[#222] cursor-pointer group snap-start shrink-0 shadow-lg border ${activeMovie.id === movie.id ? 'border-white' : 'border-[#333]/50'}`}
                       >
-                        <img src={movie.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        <img src={movie.image} alt={`Poster ${movie.title}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                         <div className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20 transition-opacity duration-300 ${hoveredMovie === movie.id ? "opacity-100" : "opacity-0"}`}>
                           <div className="absolute inset-0 p-2 flex flex-col justify-end">
                             <Play className={`w-5 h-5 text-white fill-white mb-auto self-center mt-4 transition-all duration-300 ${hoveredMovie === movie.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}`} />
@@ -138,7 +150,7 @@ export const GeekFilmeDemo: React.FC = () => {
             </motion.div>
           ) : (
             <motion.div key="player" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
-              <div className="absolute inset-0 opacity-20"><img src={activeMovie.banner} className="w-full h-full object-cover blur-md" /></div>
+              <div className="absolute inset-0 opacity-20"><img src={activeMovie.banner} alt="" className="w-full h-full object-cover blur-md" /></div>
               <div className="absolute inset-0 flex items-center justify-center">
                  <div className="flex flex-col items-center gap-3">
                    <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }} className="w-6 h-6 border-2 border-white/20 border-t-[#E50914] rounded-full" />
@@ -148,10 +160,10 @@ export const GeekFilmeDemo: React.FC = () => {
               <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
                  <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div initial={{ width: '0%' }} animate={{ width: '30%' }} transition={{ duration: 10, ease: 'linear' }} className="h-full bg-[#E50914]" /></div>
                  <div className="flex items-center gap-3">
-                   <button aria-label="Voltar" onClick={() => setIsPlaying(false)} className="hover:bg-white/20 p-1 rounded transition-colors focus:outline-none">
+                   <button aria-label="Voltar ao catálogo" onClick={() => setIsPlaying(false)} className="hover:bg-white/20 p-1 rounded transition-colors focus:outline-none">
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m15 18-6-6 6-6"/></svg>
                    </button>
-                   <Pause className="w-3.5 h-3.5 text-white fill-white cursor-pointer hover:text-gray-300" />
+                   <Pause className="w-3.5 h-3.5 text-white fill-white cursor-pointer hover:text-gray-300" aria-label="Pausar" />
                    <span className="text-white font-bold text-[0.65rem]">{activeMovie.title}</span>
                  </div>
               </div>

@@ -8,18 +8,15 @@ export const DecodeDemo: React.FC = () => {
 
   const handleChoice = (selectedChoice: 1 | 2) => {
     setChoice(selectedChoice);
-    setStep(1); // Decisão
-    
-    // Pequeno tempo apenas para a animação de "processando"
+    setStep(1);
     const timer = setTimeout(() => {
-      setStep(2); // Consequência
+      setStep(2);
     }, 1500);
-    
     return () => clearTimeout(timer);
   };
 
   const handleNext = () => {
-    setStep(3); // Aprendizado
+    setStep(3);
   };
 
   const reset = () => {
@@ -97,10 +94,18 @@ export const DecodeDemo: React.FC = () => {
 
               <div className="mt-auto flex flex-col gap-2">
                 <p className="text-[#71717A] text-[0.65rem] tracking-wider font-mono uppercase mb-1">Qual a sua reação?</p>
-                <button aria-label="Escolher concordar com a frase" onClick={() => handleChoice(1)} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                <button
+                  aria-label="Escolher concordar com a frase"
+                  onClick={() => handleChoice(1)}
+                  className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"
+                >
                   "Verdade, melhor trocar pra evitar problema."
                 </button>
-                <button aria-label="Escolher discordar da frase" onClick={() => handleChoice(2)} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                <button
+                  aria-label="Escolher discordar da frase"
+                  onClick={() => handleChoice(2)}
+                  className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"
+                >
                   "Minha roupa não justifica a atitude dos outros."
                 </button>
               </div>
@@ -148,7 +153,11 @@ export const DecodeDemo: React.FC = () => {
                   : 'Estabelecer limites pode gerar uma reação agressiva quando o controle é contrariado.'}
               </p>
               
-              <button aria-label="Ver insight" onClick={handleNext} className="mt-auto bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20 font-semibold text-xs py-2 px-4 rounded transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+              <button
+                aria-label="Ver insight"
+                onClick={handleNext}
+                className="mt-auto bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20 font-semibold text-xs py-2 px-4 rounded transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"
+              >
                 Avançar para Insight <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </motion.div>

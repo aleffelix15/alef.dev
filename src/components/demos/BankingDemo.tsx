@@ -4,11 +4,12 @@ import { Terminal, Send, ShieldCheck, Database, Server, RefreshCw } from 'lucide
 
 export const BankingDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2>(0);
+
   const handleRequest = () => {
     setStep(1);
     const timer = setTimeout(() => {
       setStep(2);
-    }, 2000); // tempo para ver a animação de processamento
+    }, 2000);
     return () => clearTimeout(timer);
   };
 
@@ -27,7 +28,7 @@ export const BankingDemo: React.FC = () => {
         </div>
         <div className="flex items-center gap-1.5">
           {step === 2 && (
-            <button onClick={reset} className="text-[#71717A] hover:text-[#F5F5F5] mr-2 transition-colors">
+            <button aria-label="Nova requisição" onClick={reset} className="text-[#71717A] hover:text-[#F5F5F5] mr-2 transition-colors focus:outline-none">
               <RefreshCw className="w-3.5 h-3.5" />
             </button>
           )}
@@ -67,7 +68,8 @@ export const BankingDemo: React.FC = () => {
 
               <button 
                 onClick={handleRequest}
-                className="w-full bg-[#F5F5F5] hover:bg-white text-[#050505] font-sans font-semibold text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 active:scale-[0.98]"
+                aria-label="Disparar requisição"
+                className="w-full bg-[#F5F5F5] hover:bg-white text-[#050505] font-sans font-semibold text-sm py-3 rounded-lg flex items-center justify-center gap-2 transition-all hover:-translate-y-0.5 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#4D94FF]"
               >
                 <Send className="w-4 h-4" />
                 Disparar Requisição
@@ -142,10 +144,6 @@ export const BankingDemo: React.FC = () => {
                     </div>
                   </div>
                   <span className="text-[#4D94FF]">{"}"}</span>
-                  
-                  <button onClick={reset} className="mt-4 bg-[#1C1C20] hover:bg-[#2A2A30] text-[#E0E0E0] text-xs font-semibold py-2 px-3 rounded flex items-center gap-2 transition-colors">
-                    <RefreshCw className="w-3.5 h-3.5" /> Nova requisição
-                  </button>
                 </motion.div>
                 
                 {/* Blinking cursor */}
@@ -155,6 +153,14 @@ export const BankingDemo: React.FC = () => {
                   className="inline-block w-2 h-3 bg-[#A1A1AA] ml-1 mt-2"
                 />
               </div>
+
+              <button
+                onClick={reset}
+                aria-label="Nova requisição"
+                className="mt-4 w-full bg-[#1C1C20] hover:bg-[#2A2A30] text-[#E0E0E0] font-sans text-xs font-semibold py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 transition-colors focus:outline-none focus:ring-2 focus:ring-[#4D94FF]"
+              >
+                <RefreshCw className="w-3.5 h-3.5" /> Nova requisição
+              </button>
             </motion.div>
           )}
 

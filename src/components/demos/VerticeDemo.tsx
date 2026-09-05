@@ -39,7 +39,7 @@ export const VerticeDemo: React.FC = () => {
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTab = activeTab === 'Categorias' ? true : p.tag === activeTab || p.tag === 'Novidades';
+      const matchesTab = activeTab === 'Categorias' ? true : p.tag === activeTab;
       return matchesSearch && matchesTab;
     });
   }, [searchQuery, activeTab]);
@@ -53,13 +53,13 @@ export const VerticeDemo: React.FC = () => {
           <span className="text-[#F5F5F5] font-display font-bold text-sm tracking-widest uppercase">VÉRTICE</span>
           <div className="vertice-demo__categories hidden sm:flex items-center gap-3 text-[11px] text-[#A1A1AA] font-medium">
             {['Categorias', 'Novidades', 'Promoções'].map(tab => (
-              <span 
+              <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cursor-pointer transition-colors ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
+                className={`cursor-pointer transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
               >
                 {tab}
-              </span>
+              </button>
             ))}
           </div>
         </div>
@@ -73,11 +73,12 @@ export const VerticeDemo: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-transparent text-[11px] text-[#F5F5F5] w-full outline-none placeholder-[#71717A]"
+              aria-label="Buscar produtos"
             />
           </div>
-          <User className="vertice-demo__user w-4 h-4 text-[#A1A1AA] hover:text-white cursor-pointer transition-colors" />
+          <User className="vertice-demo__user w-4 h-4 text-[#A1A1AA] hover:text-white cursor-pointer transition-colors" aria-label="Perfil" />
           <div className="relative cursor-pointer group" onClick={(e) => e.stopPropagation()}>
-            <ShoppingCart className="w-4 h-4 text-[#A1A1AA] group-hover:text-white transition-colors" />
+            <ShoppingCart className="w-4 h-4 text-[#A1A1AA] group-hover:text-white transition-colors" aria-label="Carrinho" />
             <AnimatePresence>
               {cartCount > 0 && (
                 <motion.span 
@@ -107,17 +108,18 @@ export const VerticeDemo: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-transparent text-[11px] text-[#F5F5F5] w-full outline-none placeholder-[#71717A]"
+              aria-label="Buscar produtos"
             />
           </div>
           <div className="flex gap-3 mt-3 text-[11px] text-[#A1A1AA] font-medium overflow-x-auto">
             {['Categorias', 'Novidades', 'Promoções'].map(tab => (
-              <span 
+              <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cursor-pointer whitespace-nowrap transition-colors ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
+                className={`cursor-pointer whitespace-nowrap transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
               >
                 {tab}
-              </span>
+              </button>
             ))}
           </div>
         </div>
@@ -133,7 +135,7 @@ export const VerticeDemo: React.FC = () => {
             >
               <img 
                 src="https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1200&h=400&fit=crop&q=80" 
-                alt="Coleção Inverno"
+                alt="Coleção Inverno VÉRTICE"
                 className="absolute inset-0 w-full h-full object-cover object-[center_35%] transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/90 via-[#000000]/50 to-transparent" />
@@ -177,7 +179,7 @@ export const VerticeDemo: React.FC = () => {
                       <button 
                         onClick={(e) => toggleFavorite(e, product.id)}
                         className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
-                        aria-label="Favoritar"
+                        aria-label={favorites.includes(product.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                       >
                         <Heart className={`w-3 h-3 ${favorites.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} />
                       </button>
@@ -191,6 +193,7 @@ export const VerticeDemo: React.FC = () => {
                           >
                             <button 
                               onClick={handleAddToCart}
+                              aria-label="Adicionar ao carrinho"
                               className="w-full bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[10px] font-semibold py-1.5 rounded shadow-lg transition-colors flex items-center justify-center gap-1.5"
                             >
                               <ShoppingBag className="w-3 h-3" /> Adicionar
@@ -237,7 +240,11 @@ export const VerticeDemo: React.FC = () => {
             >
               <div className="relative aspect-video">
                 <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full h-full object-cover" />
-                <button onClick={() => setSelectedProduct(null)} className="absolute top-2 right-2 w-6 h-6 bg-black/50 rounded-full flex items-center justify-center text-white">
+                <button
+                  onClick={() => setSelectedProduct(null)}
+                  aria-label="Fechar detalhes do produto"
+                  className="absolute top-2 right-2 w-6 h-6 bg-black/50 rounded-full flex items-center justify-center text-white focus:outline-none"
+                >
                   <X className="w-3 h-3" />
                 </button>
               </div>
@@ -253,7 +260,8 @@ export const VerticeDemo: React.FC = () => {
                   <span className="font-bold text-[#F5F5F5]">{selectedProduct.price}</span>
                   <button 
                     onClick={(e) => { handleAddToCart(e); setSelectedProduct(null); }}
-                    className="bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5"
+                    aria-label="Adicionar à sacola"
+                    className="bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
                   >
                     <ShoppingBag className="w-3 h-3" /> Por na sacola
                   </button>
@@ -266,6 +274,3 @@ export const VerticeDemo: React.FC = () => {
     </div>
   );
 };
-
-
-
