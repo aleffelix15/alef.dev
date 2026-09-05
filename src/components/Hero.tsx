@@ -120,7 +120,7 @@ export const Hero: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Right Column: Minimalist Tech Abstract Element */}
+        {/* Right Column: Avatar */}
         <div className="hidden md:flex w-[40%] justify-end relative pointer-events-none">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -128,30 +128,23 @@ export const Hero: React.FC = () => {
             transition={{ delay: 0.6, duration: 1.2 }}
             className="relative w-full aspect-square max-w-[400px]"
           >
-            {/* Subtle Abstract Graphic */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-                className="w-full h-full border-[0.5px] border-[#1C1C20] rounded-full opacity-30" 
-              />
-              <motion.div 
-                animate={{ rotate: -360 }}
-                transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[80%] h-[80%] border-[0.5px] border-[#0066FF]/20 rounded-full border-dashed" 
-              />
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[60%] h-[60%] border-[0.5px] border-[#1C1C20] rounded-full" 
-              />
-              {/* Inner glowing dot */}
-              <div className="absolute w-2 h-2 rounded-full bg-[#0066FF] opacity-40 shadow-[0_0_20px_4px_rgba(0,102,255,0.4)]" />
+            <div className="absolute inset-0 flex items-center justify-center rounded-full overflow-hidden border border-[#1C1C20] bg-[#0D0D0F] shadow-[0_0_40px_rgba(0,102,255,0.1)]">
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                poster="/assets/avatar/hero-avatar-poster.jpg"
+                className="w-full h-full object-cover opacity-90"
+              >
+                <source src="/assets/avatar/hero-avatar-pull.webm" type="video/webm" />
+                <source src="/assets/avatar/hero-avatar-pull.mp4" type="video/mp4" />
+              </video>
             </div>
             
             {/* Decorative crosshairs / marks */}
-            <div className="absolute top-[20%] left-[20%] w-2 h-2 border-l border-t border-[#4D94FF] opacity-40" />
-            <div className="absolute bottom-[20%] right-[20%] w-2 h-2 border-r border-b border-[#4D94FF] opacity-40" />
+            <div className="absolute top-[10%] left-[10%] w-2 h-2 border-l border-t border-[#4D94FF] opacity-40" />
+            <div className="absolute bottom-[10%] right-[10%] w-2 h-2 border-r border-b border-[#4D94FF] opacity-40" />
           </motion.div>
         </div>
       </div>
