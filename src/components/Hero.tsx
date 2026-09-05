@@ -1,32 +1,16 @@
 import React, { useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ChevronRight, ArrowDown } from 'lucide-react';
-import { SITE_DATA } from '../data';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const codeSnippet = `const developer = {
-  name: 'Alef Felix',
-  role: 'Desenvolvedor Full Stack',
-  focus: ['React', 'Node.js', 'TypeScript'],
-  passion: 'Resolver problemas e criar impacto',
-  learning: 'Todos os dias'
-};
-
-function transformarIdeia(ideia) {
-  return '${"$"}{ideia} -> código -> solução -> impacto';
-}
-
-console.log(transformarIdeia('Sua ideia!'));
-// Vamos construir algo incrível juntos! 🚀`;
-
   return (
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen bg-[#050505] pt-24 pb-12 flex items-center overflow-hidden"
+      className="relative min-h-[100dvh] bg-[#050505] pt-32 pb-16 flex flex-col justify-center overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div 
@@ -59,9 +43,7 @@ console.log(transformarIdeia('Sua ideia!'));
               )}
               <span className="relative h-2 w-2 rounded-full bg-[#00C853]" />
             </div>
-            <span className="font-mono text-[0.65rem] font-semibold text-[#9A9A9A] tracking-[0.2em] uppercase">
-              Disponível para novos desafios
-            </span>
+            <span className="font-mono text-[0.65rem] font-semibold text-[#9A9A9A] tracking-[0.2em] uppercase">Disponível para novos desafios</span>
           </motion.div>
 
           <motion.h1
@@ -71,7 +53,7 @@ console.log(transformarIdeia('Sua ideia!'));
             }}
             className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold text-[#F5F5F5] tracking-tight mb-5 sm:mb-6"
           >
-            DESENVOLVEDOR <span className="text-[#333333]">&</span><br />
+            DESENVOLVEDOR <span className="text-[#333333]">&amp;</span><br />
             ESTUDANTE DE<br />
             <span className="text-[#9A9A9A]">ENGENHARIA DE</span><br />
             SOFTWARE
@@ -85,16 +67,7 @@ console.log(transformarIdeia('Sua ideia!'));
             className="font-body text-base md:text-lg text-[#71717A] max-w-md leading-relaxed mb-10"
           >
             Transformando ideias em soluções digitais escaláveis. Código limpo, design inteligente e performance.
-          </motion.p>
-
-          <motion.div
-            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
-              hidden: { opacity: 0, y: 15 },
-              visible: { opacity: 1, y: 0 }
-            }}
-            className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4"
-          >
-            <a
+          </motion.p><motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4"><a
               href="#projeto"
               className="group inline-flex items-center justify-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
@@ -132,11 +105,10 @@ console.log(transformarIdeia('Sua ideia!'));
                   {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#00C853]">'Alef Felix'</span>,<br/>
                   {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#00C853]">'Desenvolvedor Full Stack'</span>,<br/>
                   {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#00C853]">'React'</span>, <span className="text-[#00C853]">'Node.js'</span>, <span className="text-[#00C853]">'TypeScript'</span>],<br/>
-                  {'  '}<span className="text-[#71717A]">passion:</span> <span className="text-[#00C853]">'Resolver problemas e criar impacto'</span>,<br/>
                   {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#00C853]">'Todos os dias'</span><br/>
                   {'}'}<br/><br/>
                   <span className="text-[#0066FF]">function</span> <span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FF9500]">ideia</span>) {'{'}<br/>
-                  {'  '}<span className="text-[#0066FF]">return</span> <span className="text-[#00C853]">\\ -{'>'} código -{'>'} solução -{'>'} impacto\</span>;<br/>
+                  {'  '}<span className="text-[#0066FF]">return</span> <span className="text-[#00C853]">{`/* -> código -> solução -> impacto */`}</span>;<br/>
                   {'}'}<br/><br/>
                   <span className="text-[#F5F5F5]">console</span>.<span className="text-[#0066FF]">log</span>(<span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#00C853]">'Sua ideia!'</span>));<br/>
                   <span className="text-[#71717A]">// Vamos construir algo incrível juntos! 🚀</span>
@@ -150,4 +122,5 @@ console.log(transformarIdeia('Sua ideia!'));
     </section>
   );
 };
+
 

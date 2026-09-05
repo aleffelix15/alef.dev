@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
@@ -177,7 +177,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="text-center text-xs text-[#71717A] font-mono">
-              Â© {new Date().getFullYear()} ALEF FELIX
+              © {new Date().getFullYear()} ALEF FELIX
             </div>
           </motion.div>
         )}
@@ -185,6 +185,3 @@ export const Navbar: React.FC = () => {
     </>
   );
 };
-
-
-
