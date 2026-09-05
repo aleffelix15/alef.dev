@@ -1,11 +1,11 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { Github, ExternalLink } from 'lucide-react';
 import { SITE_DATA } from '../data';
 import { DecodeDemo } from './demos/DecodeDemo';
 import { BankingDemo } from './demos/BankingDemo';
 import { GeekFilmeDemo } from './demos/GeekFilmeDemo';
-
+import { VerticeDemo } from './demos/VerticeDemo';
 export const Project: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
   
@@ -28,13 +28,13 @@ export const Project: React.FC = () => {
           className="mb-20 text-center md:text-left"
         >
           <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-            <span className="text-[#0066FF]">·</span>
+            <span className="text-[#0066FF]">Â·</span>
             <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Portfólio
+              PortfÃ³lio
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] tracking-tight">
-            Projetos & Construções
+            Projetos & ConstruÃ§Ãµes
           </h2>
         </motion.div>
 
@@ -93,11 +93,11 @@ export const Project: React.FC = () => {
                   </motion.div>
                 </div>
 
-                {/* 3: DEMONSTRAÇÃO */}
+                {/* 3: DEMONSTRAÃ‡ÃƒO */}
                 <motion.div variants={demoVariant} className="w-full group">
                   <div className="mb-4 flex items-center justify-between">
                     <span className="font-mono text-[0.65rem] tracking-[0.1em] text-[#71717A] uppercase transition-colors group-hover:text-[#9A9A9A]">
-                      / DEMONSTRAÇÃO INTERATIVA
+                      / DEMONSTRAÃ‡ÃƒO INTERATIVA
                     </span>
                     <div className="flex gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#1C1C20] group-hover:bg-[#FF3B30] transition-colors duration-500" />
@@ -105,11 +105,12 @@ export const Project: React.FC = () => {
                       <span className="w-1.5 h-1.5 rounded-full bg-[#1C1C20] group-hover:bg-[#00C853] transition-colors duration-500 delay-150" />
                     </div>
                   </div>
-                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/30 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/30 to-transparent' : project.demoType === 'geekfilme' ? 'from-red-600/30 to-transparent' : 'from-[#1C1C20] to-transparent'} transition-all duration-700 group-hover:scale-[1.01] shadow-2xl group-hover:shadow-[#000000]/80`}>
+                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/30 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/30 to-transparent' : project.demoType === 'geekfilme' ? 'from-red-600/30 to-transparent' : project.demoType === 'vertice' ? 'from-[#9b4dff]/30 to-transparent' : 'from-[#1C1C20] to-transparent'} transition-all duration-700 group-hover:scale-[1.01] shadow-2xl group-hover:shadow-[#000000]/80`}>
                     <div className="rounded-xl overflow-hidden bg-[#0A0A0C]">
                       {project.demoType === 'decode' && <DecodeDemo />}
                       {project.demoType === 'banking' && <BankingDemo />}
                       {project.demoType === 'geekfilme' && <GeekFilmeDemo />}
+                      {project.demoType === 'vertice' && <VerticeDemo />}
                     </div>
                   </div>
                 </motion.div>
@@ -178,7 +179,7 @@ export const Project: React.FC = () => {
                       className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
                     >
                       <Github className="w-4 h-4 text-[#9A9A9A]" />
-                      <span>Repositório</span>
+                      <span>RepositÃ³rio</span>
                     </a>
                   )}
                 </motion.div>
@@ -196,3 +197,5 @@ export const Project: React.FC = () => {
     </section>
   );
 };
+
+
