@@ -33,12 +33,29 @@
   section {
     scroll-margin-top: 80px;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.9rem;
+    margin-left: 0.25rem;
+    vertical-align: -0.12rem;
+    background: #71717A;
+    animation: terminal-cursor-blink 1.4s steps(2, start) infinite;
+  }
+
+  @keyframes terminal-cursor-blink { to { opacity: 0; } }
 
   /* The demo is embedded in portfolio cards, so its layout follows its
      available inline size instead of the browser viewport. */

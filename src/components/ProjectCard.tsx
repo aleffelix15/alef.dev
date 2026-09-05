@@ -23,7 +23,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="group bg-[#0D0D0F] border border-[#1C1C20] rounded-2xl overflow-hidden hover:border-[#2E2E38] hover:shadow-[0_4px_24px_rgba(0,0,0,0.25)] transition-all duration-300 flex flex-col h-full">
+    <div className="group bg-[#0D0D0F] border border-[#1C1C20] rounded-2xl overflow-hidden hover:border-[#2E2E38] hover:shadow-[0_8px_28px_rgba(0,0,0,0.28)] hover:-translate-y-0.5 hover:scale-[1.005] transition-[transform,border-color,box-shadow] duration-300 flex flex-col h-full">
       {/* Preview area */}
       <div className="relative aspect-video overflow-hidden bg-[#09090D] border-b border-[#1C1C20] rounded-t-2xl flex items-center justify-center">
         {project.imageUrl ? (
@@ -82,7 +82,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
       </div>
 
-      <div className="p-6 flex flex-col flex-1">
+      <div className="p-6 flex flex-col flex-1 transition-transform duration-300 group-hover:-translate-y-px">
         <h3 className="font-display text-xl font-semibold text-[#F5F5F5]">
           {project.name}
         </h3>

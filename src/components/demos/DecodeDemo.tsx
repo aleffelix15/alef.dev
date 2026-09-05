@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ShieldAlert, RefreshCw, CheckCircle2, MessageSquare, Lightbulb, ArrowRight } from 'lucide-react';
 
 export const DecodeDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
   const [choice, setChoice] = useState<1 | 2 | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleChoice = (selectedChoice: 1 | 2) => {
     setChoice(selectedChoice);
     setStep(1);
-    const timer = setTimeout(() => {
-      setStep(2);
-    }, 1500);
-    return () => clearTimeout(timer);
   };
+
+  const showConsequence = () => setStep(2);
 
   const handleNext = () => {
     setStep(3);
@@ -53,8 +52,9 @@ export const DecodeDemo: React.FC = () => {
           <motion.div 
             className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] bg-[#FF3B30] z-0"
             initial={{ width: '0%' }}
-            animate={{ width: `${(step / 3) * 100}%` }}
+            animate={{ scaleX: step / 3 }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
+            style={{ width: '100%', transformOrigin: 'left' }}
           />
           {stepsInfo.map((s) => {
             const Icon = s.icon;
@@ -115,20 +115,24 @@ export const DecodeDemo: React.FC = () => {
           {step === 1 && (
             <motion.div
               key="decision"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.05 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
               transition={{ duration: 0.4 }}
               className="flex flex-col h-full justify-center items-center text-center px-4"
             >
-              <motion.div 
-                animate={{ rotate: 360 }} 
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="w-8 h-8 rounded-full border-2 border-[#1C1C20] border-t-[#FF3B30] mb-4"
-              />
-              <p className="text-[#71717A] font-mono text-xs uppercase tracking-widest animate-pulse">
-                Processando escolha...
+              <CheckCircle2 className="w-8 h-8 text-[#FF3B30] mb-4" />
+              <p className="text-[#E0E0E0] text-sm mb-2">Decisão registrada</p>
+              <p className="text-[#71717A] font-mono text-[0.65rem] uppercase tracking-wider mb-6">
+                {choice === 1 ? 'Você concordou com a restrição.' : 'Você estabeleceu um limite.'}
               </p>
+              <button
+                aria-label="Ver consequência da decisão"
+                onClick={showConsequence}
+                className="bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20 active:scale-[0.98] font-semibold text-xs py-2 px-4 rounded transition-[transform,background-color] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]"
+              >
+                Ver consequência
+              </button>
             </motion.div>
           )}
 
@@ -180,10 +184,10 @@ export const DecodeDemo: React.FC = () => {
               
               <div className="w-full bg-[#0A0A0C] border border-[#1C1C20] rounded-lg p-3 text-left flex items-center justify-between gap-2 mt-auto">
                 <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C853] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C853]" />
                   <span className="font-mono text-[0.65rem] text-[#71717A] uppercase tracking-wider">Simulação Concluída</span>
                 </div>
-                <button aria-label="Jogar novamente" onClick={reset} className="text-[0.65rem] font-bold text-[#F5F5F5] hover:text-[#00C853] transition-colors focus:outline-none underline">
+                <button aria-label="Jogar novamente" onClick={reset} className="text-[0.65rem] font-bold text-[#F5F5F5] hover:text-[#00C853] active:scale-[0.98] transition-[transform,color] focus:outline-none underline">
                   Reiniciar
                 </button>
               </div>

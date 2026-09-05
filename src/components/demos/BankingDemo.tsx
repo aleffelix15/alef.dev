@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Terminal, Send, ShieldCheck, Database, Server, RefreshCw } from 'lucide-react';
 
 export const BankingDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2>(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleRequest = () => {
     setStep(1);
-    const timer = setTimeout(() => {
-      setStep(2);
-    }, 2000);
-    return () => clearTimeout(timer);
   };
 
   const reset = () => {
@@ -90,24 +87,34 @@ export const BankingDemo: React.FC = () => {
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0 }}
                   className="flex items-center gap-3 text-[#A1A1AA] text-xs"
                 >
-                  <Server className="w-4 h-4 text-[#4D94FF] animate-pulse" />
+                  <Server className="w-4 h-4 text-[#4D94FF]" />
                   <span>Autenticando via Spring Security...</span>
                 </motion.div>
                 <motion.div 
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 }}
                   className="flex items-center gap-3 text-[#A1A1AA] text-xs"
                 >
-                  <ShieldCheck className="w-4 h-4 text-[#00C853] animate-pulse" />
+                  <ShieldCheck className="w-4 h-4 text-[#00C853]" />
                   <span>Validando saldo disponível (ACID)...</span>
                 </motion.div>
                 <motion.div 
                   initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.2 }}
                   className="flex items-center gap-3 text-[#A1A1AA] text-xs"
                 >
-                  <Database className="w-4 h-4 text-[#FF9500] animate-pulse" />
+                  <Database className="w-4 h-4 text-[#FF9500]" />
                   <span>Persistindo transação no MySQL...</span>
                 </motion.div>
               </div>
+              <motion.button
+                type="button"
+                onClick={() => setStep(2)}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: shouldReduceMotion ? 0 : 1.35, duration: 0.25 }}
+                className="mt-8 w-full border border-[#2A2A30] hover:border-[#00C853]/50 hover:bg-[#00C853]/5 text-[#E0E0E0] active:scale-[0.98] font-sans text-xs font-semibold py-2.5 rounded-lg transition-[transform,background-color,border-color] focus:outline-none focus:ring-2 focus:ring-[#4D94FF]"
+              >
+                Ver resposta
+              </motion.button>
             </motion.div>
           )}
 
@@ -147,11 +154,7 @@ export const BankingDemo: React.FC = () => {
                 </motion.div>
                 
                 {/* Blinking cursor */}
-                <motion.span 
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.8 }}
-                  className="inline-block w-2 h-3 bg-[#A1A1AA] ml-1 mt-2"
-                />
+                {!shouldReduceMotion && <span aria-hidden="true" className="terminal-cursor" />}
               </div>
 
               <button

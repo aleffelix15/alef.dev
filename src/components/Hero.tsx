@@ -38,9 +38,6 @@ export const Hero: React.FC = () => {
             className="flex items-center gap-3 mb-6"
           >
             <div className="relative flex h-2 w-2 items-center justify-center">
-              {!shouldReduceMotion && (
-                <span className="absolute h-full w-full rounded-full bg-[#00C853] opacity-60 animate-[pulse-dot_3s_ease-in-out_infinite]" />
-              )}
               <span className="relative h-2 w-2 rounded-full bg-[#00C853]" />
             </div>
             <span className="font-mono text-[0.65rem] font-semibold text-[#9A9A9A] tracking-[0.2em] uppercase">Disponível para novos desafios</span>
@@ -84,9 +81,9 @@ export const Hero: React.FC = () => {
 
         {/* Code Block - Desktop Only */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.985 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.65, delay: shouldReduceMotion ? 0 : 0.38, ease: 'easeOut' }}
           className="hidden lg:block w-full"
         >
           <div className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl overflow-hidden shadow-2xl">
@@ -112,6 +109,7 @@ export const Hero: React.FC = () => {
                   {'}'}<br/><br/>
                   <span className="text-[#F5F5F5]">console</span>.<span className="text-[#0066FF]">log</span>(<span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#00C853]">'Sua ideia!'</span>));<br/>
                   <span className="text-[#71717A]">// Vamos construir algo incrível juntos! 🚀</span>
+                  <span aria-hidden="true" className="terminal-cursor" />
                 </code>
               </pre>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Search, User, ShoppingCart, ArrowRight, Heart, ShoppingBag, X } from 'lucide-react';
 
 type Product = {
@@ -25,6 +25,7 @@ export const VerticeDemo: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Novidades');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -56,9 +57,10 @@ export const VerticeDemo: React.FC = () => {
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cursor-pointer transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
+                className={`relative cursor-pointer transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
               >
                 {tab}
+                {activeTab === tab && <motion.span layoutId="vertice-tab" className="absolute -bottom-1 left-0 right-0 h-px bg-[#9b4dff]" transition={{ duration: shouldReduceMotion ? 0 : 0.2 }} />}
               </button>
             ))}
           </div>
@@ -81,7 +83,8 @@ export const VerticeDemo: React.FC = () => {
             <ShoppingCart className="w-4 h-4 text-[#A1A1AA] group-hover:text-white transition-colors" aria-label="Carrinho" />
             <AnimatePresence>
               {cartCount > 0 && (
-                <motion.span 
+                <motion.span
+                  key={cartCount}
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
@@ -116,9 +119,10 @@ export const VerticeDemo: React.FC = () => {
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`cursor-pointer whitespace-nowrap transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
+                className={`relative cursor-pointer whitespace-nowrap transition-colors focus:outline-none ${activeTab === tab ? 'text-white' : 'hover:text-white'}`}
               >
                 {tab}
+                {activeTab === tab && <motion.span layoutId="vertice-mobile-tab" className="absolute -bottom-1 left-0 right-0 h-px bg-[#9b4dff]" transition={{ duration: shouldReduceMotion ? 0 : 0.2 }} />}
               </button>
             ))}
           </div>
@@ -176,13 +180,15 @@ export const VerticeDemo: React.FC = () => {
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <button 
+                      <motion.button
                         onClick={(e) => toggleFavorite(e, product.id)}
+                        whileTap={{ scale: shouldReduceMotion ? 1 : 0.9 }}
+                        animate={{ scale: favorites.includes(product.id) ? 1.08 : 1 }}
                         className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
                         aria-label={favorites.includes(product.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                       >
                         <Heart className={`w-3 h-3 ${favorites.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} />
-                      </button>
+                      </motion.button>
                       <AnimatePresence>
                         {hoveredProduct === product.id && (
                           <motion.div 
@@ -232,9 +238,10 @@ export const VerticeDemo: React.FC = () => {
             onClick={() => setSelectedProduct(null)}
           >
             <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
+              initial={{ scale: shouldReduceMotion ? 1 : 0.98, y: shouldReduceMotion ? 0 : 10 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+              exit={{ scale: shouldReduceMotion ? 1 : 0.98, y: shouldReduceMotion ? 0 : 10 }}
+              transition={{ duration: 0.2 }}
               className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl w-full max-w-sm overflow-hidden flex flex-col"
               onClick={e => e.stopPropagation()}
             >

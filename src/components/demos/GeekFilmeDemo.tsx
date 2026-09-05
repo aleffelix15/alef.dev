@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, Search, ChevronRight, Pause, X } from 'lucide-react';
 
 type Movie = {
@@ -23,6 +23,8 @@ export const GeekFilmeDemo: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeMovie, setActiveMovie] = useState<Movie>(movies[0]);
+  const [isPaused, setIsPaused] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -102,7 +104,7 @@ export const GeekFilmeDemo: React.FC = () => {
                       {activeMovie.desc}
                     </motion.p>
                     <motion.div variants={fadeUp} className="flex items-center gap-2">
-                      <button onClick={() => setIsPlaying(true)} aria-label={`Assistir ${activeMovie.title}`} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 transition-all focus:outline-none">
+                      <button onClick={() => { setIsPaused(false); setIsPlaying(true); }} aria-label={`Assistir ${activeMovie.title}`} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 hover:-translate-y-px active:scale-[0.98] transition-[transform,background-color] focus:outline-none">
                         <Play className="w-2.5 h-2.5 fill-current" /> Assistir
                       </button>
                     </motion.div>
@@ -149,21 +151,23 @@ export const GeekFilmeDemo: React.FC = () => {
               </motion.div>
             </motion.div>
           ) : (
-            <motion.div key="player" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
+            <motion.div key="player" initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} transition={{ duration: 0.25 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
               <div className="absolute inset-0 opacity-20"><img src={activeMovie.banner} alt="" className="w-full h-full object-cover blur-md" /></div>
               <div className="absolute inset-0 flex items-center justify-center">
                  <div className="flex flex-col items-center gap-3">
-                   <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }} className="w-6 h-6 border-2 border-white/20 border-t-[#E50914] rounded-full" />
-                   <span className="text-gray-300 font-medium text-[0.65rem] drop-shadow-md tracking-wide">Reproduzindo...</span>
+                   {isPaused ? <Play className="w-6 h-6 text-white fill-white" /> : <div className="w-6 h-6 border-2 border-white/20 border-t-[#E50914] rounded-full" />}
+                   <span className="text-gray-300 font-medium text-[0.65rem] drop-shadow-md tracking-wide">{isPaused ? 'Pausado' : 'Reproduzindo...'}</span>
                  </div>
               </div>
               <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
-                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div initial={{ width: '0%' }} animate={{ width: '30%' }} transition={{ duration: 10, ease: 'linear' }} className="h-full bg-[#E50914]" /></div>
+                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div animate={{ scaleX: isPaused ? 0.22 : 0.3 }} transition={{ duration: shouldReduceMotion ? 0 : 0.25 }} style={{ transformOrigin: 'left' }} className="h-full bg-[#E50914]" /></div>
                  <div className="flex items-center gap-3">
-                   <button aria-label="Voltar ao catálogo" onClick={() => setIsPlaying(false)} className="hover:bg-white/20 p-1 rounded transition-colors focus:outline-none">
+                   <button aria-label="Voltar ao catálogo" onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-[transform,background-color] focus:outline-none">
                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m15 18-6-6 6-6"/></svg>
                    </button>
-                   <Pause className="w-3.5 h-3.5 text-white fill-white cursor-pointer hover:text-gray-300" aria-label="Pausar" />
+                   <button aria-label={isPaused ? 'Retomar reprodução' : 'Pausar'} onClick={() => setIsPaused(value => !value)} className="text-white hover:text-gray-300 active:scale-[0.95] transition-[transform,color] focus:outline-none">
+                     {isPaused ? <Play className="w-3.5 h-3.5 fill-white" /> : <Pause className="w-3.5 h-3.5 fill-white" />}
+                   </button>
                    <span className="text-white font-bold text-[0.65rem]">{activeMovie.title}</span>
                  </div>
               </div>
