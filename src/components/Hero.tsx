@@ -102,7 +102,7 @@ export const Hero: React.FC = () => {
               <pre className="font-mono text-[13px] leading-[1.7]">
                 <code>
                   <span className="text-[#0066FF]">const</span> <span className="text-[#F5F5F5]">developer</span> <span className="text-[#0066FF]">=</span> {'{'}<br/>
-                  {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#00C853]">'Alef Felix'</span>,<br/>
+                  {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#00C853]">'ÁLEF FELIX'</span>,<br/>
                   {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#00C853]">'Desenvolvedor Full Stack'</span>,<br/>
                   {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#00C853]">'React'</span>, <span className="text-[#00C853]">'Node.js'</span>, <span className="text-[#00C853]">'TypeScript'</span>],<br/>
                   {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#00C853]">'Todos os dias'</span><br/>

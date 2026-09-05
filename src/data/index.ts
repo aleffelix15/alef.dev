@@ -1,9 +1,9 @@
 export const SITE_DATA = {
   profile: {
-    name: "Alef Felix",
+    name: "ÁLEF FELIX",
     title: "Desenvolvedor & Estudante de Engenharia de Software",
     heroDesc: "Construindo minha carreira em Engenharia de Software e desenvolvendo projetos próprios para impactar pessoas através da tecnologia.",
-    aboutDesc1: "Sou o Alef — desenvolvedor que encontrou na tecnologia não só uma profissão, mas uma forma de pensar. Gosto de entender como as coisas funcionam por dentro, quebrar problemas em partes menores e construir soluções que realmente fazem sentido. Programação pra mim é mais do que escrever código: é criar algo que não existia antes.",
+    aboutDesc1: "Sou o ÁLEF FELIX — desenvolvedor que encontrou na tecnologia não só uma profissão, mas uma forma de pensar. Gosto de entender como as coisas funcionam por dentro, quebrar problemas em partes menores e construir soluções que realmente fazem sentido. Programação pra mim é mais do que escrever código: é criar algo que não existia antes.",
     aboutDesc2: "Trabalho com desenvolvimento web e mobile, exploro inteligência artificial e estou sempre aprendendo algo novo — seja uma tecnologia, um framework ou uma forma diferente de resolver um problema. Acredito que os melhores produtos nascem da curiosidade, e é isso que me move: transformar ideias em experiências que funcionam no mundo real.",
     email: "aleffelix81@gmail.com",
     github: "https://github.com/aleffelix15",

@@ -1,4 +1,4 @@
-# Alef.dev — Portfólio Pessoal
+# ÁLEF FELIX.dev — Portfólio Pessoal
 
 > Desenvolvedor Fullstack & Entusiasta de IA. Construindo produtos digitais, experiências interativas e aplicações modernas.
 
@@ -30,7 +30,7 @@ npm run build
 
 ## 📬 Contato
 
-- **LinkedIn:** [Alef Felix Teixeira](https://www.linkedin.com/in/alef-felix-teixeira-a5030b236)
+- **LinkedIn:** [ÁLEF FELIX Teixeira](https://www.linkedin.com/in/alef-felix-teixeira-a5030b236)
 - **GitHub:** [@aleffelix15](https://github.com/aleffelix15)
 - **E-mail:** aleffelix81@gmail.com
 "# alef.dev" 
