@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 import { SITE_DATA } from '../data';
 
 const navLinks = [
+  { name: 'Início', href: '#hero' },
   { name: 'Sobre', href: '#sobre' },
-  { name: 'Formação', href: '#formacao' },
-  { name: 'Projeto', href: '#projeto' },
-  { name: 'Stack', href: '#stack' },
+  { name: 'Trajetória', href: '#trajetoria' },
+  { name: 'Projetos', href: '#projeto' },
+  { name: 'Ecossistema', href: '#stack' },
   { name: 'Contato', href: '#contato' }
 ];
 
@@ -176,7 +177,7 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="text-center text-xs text-[#71717A] font-mono">
-              © {new Date().getFullYear()} ALEF FELIX
+              Â© {new Date().getFullYear()} ALEF FELIX
             </div>
           </motion.div>
         )}
@@ -184,3 +185,6 @@ export const Navbar: React.FC = () => {
     </>
   );
 };
+
+
+

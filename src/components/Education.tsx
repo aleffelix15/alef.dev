@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 
 export const Education: React.FC = () => {
@@ -25,7 +25,7 @@ export const Education: React.FC = () => {
   }) as Variants;
 
   return (
-    <section id="formacao" className="bg-[#050505] py-32 border-t border-[#1C1C20]/50">
+    <section id="trajetoria" className="bg-[#050505] py-32 border-t border-[#1C1C20]/50">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           
@@ -37,13 +37,13 @@ export const Education: React.FC = () => {
             className="mb-20"
           >
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-[#0066FF]">·</span>
+              <span className="text-[#0066FF]">Â·</span>
               <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-                Educação
+                EducaÃ§Ã£o
               </span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#F5F5F5] tracking-tight">
-              Trajetória Acadêmica
+              TrajetÃ³ria AcadÃªmica
             </h2>
           </motion.div>
 
@@ -64,7 +64,7 @@ export const Education: React.FC = () => {
             />
 
             <div className="relative pl-10 md:pl-16 pb-0 group">
-              {/* Ponto / Nó */}
+              {/* Ponto / NÃ³ */}
               <motion.div
                 variants={dotVariants}
                 className="absolute left-[4px] md:left-[20px] top-1.5 w-2 h-2 rounded-full border border-[#0066FF] bg-[#0066FF] shadow-[0_0_12px_rgba(0,102,255,0.6)] group-hover:scale-150 transition-transform duration-300 z-10"
@@ -73,7 +73,7 @@ export const Education: React.FC = () => {
               <div className="flex flex-col">
                 <motion.div variants={itemFade} className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm">
-                    2023 — Presente
+                    2023 â€” Presente
                   </span>
                   <span className="font-mono text-[0.65rem] text-[#0066FF] uppercase tracking-wider">
                     Em andamento
@@ -90,7 +90,7 @@ export const Education: React.FC = () => {
                 </motion.h4>
                 
                 <motion.p variants={itemFade} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8] max-w-2xl bg-[#0A0A0C] border border-[#1C1C20] p-7 rounded-xl group-hover:border-[#3F3F46] transition-colors shadow-sm">
-                  Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, com forte foco em arquitetura de software escalável, segurança de dados e experiência do usuário (UX/UI).
+                  Estudando os fundamentos da ciÃªncia da computaÃ§Ã£o, engenharia de software e prÃ¡ticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadÃªmicos na construÃ§Ã£o de projetos reais, com forte foco em arquitetura de software escalÃ¡vel, seguranÃ§a de dados e experiÃªncia do usuÃ¡rio (UX/UI).
                 </motion.p>
               </div>
             </div>
@@ -100,3 +100,4 @@ export const Education: React.FC = () => {
     </section>
   );
 };
+
