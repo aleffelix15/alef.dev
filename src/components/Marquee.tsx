@@ -1,7 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 export const Marquee: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
   const text = "SOFTWARE ENGINEERING • CREATIVE TECHNOLOGY • UI/UX DESIGN • FULLSTACK DEVELOPMENT • ";
   
   return (
@@ -9,7 +10,7 @@ export const Marquee: React.FC = () => {
       <div className="flex whitespace-nowrap">
         <motion.div
           className="font-display font-medium text-xs sm:text-sm md:text-base tracking-[0.3em] uppercase text-[#333333] flex"
-          animate={{ x: ["0%", "-50%"] }}
+          animate={shouldReduceMotion ? { x: 0 } : { x: ["0%", "-50%"] }}
           transition={{
             x: {
               repeat: Infinity,

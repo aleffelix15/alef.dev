@@ -1,15 +1,19 @@
-import { motion } from 'framer-motion'
+import React from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Github, Linkedin } from 'lucide-react'
+import { SITE_DATA } from '../data'
 
-export function Contact() {
+export const Contact: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section id="contato" className="bg-[#050505] py-24">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
           className="max-w-[640px] mx-auto text-center"
         >
           <div className="flex items-center justify-center gap-2">
@@ -28,12 +32,11 @@ export function Contact() {
           </p>
           
           <motion.a 
-            href="mailto:aleffelix81@gmail.com"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="relative overflow-hidden mt-8 inline-flex items-center justify-center gap-2 bg-[#0066FF] hover:bg-[#1A75FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.15)] hover:-translate-y-[1px] text-white font-body text-[0.9375rem] font-semibold px-6 py-3.5 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] transition-all duration-300 group"
+            href={`mailto:${SITE_DATA.profile.email}`}
+            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+            whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+            className="relative overflow-hidden mt-8 inline-flex items-center justify-center gap-2 bg-[#0066FF] hover:bg-[#1A75FF] text-white font-body text-[0.9375rem] font-semibold px-6 py-3.5 rounded-lg transition-all duration-300 group"
           >
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-[-100%] group-hover:scale-150 transition-transform duration-700 ease-out rotate-12 blur-sm pointer-events-none" />
             <span className="relative z-10">Enviar e-mail</span>
             <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 relative z-10" />
           </motion.a>
@@ -48,10 +51,10 @@ export function Contact() {
 
           <div className="mt-6 flex justify-center gap-4">
             <a 
-              href="https://github.com/aleffelix15" 
+              href={SITE_DATA.profile.github} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-xl px-5 py-2.5 transition-all duration-200"
+              className="group flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl px-5 py-2.5 transition-all duration-200"
             >
               <Github className="w-4 h-4 text-[#71717A] group-hover:text-[#F5F5F5] transition-colors duration-200" />
               <span className="font-body text-[0.875rem] font-medium text-[#9A9A9A] group-hover:text-[#F5F5F5] transition-colors duration-200">
@@ -60,10 +63,10 @@ export function Contact() {
             </a>
             
             <a 
-              href="https://www.linkedin.com/in/alef-felix-teixeira-a5030b236" 
+              href={SITE_DATA.profile.linkedin}
               target="_blank" 
               rel="noopener noreferrer"
-              className="group flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-xl px-5 py-2.5 transition-all duration-200"
+              className="group flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2E2E38] hover:bg-[#111114] rounded-xl px-5 py-2.5 transition-all duration-200"
             >
               <Linkedin className="w-4 h-4 text-[#71717A] group-hover:text-[#F5F5F5] transition-colors duration-200" />
               <span className="font-body text-[0.875rem] font-medium text-[#9A9A9A] group-hover:text-[#F5F5F5] transition-colors duration-200">

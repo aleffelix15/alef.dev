@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
+import { SITE_DATA } from '../data';
+
 const navLinks = [
   { name: 'Sobre', href: '#sobre' },
   { name: 'Formação', href: '#formacao' },
@@ -75,7 +77,7 @@ export const Navbar: React.FC = () => {
             href="#hero"
             className="font-display font-semibold text-sm text-[#F5F5F5] tracking-[0.04em] uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-md px-1"
           >
-            Alef Felix
+            {SITE_DATA.profile.name}
           </a>
 
           {/* Right side (Desktop) */}
@@ -139,7 +141,7 @@ export const Navbar: React.FC = () => {
           >
             <div className="flex items-center justify-between w-full">
               <span className="font-display font-semibold text-sm text-[#F5F5F5] tracking-[0.04em] uppercase">
-                Alef Felix
+                {SITE_DATA.profile.name}
               </span>
               <button
                 className="text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg p-1.5 border border-[#1C1C20] bg-[#0D0D0F]"

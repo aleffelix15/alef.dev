@@ -7,13 +7,11 @@ import { Project } from './components/Project'
 import { Education } from './components/Education'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
-import { CustomCursor } from './components/CustomCursor'
 import { ScrollProgress } from './components/ScrollProgress'
 
 export default function App() {
   return (
     <div className="min-h-screen bg-[#050505] text-[#F5F5F5] overflow-x-hidden w-full relative">
-      <CustomCursor />
       <ScrollProgress />
       {/* Grain texture overlay */}
       <div
