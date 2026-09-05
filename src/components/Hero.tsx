@@ -69,7 +69,7 @@ console.log(transformarIdeia('Sua ideia!'));
               hidden: { opacity: 0, y: 15 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
             }}
-            className="font-display text-[2.75rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold text-[#F5F5F5] tracking-tight mb-6"
+            className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold text-[#F5F5F5] tracking-tight mb-5 sm:mb-6"
           >
             DESENVOLVEDOR <span className="text-[#333333]">&</span><br />
             ESTUDANTE DE<br />
@@ -92,17 +92,17 @@ console.log(transformarIdeia('Sua ideia!'));
               hidden: { opacity: 0, y: 15 },
               visible: { opacity: 1, y: 0 }
             }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4"
           >
             <a
               href="#projeto"
-              className="group inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-sm font-semibold px-6 py-3 rounded-md transition-all active:scale-95"
+              className="group inline-flex items-center justify-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               Ver projetos <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
               href="#sobre"
-              className="group inline-flex items-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-[#0D0D0F] hover:border-[#2A2A30] font-body text-sm font-medium px-6 py-3 rounded-md transition-all active:scale-95"
+              className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-[#0D0D0F] hover:border-[#2A2A30] font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               Sobre mim <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>

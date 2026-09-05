@@ -35,7 +35,7 @@ export const DecodeDemo: React.FC = () => {
   ];
 
   return (
-    <div className="w-full h-full min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none">
+    <div className="w-full h-full min-h-[300px] md:min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none">
       
       {/* Header com Progress Tracker */}
       <div className="flex flex-col px-4 py-3 border-b border-[#1C1C20] bg-[#0A0A0C]">

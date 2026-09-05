@@ -24,32 +24,32 @@ export const VerticeDemo: React.FC = () => {
   };
 
   const products = [
-    { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
-    { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
-    { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
-    { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", image: "https://images.unsplash.com/photo-1588850561407-ed78c334e67a?w=500&h=600&fit=crop&q=80" },
+    { id: 1, name: "Oversized Tee â€” Void", category: "Camisetas", price: "R$ 189,90", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
+    { id: 2, name: "Cargo Jogger â€” Stealth", category: "CalÃ§as", price: "R$ 329,90", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
+    { id: 3, name: "Hoodie â€” Phantom", category: "Agasalhos", price: "R$ 419,90", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
+    { id: 4, name: "Cap â€” Signal", category: "AcessÃ³rios", price: "R$ 129,90", image: "/vertice/cap-signal.jpg" },
   ];
 
   return (
-    <div className="w-full h-full min-h-[350px] max-h-[420px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none font-sans">
+    <div className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none font-sans">
       
       {/* Navbar */}
       <div className="flex flex-shrink-0 items-center justify-between px-4 sm:px-6 py-3 border-b border-[#1C1C20] bg-[#0A0A0C] z-10">
         <div className="flex items-center gap-8">
-          <span className="text-[#F5F5F5] font-display font-bold text-sm tracking-widest uppercase">VÉRTICE</span>
+          <span className="text-[#F5F5F5] font-display font-bold text-sm tracking-widest uppercase">VÃ‰RTICE</span>
           <div className="hidden md:flex items-center gap-5 text-[11px] text-[#A1A1AA] font-medium">
             <span className="hover:text-white cursor-pointer transition-colors">Categorias</span>
             <span className="hover:text-white cursor-pointer transition-colors text-white">Novidades</span>
-            <span className="hover:text-white cursor-pointer transition-colors">Promoções</span>
+            <span className="hover:text-white cursor-pointer transition-colors">PromoÃ§Ãµes</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-5">
-          <div className="hidden sm:flex items-center bg-[#151518] border border-[#2A2A30] rounded-md px-3 py-1.5 w-48 transition-colors focus-within:border-[#9b4dff]/50">
+        <div className="flex items-center gap-5 sm:gap-5">
+          <div className="hidden md:flex items-center bg-[#151518] border border-[#2A2A30] rounded-md px-3 py-1.5 w-48 transition-colors focus-within:border-[#9b4dff]/50">
             <Search className="w-3.5 h-3.5 text-[#71717A] mr-2" />
             <span className="text-[#71717A] text-[11px]">Buscar produtos...</span>
           </div>
-          <User className="w-4 h-4 text-[#A1A1AA] hover:text-white cursor-pointer transition-colors" />
+          <User className="w-4 h-4 text-[#A1A1AA] hover:text-white cursor-pointer transition-colors hidden sm:block" />
           <div className="relative cursor-pointer group" onClick={() => setCartCount(prev => prev > 0 ? 0 : 1)}>
             <ShoppingCart className="w-4 h-4 text-[#A1A1AA] group-hover:text-white transition-colors" />
             <AnimatePresence>
@@ -70,7 +70,16 @@ export const VerticeDemo: React.FC = () => {
 
       {/* Main Scrollable Content */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#2A2A30] [&::-webkit-scrollbar-thumb]:rounded-full">
-        <div className="p-4 md:p-6 flex flex-col gap-8">
+        
+        {/* Mobile Search Bar */}
+        <div className="md:hidden px-4 pt-4 pb-0">
+          <div className="flex items-center bg-[#151518] border border-[#2A2A30] rounded-md px-3 py-2 w-full transition-colors focus-within:border-[#9b4dff]/50">
+            <Search className="w-3.5 h-3.5 text-[#71717A] mr-2" />
+            <span className="text-[#71717A] text-[11px]">Buscar produtos...</span>
+          </div>
+        </div>
+
+        <div className="p-4 md:p-6 flex flex-col gap-6 md:gap-8">
           
           {/* Hero Banner */}
           <motion.div 
@@ -81,20 +90,20 @@ export const VerticeDemo: React.FC = () => {
           >
             <img 
               src="https://images.unsplash.com/photo-1552346154-21d32810aba3?w=1200&h=400&fit=crop&q=80" 
-              alt="Coleção Inverno"
+              alt="ColeÃ§Ã£o Inverno"
               className="absolute inset-0 w-full h-full object-cover object-[center_35%] transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#000000]/90 via-[#000000]/50 to-transparent" />
             
             <div className="absolute inset-0 p-5 sm:p-7 flex flex-col justify-center max-w-[280px] sm:max-w-sm">
               <span className="text-[10px] sm:text-[11px] uppercase font-medium tracking-wider text-[#A1A1AA] mb-2">
-                Coleção Exclusiva
+                ColeÃ§Ã£o Exclusiva
               </span>
               <h2 className="text-lg sm:text-2xl font-bold text-[#F5F5F5] leading-tight mb-4 font-display">
-                O Ápice do Estilo em Qualquer Momento
+                O Ãpice do Estilo em Qualquer Momento
               </h2>
               <button className="bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[11px] font-semibold py-2 px-4 rounded-md w-fit flex items-center gap-2 transition-colors">
-                Ver coleção <ArrowRight className="w-3.5 h-3.5" />
+                Ver coleÃ§Ã£o <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </motion.div>
@@ -102,7 +111,7 @@ export const VerticeDemo: React.FC = () => {
           {/* Destaques Section */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-[#F5F5F5]">Destaques para você</h3>
+              <h3 className="text-sm font-semibold text-[#F5F5F5]">Destaques para vocÃª</h3>
               <span className="text-[11px] text-[#9b4dff] hover:text-[#8a44e5] cursor-pointer font-medium transition-colors">Ver todos</span>
             </div>
 
@@ -121,6 +130,9 @@ export const VerticeDemo: React.FC = () => {
                     <img 
                       src={product.image} 
                       alt={product.name}
+                      onError={(e) => {
+                        e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 400 500'%3E%3Crect width='100%25' height='100%25' fill='%23050505'/%3E%3Cpath d='M200 210L160 240V280L200 310L240 280V240L200 210Z' fill='%23151518'/%3E%3C/svg%3E";
+                      }}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     
@@ -166,4 +178,5 @@ export const VerticeDemo: React.FC = () => {
     </div>
   );
 };
+
 

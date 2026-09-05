@@ -50,7 +50,7 @@ export const About: React.FC = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="group relative overflow-hidden bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-6 transition-all duration-300 hover:border-[#4D94FF]/50 hover:bg-[#0D0D0F] hover:-translate-y-1 shadow-sm hover:shadow-[#0066FF]/5"
+                className="group relative overflow-hidden bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-4 sm:p-6 transition-all duration-300 hover:border-[#4D94FF]/50 hover:bg-[#0D0D0F] hover:-translate-y-1 shadow-sm hover:shadow-[#0066FF]/5"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0066FF]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <span className="block font-mono text-[0.7rem] tracking-[0.15em] text-[#71717A] uppercase mb-2">

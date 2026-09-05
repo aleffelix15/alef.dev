@@ -39,7 +39,7 @@ export const Contact: React.FC = () => {
             </span>
           </motion.div>
           
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1] flex flex-col items-center">
+          <h2 className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1] flex flex-col items-center text-center">
             <span className="overflow-hidden pb-1">
               <motion.span variants={itemVariant} className="inline-block">Vamos transformar uma</motion.span>
             </span>

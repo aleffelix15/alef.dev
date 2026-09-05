@@ -24,7 +24,7 @@ export const GeekFilmeDemo: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full min-h-[350px] max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
+    <div className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
       <motion.div initial={{ opacity: 0, y: -10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-b from-black/80 to-transparent absolute top-0 left-0 right-0 z-20">
         <div className="flex items-center gap-4">
           <span className="font-black text-[#E50914] text-[0.8rem] tracking-tighter">GEEKFILME</span>

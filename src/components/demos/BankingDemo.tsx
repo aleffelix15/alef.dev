@@ -29,7 +29,7 @@ export const BankingDemo: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-mono relative select-none">
+    <div className="w-full h-full min-h-[300px] md:min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-mono relative select-none">
       
       {/* Header Terminal */}
       <div className="flex items-center justify-between px-4 py-2 border-b border-[#1C1C20] bg-[#0A0A0C]">
