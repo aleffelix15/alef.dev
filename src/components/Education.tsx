@@ -73,10 +73,10 @@ export const Education: React.FC = () => {
               <div className="flex flex-col">
                 <motion.div variants={itemFade} className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm">
-                    2023 — Presente
+                    2027 — FUTURO
                   </span>
                   <span className="font-mono text-[0.65rem] text-[#0066FF] uppercase tracking-wider">
-                    Em andamento
+                    A iniciar
                   </span>
                 </motion.div>
                 
