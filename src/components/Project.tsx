@@ -2,13 +2,13 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, ExternalLink } from 'lucide-react';
 import { SITE_DATA } from '../data';
+import { DecodeDemo } from './demos/DecodeDemo';
+import { BankingDemo } from './demos/BankingDemo';
 
 export const Project: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
   
-  const decodeProject = SITE_DATA.projects.find(p => p.id === 'decode');
-
-  if (!decodeProject) return null;
+  const highlightedProjects = SITE_DATA.projects.filter(p => p.isHighlight);
 
   const fadeUpVariant = shouldReduceMotion 
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
@@ -37,100 +37,126 @@ export const Project: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* DESTAQUE PRINCIPAL: DECODE */}
-        <div className="mb-32">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            variants={fadeUpVariant}
-            className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center lg:items-start"
-          >
-            {/* Info Column */}
-            <div className="flex-1 w-full flex flex-col order-2 lg:order-1">
-              <span className="inline-flex font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#0066FF] border border-[#0066FF]/30 bg-[#0066FF]/10 px-3 py-1 rounded-full w-fit mb-6">
-                Projeto em Destaque
-              </span>
+        <div className="flex flex-col gap-32">
+          {highlightedProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-50px' }}
+              variants={fadeUpVariant}
+              className="flex flex-col gap-12"
+            >
               
-              <h3 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
-                {decodeProject.name}
-              </h3>
-              <p className="font-display text-xl sm:text-2xl text-[#4D94FF] mb-8 font-light">
-                {decodeProject.subtitle}
-              </p>
-
-              <div className="space-y-6">
-                <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-relaxed">
-                  {decodeProject.desc}
-                </p>
-                <div className="pt-4 border-t border-[#1C1C20]">
-                  <h4 className="text-[#E0E0E0] font-display text-base font-semibold mb-2">O Problema & A Solução</h4>
-                  <p className="font-body text-[1rem] text-[#71717A] leading-relaxed mb-4">
-                    {decodeProject.problem} {decodeProject.solution}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 flex flex-wrap gap-2">
-                {decodeProject.tech.map(tech => (
-                  <span 
-                    key={tech} 
-                    className="font-mono text-[0.75rem] text-[#A1A1AA] bg-[#0A0A0C] border border-[#2A2A30] px-3 py-1.5 rounded-md"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a 
-                  href={decodeProject.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative overflow-hidden inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-7 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
-                >
-                  <span>Acessar Projeto</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <a 
-                  href={decodeProject.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
-                >
-                  <Github className="w-4 h-4 text-[#9A9A9A]" />
-                  <span>Repositório</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Visual Column */}
-            <div className="flex-1 w-full order-1 lg:order-2">
-              <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-[#0A0A0C] border border-[#1C1C20]">
-                {/* Abstract geometric background elements */}
-                <div className="absolute top-10 left-10 w-64 h-64 bg-[#0066FF] rounded-full mix-blend-screen filter blur-[100px] opacity-20" />
+              <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
                 
-                {decodeProject.images && decodeProject.images.length > 0 && (
-                  <div className="absolute inset-0 flex flex-col justify-center gap-6 p-6 sm:p-12">
-                    <img 
-                      src={decodeProject.images[0]} 
-                      alt={`${decodeProject.name} Principal`}
-                      className="w-full rounded-xl border border-[#2A2A30] shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
-                    />
-                    {decodeProject.images[1] && (
-                      <img 
-                        src={decodeProject.images[1]} 
-                        alt={`${decodeProject.name} Secundária`}
-                        className="w-5/6 ml-auto rounded-xl border border-[#2A2A30] shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
-                      />
+                {/* Info Column */}
+                <div className="flex-1 w-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="inline-flex font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#0066FF] border border-[#0066FF]/30 bg-[#0066FF]/10 px-3 py-1 rounded-full w-fit">
+                      {project.category}
+                    </span>
+                  </div>
+                  
+                  <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                    {project.name}
+                  </h3>
+                  <p className="font-display text-lg sm:text-xl text-[#4D94FF] mb-8 font-light">
+                    {project.subtitle}
+                  </p>
+
+                  <div className="space-y-8">
+                    <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-relaxed">
+                      {project.desc}
+                    </p>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6 border-t border-[#1C1C20]">
+                      <div>
+                        <h4 className="text-[#E0E0E0] font-display text-sm font-bold uppercase tracking-wider mb-2">Por que criei</h4>
+                        <p className="font-body text-[0.9375rem] text-[#71717A] leading-relaxed">
+                          {project.whyCreated}
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="text-[#E0E0E0] font-display text-sm font-bold uppercase tracking-wider mb-2">Para que serve</h4>
+                        <p className="font-body text-[0.9375rem] text-[#71717A] leading-relaxed">
+                          {project.whatItIsFor}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-6 border-t border-[#1C1C20]">
+                      <h4 className="text-[#E0E0E0] font-display text-sm font-bold uppercase tracking-wider mb-2">O que desenvolvi</h4>
+                      <p className="font-body text-[0.9375rem] text-[#71717A] leading-relaxed mb-6">
+                        {project.whatIDeveloped}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((tech: string) => (
+                          <span 
+                            key={tech} 
+                            className="font-mono text-[0.7rem] text-[#A1A1AA] bg-[#0A0A0C] border border-[#2A2A30] px-3 py-1.5 rounded-md"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="pt-6 border-t border-[#1C1C20]">
+                      <h4 className="text-[#E0E0E0] font-display text-sm font-bold uppercase tracking-wider mb-2">Resultado</h4>
+                      <p className="font-body text-[0.9375rem] text-[#71717A] leading-relaxed">
+                        {project.results}
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <div className="mt-10 flex flex-wrap gap-4">
+                    {project.demoUrl && (
+                      <a 
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative overflow-hidden inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-7 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                      >
+                        <span>Ver Projeto</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a 
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                      >
+                        <Github className="w-4 h-4 text-[#9A9A9A]" />
+                        <span>Repositório</span>
+                      </a>
                     )}
                   </div>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        </div>
+                </div>
 
+                {/* Demo / Visual Column */}
+                <div className="flex-1 w-full flex flex-col justify-center">
+                  <div className="mb-4">
+                    <span className="font-mono text-[0.65rem] tracking-[0.1em] text-[#71717A] uppercase">
+                      / DEMONSTRAÇÃO
+                    </span>
+                  </div>
+                  {project.demoType === 'decode' && <DecodeDemo />}
+                  {project.demoType === 'banking' && <BankingDemo />}
+                </div>
+
+              </div>
+
+              {/* Divider between projects */}
+              {index !== highlightedProjects.length - 1 && (
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-[#1C1C20] to-transparent mt-16" />
+              )}
+            </motion.div>
+          ))}
+        </div>
 
       </div>
     </section>
