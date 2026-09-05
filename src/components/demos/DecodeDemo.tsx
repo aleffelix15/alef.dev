@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, RefreshCw, CheckCircle2, MessageSquare, Lightbulb } from 'lucide-react';
 
 export const DecodeDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  useEffect(() => {
+    if (step === 0 && !hasInteracted) {
+      const timer = setTimeout(() => {
+        handleChoice();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, hasInteracted]);
 
   const handleChoice = () => {
+    setHasInteracted(true);
     setStep(1); // Decisão
     setTimeout(() => setStep(2), 1200); // Consequência
-    setTimeout(() => setStep(3), 2800); // Aprendizado
+    setTimeout(() => setStep(3), 3500); // Aprendizado
   };
 
-  const reset = () => setStep(0);
+  const reset = () => {
+    setHasInteracted(false);
+    setStep(0);
+  };
 
   const stepsInfo = [
     { id: 0, label: 'Situação', icon: MessageSquare },

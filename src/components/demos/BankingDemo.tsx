@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Send, ShieldCheck, Database, Server, RefreshCw } from 'lucide-react';
 
 export const BankingDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2>(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
+
+  useEffect(() => {
+    if (step === 0 && !hasInteracted) {
+      const timer = setTimeout(() => {
+        handleRequest();
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [step, hasInteracted]);
 
   const handleRequest = () => {
+    setHasInteracted(true);
     setStep(1);
     setTimeout(() => {
       setStep(2);
     }, 2000); // tempo para ver a animação de processamento
   };
 
-  const reset = () => setStep(0);
+  const reset = () => {
+    setHasInteracted(false);
+    setStep(0);
+  };
 
   return (
     <div className="w-full h-full min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-mono relative select-none">

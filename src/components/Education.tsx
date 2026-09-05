@@ -1,23 +1,31 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import React from 'react';
+import { motion, useReducedMotion, Variants } from 'framer-motion';
 
 export const Education: React.FC = () => {
-  const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 80%", "end 50%"]
-  });
-  
-  const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const timelineContainerVariants = (shouldReduceMotion ? { hidden: {}, visible: {} } : {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.3, delayChildren: 0.2 } }
+  }) as Variants;
 
-  const fadeUpVariant = shouldReduceMotion 
-    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
-    : { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } } };
+  const lineVariants = (shouldReduceMotion ? { hidden: { height: '100%' }, visible: { height: '100%' } } : {
+    hidden: { height: '0%' },
+    visible: { height: '100%', transition: { duration: 0.8, ease: "easeInOut" } }
+  }) as Variants;
+
+  const itemFade = (shouldReduceMotion ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+  }) as Variants;
+
+  const dotVariants = (shouldReduceMotion ? { hidden: { opacity: 1, scale: 1 }, visible: { opacity: 1, scale: 1 } } : {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.4, type: "spring", stiffness: 200 } }
+  }) as Variants;
 
   return (
-    <section id="formacao" className="bg-[#050505] py-24 sm:py-32 border-t border-[#1C1C20]/50">
+    <section id="formacao" className="bg-[#050505] py-32 border-t border-[#1C1C20]/50">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           
@@ -25,72 +33,68 @@ export const Education: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
-            variants={fadeUpVariant}
-            className="mb-16"
+            variants={itemFade}
+            className="mb-20"
           >
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-4">
               <span className="text-[#0066FF]">·</span>
-              <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
+              <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
                 Educação
               </span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#F5F5F5] tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#F5F5F5] tracking-tight">
               Trajetória Acadêmica
             </h2>
           </motion.div>
 
-          <div
-            ref={ref}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={timelineContainerVariants}
             className="relative"
           >
-            {/* Linha base */}
-            <div className="absolute left-[7px] md:left-[23px] top-2 bottom-0 w-[1px] bg-[#1C1C20]" />
+            {/* Linha base fixa transparente */}
+            <div className="absolute left-[7px] md:left-[23px] top-2 bottom-0 w-[1px] bg-[#1C1C20]/30" />
             
             {/* Linha animada */}
-            {!shouldReduceMotion && (
-              <motion.div 
-                style={{ height }}
-                className="absolute left-[7px] md:left-[23px] top-2 w-[1px] bg-gradient-to-b from-[#0066FF] to-transparent origin-top" 
-              />
-            )}
+            <motion.div 
+              variants={lineVariants}
+              className="absolute left-[7px] md:left-[23px] top-2 w-[1px] bg-gradient-to-b from-[#0066FF] to-transparent origin-top z-0" 
+            />
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={fadeUpVariant}
-              className="relative pl-10 md:pl-16 pb-0 group"
-            >
+            <div className="relative pl-10 md:pl-16 pb-0 group">
               {/* Ponto / Nó */}
-              <div
-                className="absolute left-[4px] md:left-[20px] top-1.5 w-2 h-2 rounded-full border border-[#0066FF] bg-[#0066FF] shadow-[0_0_12px_rgba(0,102,255,0.6)] group-hover:scale-150 transition-transform duration-300"
+              <motion.div
+                variants={dotVariants}
+                className="absolute left-[4px] md:left-[20px] top-1.5 w-2 h-2 rounded-full border border-[#0066FF] bg-[#0066FF] shadow-[0_0_12px_rgba(0,102,255,0.6)] group-hover:scale-150 transition-transform duration-300 z-10"
               />
 
               <div className="flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
+                <motion.div variants={itemFade} className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm">
                     2023 — Presente
                   </span>
                   <span className="font-mono text-[0.65rem] text-[#0066FF] uppercase tracking-wider">
                     Em andamento
                   </span>
-                </div>
+                </motion.div>
                 
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                <motion.h3 variants={itemFade} className="font-display text-3xl md:text-4xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
                   Bacharelado em Engenharia de Software
-                </h3>
+                </motion.h3>
                 
-                <h4 className="font-display text-[1rem] text-[#71717A] mb-6 flex items-center gap-2">
+                <motion.h4 variants={itemFade} className="font-display text-[1.125rem] text-[#71717A] mb-8 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#3F3F46]" />
                   UniAlfa
-                </h4>
+                </motion.h4>
                 
-                <p className="font-body text-[1rem] text-[#9A9A9A] leading-relaxed max-w-2xl bg-[#0A0A0C] border border-[#1C1C20] p-6 rounded-xl group-hover:border-[#3F3F46] transition-colors">
+                <motion.p variants={itemFade} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8] max-w-2xl bg-[#0A0A0C] border border-[#1C1C20] p-7 rounded-xl group-hover:border-[#3F3F46] transition-colors shadow-sm">
                   Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, com forte foco em arquitetura de software escalável, segurança de dados e experiência do usuário (UX/UI).
-                </p>
+                </motion.p>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

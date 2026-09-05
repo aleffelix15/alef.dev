@@ -55,23 +55,53 @@ export const Hero: React.FC = () => {
           </motion.div>
 
           {/* Nome e Especialidade */}
-          <motion.div
-            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
-              hidden: { opacity: 0, y: 20, filter: 'blur(8px)' },
-              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.25, 0.1, 0.25, 1] } }
-            }}
-            className="flex flex-col items-center gap-4 mb-8 w-full"
-          >
-            <p className="font-mono text-[0.8125rem] md:text-sm text-[#0066FF] tracking-wide uppercase">
+          <div className="flex flex-col items-center gap-4 mb-8 w-full">
+            <motion.p
+              variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+                hidden: { opacity: 0, y: 10, filter: 'blur(4px)' },
+                visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8 } }
+              }}
+              className="font-mono text-[0.8125rem] md:text-sm text-[#0066FF] tracking-wide uppercase"
+            >
               Olá, eu sou {SITE_DATA.profile.name}
-            </p>
+            </motion.p>
             
-            <h2 className="font-display font-black text-[#F5F5F5] text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.05] tracking-tighter uppercase w-full">
-              <span className="text-white drop-shadow-sm">Desenvolvedor</span> <span className="text-[#3F3F46] font-light tracking-normal">&</span> <br />
-              <span className="text-[#E0E0E0]">Estudante de</span> <br />
-              <span className="text-[#A1A1AA]">Engenharia de Software</span>
+            <h2 className="font-display font-black text-[#F5F5F5] text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.05] tracking-tighter uppercase w-full flex flex-col items-center">
+              <span className="overflow-hidden pb-1">
+                <motion.span 
+                  variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+                    hidden: { opacity: 0, y: '100%' },
+                    visible: { opacity: 1, y: '0%', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-b from-white to-[#A1A1AA] relative"
+                >
+                  Desenvolvedor <span className="text-[#3F3F46] font-light tracking-normal">&</span>
+                </motion.span>
+              </span>
+              <span className="overflow-hidden pb-1">
+                <motion.span 
+                  variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+                    hidden: { opacity: 0, y: '100%' },
+                    visible: { opacity: 1, y: '0%', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="inline-block text-[#E0E0E0]"
+                >
+                  Estudante de
+                </motion.span>
+              </span>
+              <span className="overflow-hidden pb-1">
+                <motion.span 
+                  variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
+                    hidden: { opacity: 0, y: '100%' },
+                    visible: { opacity: 1, y: '0%', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+                  }}
+                  className="inline-block text-[#A1A1AA] relative after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/10 after:to-transparent after:-translate-x-full hover:after:animate-[shimmer_2s_infinite] after:pointer-events-none"
+                >
+                  Engenharia de Software
+                </motion.span>
+              </span>
             </h2>
-          </motion.div>
+          </div>
 
           {/* Proposta Principal */}
           <motion.h1
@@ -142,6 +172,11 @@ export const Hero: React.FC = () => {
           50% {
             transform: scale(1.5);
             opacity: 0.4;
+          }
+        }
+        @keyframes shimmer {
+          100% {
+            transform: translateX(100%);
           }
         }
       `}</style>

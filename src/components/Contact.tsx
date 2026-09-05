@@ -1,14 +1,20 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
 import { SITE_DATA } from '../data';
 
 export const Contact: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
 
-  const fadeUpVariant = shouldReduceMotion 
-    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
-    : { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] } } };
+  const containerVariant = (shouldReduceMotion ? {} : {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+  }) as Variants;
+
+  const itemVariant = (shouldReduceMotion ? { hidden: { opacity: 1 }, visible: { opacity: 1 } } : {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+  }) as Variants;
 
   return (
     <section id="contato" className="bg-[#050505] py-32 border-t border-[#1C1C20]/50 relative overflow-hidden">
@@ -23,36 +29,41 @@ export const Contact: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
-          variants={fadeUpVariant}
+          variants={containerVariant}
           className="max-w-2xl mx-auto text-center"
         >
-          <div className="flex items-center justify-center gap-2 mb-6">
+          <motion.div variants={itemVariant} className="flex items-center justify-center gap-2 mb-6">
             <span className="text-[#0066FF]">·</span>
-            <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
+            <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
               Próximos Passos
             </span>
-          </div>
+          </motion.div>
           
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1]">
-            Vamos transformar uma <br className="hidden sm:block" />ideia em projeto?
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1] flex flex-col items-center">
+            <span className="overflow-hidden pb-1">
+              <motion.span variants={itemVariant} className="inline-block">Vamos transformar uma</motion.span>
+            </span>
+            <span className="overflow-hidden pb-1">
+              <motion.span variants={itemVariant} className="inline-block">ideia em projeto?</motion.span>
+            </span>
           </h2>
           
-          <p className="font-body text-[1.0625rem] sm:text-[1.125rem] text-[#9A9A9A] leading-relaxed mb-12 max-w-lg mx-auto">
+          <motion.p variants={itemVariant} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8] mb-12 max-w-lg mx-auto">
             Estou sempre aberto a novos desafios e conversas interessantes sobre tecnologia e desenvolvimento de produtos.
-          </p>
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a 
               href={`mailto:${SITE_DATA.profile.email}`}
-              className="group relative overflow-hidden flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#050505] font-body text-[0.9375rem] font-semibold px-8 py-4 rounded-lg transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
+              className="group relative overflow-hidden flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-[#050505] font-body text-[0.9375rem] font-semibold px-8 py-4 rounded-lg transition-all hover:-translate-y-1 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto"
             >
               <Mail className="w-4 h-4" />
               <span>Enviar e-mail</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
-          </div>
+          </motion.div>
 
-          <div className="mt-16 flex items-center justify-center gap-6">
+          <motion.div variants={itemVariant} className="mt-16 flex items-center justify-center gap-6">
             <a 
               href={SITE_DATA.profile.github} 
               target="_blank" 
@@ -72,7 +83,7 @@ export const Contact: React.FC = () => {
             >
               <Linkedin className="w-6 h-6" />
             </a>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

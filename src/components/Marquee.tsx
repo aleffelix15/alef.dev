@@ -15,7 +15,7 @@ export const Marquee: React.FC = () => {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 35,
+              duration: 80,
               ease: "linear",
             },
           }}
