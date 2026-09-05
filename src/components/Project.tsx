@@ -1,145 +1,197 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Github } from 'lucide-react';
+import { Github, ExternalLink } from 'lucide-react';
 import { SITE_DATA } from '../data';
 
 export const Project: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
-  const decode = SITE_DATA.projects.find(p => p.id === 'decode');
+  
+  const decodeProject = SITE_DATA.projects.find(p => p.id === 'decode');
+  const otherProjects = SITE_DATA.projects.filter(p => p.id !== 'decode');
 
-  if (!decode) return null;
+  if (!decodeProject) return null;
 
-  const animationProps = shouldReduceMotion 
-    ? { initial: { opacity: 1 }, whileInView: { opacity: 1 }, transition: { duration: 0 } }
-    : { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true, margin: '-50px' } };
+  const fadeUpVariant = shouldReduceMotion 
+    ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
+    : { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] } } };
 
   return (
-    <section id="projeto" className="bg-[#050505] py-24 overflow-hidden">
+    <section id="projeto" className="bg-[#050505] py-32 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
+        
+        {/* HEADER */}
         <motion.div
-          {...animationProps}
-          className="mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={fadeUpVariant}
+          className="mb-20 text-center md:text-left"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
             <span className="text-[#0066FF]">·</span>
             <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Projeto em Destaque
+              Portfólio
             </span>
+          </div>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] tracking-tight">
+            Projetos & Construções
+          </h2>
+        </motion.div>
+
+        {/* DESTAQUE PRINCIPAL: DECODE */}
+        <div className="mb-32">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={fadeUpVariant}
+            className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center lg:items-start"
+          >
+            {/* Info Column */}
+            <div className="flex-1 w-full flex flex-col order-2 lg:order-1">
+              <span className="inline-flex font-mono text-[0.65rem] tracking-[0.15em] uppercase text-[#0066FF] border border-[#0066FF]/30 bg-[#0066FF]/10 px-3 py-1 rounded-full w-fit mb-6">
+                Projeto em Destaque
+              </span>
+              
+              <h3 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                {decodeProject.name}
+              </h3>
+              <p className="font-display text-xl sm:text-2xl text-[#4D94FF] mb-8 font-light">
+                {decodeProject.subtitle}
+              </p>
+
+              <div className="space-y-6">
+                <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-relaxed">
+                  {decodeProject.desc}
+                </p>
+                <div className="pt-4 border-t border-[#1C1C20]">
+                  <h4 className="text-[#E0E0E0] font-display text-base font-semibold mb-2">O Problema & A Solução</h4>
+                  <p className="font-body text-[1rem] text-[#71717A] leading-relaxed mb-4">
+                    {decodeProject.problem} {decodeProject.solution}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                {decodeProject.tech.map(tech => (
+                  <span 
+                    key={tech} 
+                    className="font-mono text-[0.75rem] text-[#A1A1AA] bg-[#0A0A0C] border border-[#2A2A30] px-3 py-1.5 rounded-md"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a 
+                  href={decodeProject.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative overflow-hidden inline-flex items-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-7 py-3.5 rounded-lg transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                >
+                  <span>Acessar Projeto</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+                <a 
+                  href={decodeProject.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-transparent border border-[#2A2A30] hover:border-[#4D4D55] hover:bg-[#0D0D0F] text-[#F5F5F5] font-body text-[0.9375rem] font-medium px-7 py-3.5 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4D4D55] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                >
+                  <Github className="w-4 h-4 text-[#9A9A9A]" />
+                  <span>Repositório</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Visual Column */}
+            <div className="flex-1 w-full order-1 lg:order-2">
+              <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-[#0A0A0C] border border-[#1C1C20]">
+                {/* Abstract geometric background elements */}
+                <div className="absolute top-10 left-10 w-64 h-64 bg-[#0066FF] rounded-full mix-blend-screen filter blur-[100px] opacity-20" />
+                
+                {decodeProject.images && decodeProject.images.length > 0 && (
+                  <div className="absolute inset-0 flex flex-col justify-center gap-6 p-6 sm:p-12">
+                    <img 
+                      src={decodeProject.images[0]} 
+                      alt={`${decodeProject.name} Principal`}
+                      className="w-full rounded-xl border border-[#2A2A30] shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+                    />
+                    {decodeProject.images[1] && (
+                      <img 
+                        src={decodeProject.images[1]} 
+                        alt={`${decodeProject.name} Secundária`}
+                        className="w-5/6 ml-auto rounded-xl border border-[#2A2A30] shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* OUTROS PROJETOS (GRID) */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={shouldReduceMotion ? { hidden: {}, visible: {} } : {
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.15 }
+            }
+          }}
+        >
+          <div className="flex items-center gap-4 mb-10">
+            <h3 className="font-display text-2xl font-bold text-[#F5F5F5]">
+              Outras Construções
+            </h3>
+            <div className="flex-1 h-px bg-[#1C1C20]" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {otherProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                variants={fadeUpVariant}
+                className="group flex flex-col justify-between bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#2E2E38] rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:bg-[#0D0D0F]"
+              >
+                <div>
+                  <div className="flex items-start justify-between mb-4">
+                    <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-[#71717A] border border-[#2A2A30] px-2.5 py-1 rounded-md">
+                      {project.category}
+                    </span>
+                    {project.status && (
+                      <span className="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase text-[#A1A1AA]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF] animate-pulse" />
+                        {project.status}
+                      </span>
+                    )}
+                  </div>
+
+                  <h4 className="font-display text-xl font-bold text-[#F5F5F5] mb-3 group-hover:text-[#0066FF] transition-colors">
+                    {project.name}
+                  </h4>
+                  <p className="font-body text-sm sm:text-[0.9375rem] text-[#9A9A9A] leading-relaxed mb-8 line-clamp-3">
+                    {project.desc}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {project.tech.map(t => (
+                    <span key={t} className="font-mono text-[0.7rem] text-[#71717A] bg-[#050505] border border-[#1C1C20] px-2 py-1 rounded">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
-          {/* Info Column */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }}
-            className="flex-1 w-full"
-          >
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#F5F5F5] mb-2">
-              {decode.name}
-            </h2>
-            <p className="font-display text-xl text-[#4D94FF] italic mb-8">
-              {decode.subtitle}
-            </p>
-
-            <div className="space-y-8">
-              <div>
-                <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7]">
-                  {decode.desc}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-[#F5F5F5] font-display text-lg font-semibold mb-2">O Problema</h3>
-                <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7]">
-                  {decode.problem}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-[#F5F5F5] font-display text-lg font-semibold mb-2">A Solução</h3>
-                <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7]">
-                  {decode.solution}
-                </p>
-              </div>
-
-              {decode.results && (
-                <div>
-                  <h3 className="text-[#F5F5F5] font-display text-lg font-semibold mb-2">Impacto</h3>
-                  <p className="font-body text-[1.0625rem] text-[#9A9A9A] leading-[1.7]">
-                    {decode.results}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-2">
-              {decode.tech.map(tech => (
-                <span 
-                  key={tech} 
-                  className="font-mono text-[0.8125rem] text-[#E0E0E0] bg-[#1C1C20] border border-[#2E2E38] px-3 py-1.5 rounded-md shadow-sm"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a 
-                href={decode.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative overflow-hidden inline-flex items-center gap-2 bg-[#0066FF] hover:bg-[#1A75FF] text-white font-body text-[0.9375rem] font-medium px-6 py-3 rounded-lg transition-all duration-300 group"
-              >
-                <span className="relative z-10">Acessar Projeto</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
-              </a>
-              
-              <a 
-                href={decode.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-transparent border border-[#2E2E38] hover:border-[#4D94FF] hover:text-white text-[#9A9A9A] font-body text-[0.9375rem] font-medium px-6 py-3 rounded-lg transition-all duration-300"
-              >
-                <Github className="w-4 h-4" />
-                <span>Repositório</span>
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Image/Visual Column */}
-          <motion.div 
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 0.97, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            className="flex-1 w-full flex flex-col gap-8 lg:mt-8"
-          >
-            {decode.images && decode.images.map((img, index) => (
-              <div 
-                key={index}
-                className="group rounded-xl border border-[#1C1C20] overflow-hidden bg-[#09090D] shadow-xl relative select-none"
-              >
-                {/* Safari style header for mockup feeling */}
-                <div className="relative z-10 flex items-center gap-1.5 border-b border-[#1C1C24] px-4 py-3 bg-[#0D0D11]/90 backdrop-blur-md">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/50" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/50" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/50" />
-                </div>
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#050505]">
-                  <img 
-                    src={img} 
-                    alt={`Screenshot ${index + 1}`} 
-                    className="w-full h-full object-cover object-top opacity-90 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-100"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
       </div>
     </section>
   );

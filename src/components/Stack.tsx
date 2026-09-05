@@ -14,14 +14,15 @@ export const Stack: React.FC = () => {
     : { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } } };
 
   return (
-    <section id="stack" className="bg-[#050505] py-24">
+    <section id="stack" className="bg-[#050505] py-24 sm:py-32">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
+        
         <motion.div
           initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.5 }}
-          className="mb-12 sm:mb-16"
+          className="mb-16"
         >
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[#0066FF]">·</span>
@@ -29,8 +30,8 @@ export const Stack: React.FC = () => {
               Tecnologias
             </span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] leading-tight">
-            O ecossistema que utilizo
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#F5F5F5] tracking-tight">
+            Meu Ecossistema
           </h2>
         </motion.div>
 
@@ -39,25 +40,27 @@ export const Stack: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {SITE_DATA.stackCategories.map((category, index) => (
             <motion.div 
               key={index} 
               variants={itemVariants}
-              className="bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#2A2A30] p-6 sm:p-8 rounded-2xl transition-colors duration-300"
+              className="flex flex-col"
             >
-              <h3 className="font-display text-xl sm:text-2xl font-bold text-[#F5F5F5] mb-6">
-                {category.name}
-              </h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="pb-4 mb-4 border-b border-[#1C1C20]">
+                <h3 className="font-display text-lg font-semibold text-[#E0E0E0]">
+                  {category.name}
+                </h3>
+              </div>
+              <div className="flex flex-col gap-2.5">
                 {category.techs.map((tech, techIndex) => (
                   <div
                     key={techIndex}
-                    className="flex items-center gap-2.5 bg-[#0D0D0F] border border-[#1C1C20] rounded-xl px-4 py-2.5 shadow-sm"
+                    className="group flex items-center gap-3 transition-colors"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
-                    <span className="font-body text-[0.875rem] font-medium text-[#E0E0E0]">
+                    <div className="w-1 h-1 rounded-full bg-[#2A2A30] group-hover:bg-[#0066FF] transition-colors" />
+                    <span className="font-body text-[0.9375rem] text-[#9A9A9A] group-hover:text-[#F5F5F5] transition-colors">
                       {tech}
                     </span>
                   </div>
@@ -66,6 +69,7 @@ export const Stack: React.FC = () => {
             </motion.div>
           ))}
         </motion.div>
+
       </div>
     </section>
   );
