@@ -7,7 +7,6 @@ export const Project: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
   
   const decodeProject = SITE_DATA.projects.find(p => p.id === 'decode');
-  const otherProjects = SITE_DATA.projects.filter(p => p.id !== 'decode');
 
   if (!decodeProject) return null;
 
@@ -132,65 +131,6 @@ export const Project: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* OUTROS PROJETOS (GRID) */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={shouldReduceMotion ? { hidden: {}, visible: {} } : {
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.15 }
-            }
-          }}
-        >
-          <div className="flex items-center gap-4 mb-10">
-            <h3 className="font-display text-2xl font-bold text-[#F5F5F5]">
-              Outras Construções
-            </h3>
-            <div className="flex-1 h-px bg-[#1C1C20]" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {otherProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                variants={fadeUpVariant}
-                className="group flex flex-col justify-between bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#2E2E38] rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:bg-[#0D0D0F]"
-              >
-                <div>
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-[#71717A] border border-[#2A2A30] px-2.5 py-1 rounded-md">
-                      {project.category}
-                    </span>
-                    {project.status && (
-                      <span className="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase text-[#A1A1AA]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF] animate-pulse" />
-                        {project.status}
-                      </span>
-                    )}
-                  </div>
-
-                  <h4 className="font-display text-xl font-bold text-[#F5F5F5] mb-3 group-hover:text-[#0066FF] transition-colors">
-                    {project.name}
-                  </h4>
-                  <p className="font-body text-sm sm:text-[0.9375rem] text-[#9A9A9A] leading-relaxed mb-8 line-clamp-3">
-                    {project.desc}
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.tech.map(t => (
-                    <span key={t} className="font-mono text-[0.7rem] text-[#71717A] bg-[#050505] border border-[#1C1C20] px-2 py-1 rounded">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
 
       </div>
     </section>
