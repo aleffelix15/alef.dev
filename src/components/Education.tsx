@@ -67,20 +67,26 @@ export const Education: React.FC = () => {
               />
 
               <div className="flex flex-col">
-                <span className="font-mono text-[0.65rem] font-semibold text-[#0066FF] uppercase tracking-wider bg-[#0066FF]/10 border border-[#0066FF]/20 px-2.5 py-1 rounded w-fit mb-4">
-                  Em andamento
-                </span>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm">
+                    2023 — Presente
+                  </span>
+                  <span className="font-mono text-[0.65rem] text-[#0066FF] uppercase tracking-wider">
+                    Em andamento
+                  </span>
+                </div>
                 
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F5] mb-1">
-                  Engenharia de Software
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                  Bacharelado em Engenharia de Software
                 </h3>
                 
-                <h4 className="font-display text-lg text-[#71717A] mb-6">
+                <h4 className="font-display text-[1rem] text-[#71717A] mb-6 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#3F3F46]" />
                   UniAlfa
                 </h4>
                 
-                <p className="font-body text-[0.9375rem] sm:text-base text-[#9A9A9A] leading-relaxed max-w-2xl bg-[#0A0A0C] border border-[#1C1C20] p-6 rounded-2xl group-hover:border-[#2A2A30] transition-colors">
-                  Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, focando em arquitetura escalável e design focado no usuário.
+                <p className="font-body text-[1rem] text-[#9A9A9A] leading-relaxed max-w-2xl bg-[#0A0A0C] border border-[#1C1C20] p-6 rounded-xl group-hover:border-[#3F3F46] transition-colors">
+                  Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, com forte foco em arquitetura de software escalável, segurança de dados e experiência do usuário (UX/UI).
                 </p>
               </div>
             </motion.div>

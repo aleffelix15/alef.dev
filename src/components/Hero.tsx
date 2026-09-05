@@ -52,16 +52,16 @@ export const Hero: React.FC = () => {
             initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.1, duration: 0.8 }}
-            className="flex flex-col items-center gap-2 mb-6"
+            className="flex flex-col items-center gap-4 mb-8 w-full"
           >
-            <p className="font-mono text-sm sm:text-base text-[#0066FF] mb-2">
+            <p className="font-mono text-[0.8125rem] md:text-sm text-[#0066FF] tracking-wide uppercase">
               Olá, eu sou {SITE_DATA.profile.name}
             </p>
             
-            <h2 className="font-display font-bold text-[#F5F5F5] text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-tight uppercase">
-              Desenvolvedor <span className="text-[#4D4D55] font-light">&</span> <br />
-              Estudante de <br />
-              Engenharia de Software
+            <h2 className="font-display font-black text-[#F5F5F5] text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.05] tracking-tighter uppercase w-full">
+              <span className="text-white drop-shadow-sm">Desenvolvedor</span> <span className="text-[#3F3F46] font-light tracking-normal">&</span> <br />
+              <span className="text-[#E0E0E0]">Estudante de</span> <br />
+              <span className="text-[#A1A1AA]">Engenharia de Software</span>
             </h2>
           </motion.div>
 
@@ -70,9 +70,9 @@ export const Hero: React.FC = () => {
             initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={shouldReduceMotion ? { duration: 0 } : { delay: 0.2, duration: 0.8 }}
-            className="font-display font-medium text-[#A1A1AA] text-[clamp(1.25rem,2.5vw,1.5rem)] leading-snug tracking-tight mb-8"
+            className="font-body font-medium text-[#71717A] text-[clamp(1.125rem,2vw,1.375rem)] leading-snug tracking-tight mb-10 max-w-2xl"
           >
-            Transformando ideias em soluções digitais.
+            Transformando ideias em soluções digitais confiáveis.
           </motion.h1>
 
           {/* Descrição Longa */}

@@ -33,12 +33,12 @@ export const Contact: React.FC = () => {
             </span>
           </div>
           
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#F5F5F5] mb-8 tracking-tight">
-            Vamos transformar uma ideia em projeto?
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1]">
+            Vamos transformar uma <br className="hidden sm:block" />ideia em projeto?
           </h2>
           
-          <p className="font-body text-[1.0625rem] sm:text-lg text-[#9A9A9A] leading-relaxed mb-12 max-w-lg mx-auto">
-            Estou sempre aberto a novas oportunidades e conversas interessantes. Sinta-se à vontade para entrar em contato.
+          <p className="font-body text-[1.0625rem] sm:text-[1.125rem] text-[#9A9A9A] leading-relaxed mb-12 max-w-lg mx-auto">
+            Estou sempre aberto a novos desafios e conversas interessantes sobre tecnologia e desenvolvimento de produtos.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

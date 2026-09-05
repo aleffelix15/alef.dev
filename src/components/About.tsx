@@ -50,23 +50,24 @@ export const About: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-            className="grid grid-cols-2 gap-4"
+            className="grid grid-cols-2 gap-3"
           >
             {SITE_DATA.stats.map((stat, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-[#0D0D0F] border border-[#1C1C20] rounded-xl p-5 sm:p-6 transition-colors duration-300 hover:border-[#2E2E38] hover:bg-[#111114]"
+                className="group relative overflow-hidden bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-6 transition-all duration-300 hover:border-[#3F3F46] hover:bg-[#0D0D0F]"
               >
-                <div className="font-display text-2xl font-bold text-[#F5F5F5]">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0066FF]/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <span className="block font-mono text-[0.65rem] tracking-[0.15em] text-[#71717A] uppercase mb-2">
+                  {stat.label}
+                </span>
+                <div className="font-display text-xl sm:text-2xl font-semibold text-[#E0E0E0] group-hover:text-[#F5F5F5] transition-colors relative z-10">
                   {stat.isNumber && !shouldReduceMotion ? (
                     <Counter from={0} to={stat.value as number} duration={2} suffix={stat.prefix} />
                   ) : (
                     <>{stat.prefix}{stat.value}</>
                   )}
-                </div>
-                <div className="font-body text-[0.8125rem] font-medium text-[#71717A] mt-1">
-                  {stat.label}
                 </div>
               </motion.div>
             ))}
