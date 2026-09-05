@@ -2,24 +2,39 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, User, ShoppingCart, ArrowRight, Heart, ShoppingBag, X } from 'lucide-react';
 
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  price: string;
+  tag: string;
+  image: string;
+};
+
+const products: Product[] = [
+  { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
+  { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
+  { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
+  { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.jpg" },
+];
+
 export const VerticeDemo: React.FC = () => {
   const [cartCount, setCartCount] = useState(0);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('Novidades');
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCartCount(prev => prev + 1);
   };
 
-  const products = [
-    { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
-    { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
-    { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
-    { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.jpg" },
-  ];
+  const toggleFavorite = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setFavorites(prev => prev.includes(id) ? prev.filter(fId => fId !== id) : [...prev, id]);
+  };
 
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
@@ -159,8 +174,12 @@ export const VerticeDemo: React.FC = () => {
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <button className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all">
-                        <Heart className="w-3 h-3" />
+                      <button 
+                        onClick={(e) => toggleFavorite(e, product.id)}
+                        className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
+                        aria-label="Favoritar"
+                      >
+                        <Heart className={`w-3 h-3 ${favorites.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} />
                       </button>
                       <AnimatePresence>
                         {hoveredProduct === product.id && (

@@ -146,9 +146,12 @@ export const GeekFilmeDemo: React.FC = () => {
                  </div>
               </div>
               <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
-                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div initial={{ width: '0%' }} animate={{ width: '10%' }} transition={{ duration: 2, ease: 'linear' }} className="h-full bg-[#E50914]" /></div>
+                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div initial={{ width: '0%' }} animate={{ width: '30%' }} transition={{ duration: 10, ease: 'linear' }} className="h-full bg-[#E50914]" /></div>
                  <div className="flex items-center gap-3">
-                   <Pause className="w-3.5 h-3.5 text-white fill-white cursor-pointer hover:text-gray-300" onClick={() => setIsPlaying(false)} />
+                   <button aria-label="Voltar" onClick={() => setIsPlaying(false)} className="hover:bg-white/20 p-1 rounded transition-colors focus:outline-none">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m15 18-6-6 6-6"/></svg>
+                   </button>
+                   <Pause className="w-3.5 h-3.5 text-white fill-white cursor-pointer hover:text-gray-300" />
                    <span className="text-white font-bold text-[0.65rem]">{activeMovie.title}</span>
                  </div>
               </div>

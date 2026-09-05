@@ -1,30 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Send, ShieldCheck, Database, Server, RefreshCw } from 'lucide-react';
 
 export const BankingDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2>(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  useEffect(() => {
-    if (step === 0 && !hasInteracted) {
-      const timer = setTimeout(() => {
-        handleRequest();
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [step, hasInteracted]);
-
   const handleRequest = () => {
-    setHasInteracted(true);
     setStep(1);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setStep(2);
     }, 2000); // tempo para ver a animação de processamento
+    return () => clearTimeout(timer);
   };
 
   const reset = () => {
-    setHasInteracted(false);
     setStep(0);
   };
 
@@ -154,6 +142,10 @@ export const BankingDemo: React.FC = () => {
                     </div>
                   </div>
                   <span className="text-[#4D94FF]">{"}"}</span>
+                  
+                  <button onClick={reset} className="mt-4 bg-[#1C1C20] hover:bg-[#2A2A30] text-[#E0E0E0] text-xs font-semibold py-2 px-3 rounded flex items-center gap-2 transition-colors">
+                    <RefreshCw className="w-3.5 h-3.5" /> Nova requisição
+                  </button>
                 </motion.div>
                 
                 {/* Blinking cursor */}

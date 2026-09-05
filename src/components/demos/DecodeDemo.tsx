@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldAlert, RefreshCw, CheckCircle2, MessageSquare, Lightbulb } from 'lucide-react';
+import { ShieldAlert, RefreshCw, CheckCircle2, MessageSquare, Lightbulb, ArrowRight } from 'lucide-react';
 
 export const DecodeDemo: React.FC = () => {
   const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [choice, setChoice] = useState<1 | 2 | null>(null);
 
-  useEffect(() => {
-    if (step === 0 && !hasInteracted) {
-      const timer = setTimeout(() => {
-        handleChoice();
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [step, hasInteracted]);
-
-  const handleChoice = () => {
-    setHasInteracted(true);
+  const handleChoice = (selectedChoice: 1 | 2) => {
+    setChoice(selectedChoice);
     setStep(1); // Decisão
-    setTimeout(() => setStep(2), 1200); // Consequência
-    setTimeout(() => setStep(3), 3500); // Aprendizado
+    
+    // Pequeno tempo apenas para a animação de "processando"
+    const timer = setTimeout(() => {
+      setStep(2); // Consequência
+    }, 1500);
+    
+    return () => clearTimeout(timer);
+  };
+
+  const handleNext = () => {
+    setStep(3); // Aprendizado
   };
 
   const reset = () => {
-    setHasInteracted(false);
+    setChoice(null);
     setStep(0);
   };
 
@@ -44,7 +44,7 @@ export const DecodeDemo: React.FC = () => {
             <span className="text-[#F5F5F5] font-display font-semibold text-sm">Simulador DECODE</span>
           </div>
           {step === 3 && (
-            <button onClick={reset} className="text-[#71717A] hover:text-[#F5F5F5] transition-colors">
+            <button aria-label="Reiniciar simulador" onClick={reset} className="text-[#71717A] hover:text-[#F5F5F5] transition-colors focus:outline-none focus:ring-2 focus:ring-[#FF3B30] rounded">
               <RefreshCw className="w-4 h-4" />
             </button>
           )}
@@ -97,10 +97,10 @@ export const DecodeDemo: React.FC = () => {
 
               <div className="mt-auto flex flex-col gap-2">
                 <p className="text-[#71717A] text-[0.65rem] tracking-wider font-mono uppercase mb-1">Qual a sua reação?</p>
-                <button onClick={handleChoice} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99]">
+                <button aria-label="Escolher concordar com a frase" onClick={() => handleChoice(1)} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
                   "Verdade, melhor trocar pra evitar problema."
                 </button>
-                <button onClick={handleChoice} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99]">
+                <button aria-label="Escolher discordar da frase" onClick={() => handleChoice(2)} className="w-full text-left p-3.5 rounded-lg bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#FF3B30]/50 hover:bg-[#FF3B30]/5 transition-all text-sm text-[#A1A1AA] hover:text-[#F5F5F5] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
                   "Minha roupa não justifica a atitude dos outros."
                 </button>
               </div>
@@ -118,7 +118,7 @@ export const DecodeDemo: React.FC = () => {
             >
               <motion.div 
                 animate={{ rotate: 360 }} 
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                 className="w-8 h-8 rounded-full border-2 border-[#1C1C20] border-t-[#FF3B30] mb-4"
               />
               <p className="text-[#71717A] font-mono text-xs uppercase tracking-widest animate-pulse">
@@ -140,11 +140,17 @@ export const DecodeDemo: React.FC = () => {
                 <ShieldAlert className="w-7 h-7 text-[#FF3B30]" />
               </div>
               <h4 className="text-[#F5F5F5] font-display font-bold text-xl mb-2">
-                Red Flag Detectada
+                {choice === 1 ? 'Ciclo de Controle Iniciado' : 'Conflito Iminente'}
               </h4>
-              <p className="text-[#9A9A9A] text-[0.9375rem] leading-relaxed">
-                Controle disfarçado de cuidado.
+              <p className="text-[#9A9A9A] text-[0.9375rem] leading-relaxed mb-6">
+                {choice === 1 
+                  ? 'Ceder a pequenos controles abre espaço para perdas de autonomia maiores no futuro.' 
+                  : 'Estabelecer limites pode gerar uma reação agressiva quando o controle é contrariado.'}
               </p>
+              
+              <button aria-label="Ver insight" onClick={handleNext} className="mt-auto bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30]/20 font-semibold text-xs py-2 px-4 rounded transition-colors flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                Avançar para Insight <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </motion.div>
           )}
 
@@ -163,9 +169,14 @@ export const DecodeDemo: React.FC = () => {
                 Restringir vestimentas não é sinal de proteção, é uma tentativa de limitar autonomia e isolar a vítima. Reconhecer esse padrão é o primeiro passo para quebrar o ciclo.
               </p>
               
-              <div className="w-full bg-[#0A0A0C] border border-[#1C1C20] rounded-lg p-3 text-left flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00C853] animate-pulse" />
-                <span className="font-mono text-[0.65rem] text-[#71717A] uppercase tracking-wider">Módulo 1 Concluído</span>
+              <div className="w-full bg-[#0A0A0C] border border-[#1C1C20] rounded-lg p-3 text-left flex items-center justify-between gap-2 mt-auto">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C853] animate-pulse" />
+                  <span className="font-mono text-[0.65rem] text-[#71717A] uppercase tracking-wider">Simulação Concluída</span>
+                </div>
+                <button aria-label="Jogar novamente" onClick={reset} className="text-[0.65rem] font-bold text-[#F5F5F5] hover:text-[#00C853] transition-colors focus:outline-none underline">
+                  Reiniciar
+                </button>
               </div>
             </motion.div>
           )}
