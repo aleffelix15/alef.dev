@@ -4,6 +4,7 @@ import { Github, ExternalLink } from 'lucide-react';
 import { SITE_DATA } from '../data';
 import { DecodeDemo } from './demos/DecodeDemo';
 import { BankingDemo } from './demos/BankingDemo';
+import { GeekFilmeDemo } from './demos/GeekFilmeDemo';
 
 export const Project: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -144,10 +145,11 @@ export const Project: React.FC = () => {
                       / DEMONSTRAÇÃO
                     </span>
                   </div>
-                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/20 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/20 to-transparent' : 'from-[#1C1C20] to-transparent'}`}>
+                  <div className={`relative rounded-xl p-[1px] bg-gradient-to-b ${project.demoType === 'decode' ? 'from-[#FF3B30]/20 to-transparent' : project.demoType === 'banking' ? 'from-[#00C853]/20 to-transparent' : project.demoType === 'geekfilme' ? 'from-red-600/20 to-transparent' : 'from-[#1C1C20] to-transparent'}`}>
                     <div className="rounded-xl overflow-hidden bg-[#0A0A0C]">
                       {project.demoType === 'decode' && <DecodeDemo />}
                       {project.demoType === 'banking' && <BankingDemo />}
+                      {project.demoType === 'geekfilme' && <GeekFilmeDemo />}
                     </div>
                   </div>
                 </div>
