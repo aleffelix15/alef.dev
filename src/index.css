@@ -39,4 +39,41 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* The demo is embedded in portfolio cards, so its layout follows its
+     available inline size instead of the browser viewport. */
+  .vertice-demo { container-type: inline-size; }
+  .vertice-demo__nav { padding: 0.75rem 1rem; }
+  .vertice-demo__nav-left, .vertice-demo__actions { gap: 1.25rem; }
+  .vertice-demo__categories, .vertice-demo__desktop-search { display: none; }
+  .vertice-demo__mobile-search { padding: 1rem 1rem 0; }
+  .vertice-demo__user { display: none; }
+  .vertice-demo__content { gap: 1.5rem; padding: 1rem; }
+  .vertice-demo__hero { height: 10rem; }
+  .vertice-demo__hero-content { max-width: 17.5rem; padding: 1.25rem; }
+  .vertice-demo__hero-eyebrow { font-size: 0.625rem; }
+  .vertice-demo__hero-title { font-size: 1.125rem; }
+  .vertice-demo__products { gap: 1rem; }
+
+  @container (min-width: 430px) { .vertice-demo__user { display: block; } }
+
+  @container (min-width: 600px) {
+    .vertice-demo__nav { padding-inline: 1.5rem; }
+    .vertice-demo__content { gap: 2rem; padding: 1.5rem; }
+    .vertice-demo__hero { height: 12rem; }
+    .vertice-demo__hero-content { max-width: 24rem; padding: 1.75rem; }
+    .vertice-demo__hero-eyebrow { font-size: 0.6875rem; }
+    .vertice-demo__hero-title { font-size: 1.5rem; }
+    .vertice-demo__products { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+  }
+
+  @container (min-width: 700px) {
+    .vertice-demo__categories { display: flex; gap: 1.25rem; }
+  }
+
+  @container (min-width: 800px) {
+    .vertice-demo__desktop-search { display: flex; }
+    .vertice-demo__mobile-search { display: none; }
+    .vertice-demo__products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
 }
