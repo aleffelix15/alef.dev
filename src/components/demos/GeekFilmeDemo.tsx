@@ -24,7 +24,7 @@ export const GeekFilmeDemo: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full min-h-[300px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
+    <div className="w-full h-full min-h-[350px] max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
       <motion.div initial={{ opacity: 0, y: -10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-b from-black/80 to-transparent absolute top-0 left-0 right-0 z-20">
         <div className="flex items-center gap-4">
           <span className="font-black text-[#E50914] text-[0.8rem] tracking-tighter">GEEKFILME</span>
@@ -68,7 +68,7 @@ export const GeekFilmeDemo: React.FC = () => {
                 </div>
                 <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x items-end pb-1">
                   {movies.map((movie, index) => (
-                    <motion.div key={movie.id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 + (index * 0.1) }} onMouseEnter={() => setHoveredMovie(movie.id)} onMouseLeave={() => setHoveredMovie(null)} className="relative min-w-[75px] sm:min-w-[85px] aspect-[2/3] rounded overflow-hidden bg-[#222] cursor-pointer group snap-start shrink-0 shadow-lg border border-[#333]/50">
+                    <motion.div key={movie.id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 + (index * 0.1) }} onMouseEnter={() => setHoveredMovie(movie.id)} onMouseLeave={() => setHoveredMovie(null)} className="relative w-[75px] sm:w-[85px] aspect-[2/3] rounded overflow-hidden bg-[#222] cursor-pointer group snap-start shrink-0 shadow-lg border border-[#333]/50">
                       <img src={movie.image} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                       <div className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/20 transition-opacity duration-300 ${hoveredMovie === movie.id ? "opacity-100" : "opacity-0"}`}>
                         <div className="absolute inset-0 p-2 flex flex-col justify-end">
