@@ -57,9 +57,9 @@ export const Hero: React.FC = () => {
 
           <div className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold tracking-tight mb-5 sm:mb-6 flex flex-col items-start">
             <MaskTextReveal text="DESENVOLVEDOR &" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="ESTUDANTE DE" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="ENGENHARIA DE" className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
-            <MaskTextReveal text="SOFTWARE" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="FULL STACK" className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
+            <MaskTextReveal text="FREELANCE" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="& CRIADOR DE" className="text-[#F5F5F5]" />
           </div>
 
           <motion.p
@@ -77,13 +77,13 @@ export const Hero: React.FC = () => {
               href="#projeto"
               className="group inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-hover hover:shadow-[0_0_20px_theme(colors.accent.glow)] font-body text-[0.9375rem] font-bold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Ver projetos <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+              Ver o que já construí <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
-              href="#sobre"
+              href="#contato"
               className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-accent/10 hover:border-accent/30 hover:text-accent font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Sobre mim <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              Solicitar orçamento <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
           </motion.div>
         </motion.div>

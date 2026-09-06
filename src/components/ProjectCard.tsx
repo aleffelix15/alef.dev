@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { SpotlightCard } from './SpotlightCard';
 import { ProjectType } from './Project';
+import { CheckCircle2 } from 'lucide-react';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -38,12 +39,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
     >
       <motion.div layoutId={`card-container-${project.id}`} className="flex flex-col h-full gap-4 relative z-10">
         
-        <motion.span 
+        <motion.span
           layoutId={`category-${project.id}`}
           className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
         >
           {project.category}
         </motion.span>
+        {project.metric && (
+          <motion.span
+            className="flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.05em] text-[#F5F5F5] border border-[#1C1C20] bg-[#050505] px-2 py-1 rounded w-fit"
+          >
+            <CheckCircle2 className="w-3 h-3 text-accent" />
+            {project.metric}
+          </motion.span>
+        )}
         
         <div>
           <motion.h3 

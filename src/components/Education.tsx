@@ -34,7 +34,7 @@ export const Education: React.FC = () => {
               </span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-[#F5F5F5] tracking-tight">
-              Trajetória Acadêmica
+              Formação & Trajetória
             </h2>
           </motion.div>
 
@@ -59,7 +59,39 @@ export const Education: React.FC = () => {
             />
 
             {/* Conteúdo */}
-            <motion.div 
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={itemFade}
+              className="mb-12 relative pl-2 md:pl-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm border border-[#2A2A30]">
+                  2025 — EM ANDAMENTO
+                </span>
+                <span className="font-mono text-[0.65rem] text-accent uppercase tracking-wider font-bold">
+                  Autodidata
+                </span>
+              </div>
+
+              <h3 className="font-display text-3xl md:text-4xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
+                Formação Autodidata em Desenvolvimento Full Stack
+              </h3>
+
+              <h4 className="font-display text-[1.125rem] text-[#71717A] mb-8 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3F3F46]" />
+                Estudo intensivo e projetos reais
+              </h4>
+
+              <div className="bg-[#0A0A0C] border border-[#1C1C20] hover:border-accent/30 hover:shadow-[0_0_15px_theme(colors.accent.glow)] rounded-xl p-6 md:p-8 transition-colors duration-500">
+                <p className="font-body text-[#9A9A9A] leading-[1.8] max-w-2xl text-sm md:text-base">
+                  Desde 2025, venho me aprofundando de forma autodidata em desenvolvimento web e mobile, aplicando o conhecimento diretamente em projetos reais (Hub Harmony, FitSync, portfólio próprio) em vez de esperar o ambiente acadêmico formal.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -74,16 +106,16 @@ export const Education: React.FC = () => {
                   A iniciar
                 </span>
               </div>
-              
+
               <h3 className="font-display text-3xl md:text-4xl font-bold text-[#F5F5F5] mb-2 tracking-tight">
                 Bacharelado em Engenharia de Software
               </h3>
-              
+
               <h4 className="font-display text-[1.125rem] text-[#71717A] mb-8 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3F3F46]" />
                 UniAlfa
               </h4>
-              
+
               <div className="bg-[#0A0A0C] border border-[#1C1C20] hover:border-accent/30 hover:shadow-[0_0_15px_theme(colors.accent.glow)] rounded-xl p-6 md:p-8 transition-colors duration-500">
                 <p className="font-body text-[#9A9A9A] leading-[1.8] max-w-2xl text-sm md:text-base">
                   Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, com forte foco em arquitetura de software escalável, segurança de dados e experiência do usuário (UX/UI).

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Github, ExternalLink } from 'lucide-react';
+import { X, Github, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { DrawerModal } from './Animations';
 
 import { DecodeDemo } from './demos/DecodeDemo';
@@ -56,12 +56,20 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
         <div className="p-6 md:p-10 flex flex-col gap-8">
           {/* Header Info */}
           <div className="flex flex-col gap-4 max-w-3xl">
-            <motion.span 
+            <motion.span
               layoutId={`category-${project.id}`}
               className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
             >
               {project.category}
             </motion.span>
+            {project.metric && (
+              <motion.span
+                className="flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.05em] text-[#F5F5F5] border border-[#1C1C20] bg-[#050505] px-2 py-1 rounded w-fit"
+              >
+                <CheckCircle2 className="w-3 h-3 text-accent" />
+                {project.metric}
+              </motion.span>
+            )}
             
             <div>
               <motion.h2 

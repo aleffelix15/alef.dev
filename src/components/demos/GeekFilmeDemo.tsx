@@ -175,6 +175,11 @@ export const GeekFilmeDemo: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
+      <div className="w-full text-center py-1 border-t border-[#1C1C20]/30 bg-black/20">
+        <span className="text-[10px] text-[#71717A] opacity-60 leading-tight">
+          Projeto de estudo de UI/UX — conteúdo e imagens usados apenas como referência de aprendizado, sem fins comerciais.
+        </span>
+      </div >
       <style dangerouslySetInnerHTML={{__html: `.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`}} />
     </div>
   );

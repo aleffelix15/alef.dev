@@ -1,19 +1,20 @@
 import React, { useRef, useState } from 'react';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
-import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowUpRight, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { SITE_DATA } from '../data';
 
-const MagneticButton = ({ 
-  children, 
-  className, 
+const MagneticButton = ({
+  children,
+  className,
   onClick,
-  href
-}: { 
-  children: React.ReactNode; 
-  className?: string; 
+  href,
+  ...props
+}: {
+  children: React.ReactNode;
+  className?: string;
   onClick?: () => void;
   href?: string;
-}) => {
+} & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
   const ref = useRef<HTMLAnchorElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const shouldReduceMotion = useReducedMotion();
@@ -47,6 +48,7 @@ const MagneticButton = ({
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       onClick={onClick}
       className={className}
+      {...props}
     >
       {children}
     </motion.a>
@@ -103,7 +105,7 @@ export const Contact: React.FC = () => {
           </motion.p>
           
           <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <MagneticButton 
+            <MagneticButton
               href={`mailto:${SITE_DATA.profile.email}`}
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-accent text-white font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_theme(colors.accent.glow)] hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:bg-accent-hover"
             >
@@ -111,7 +113,20 @@ export const Contact: React.FC = () => {
               <span>Iniciar conversa</span>
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </MagneticButton>
+            <MagneticButton
+              href="https://wa.me/5562985163672?text=Ol%C3%A1%20Alef!%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative overflow-hidden flex items-center justify-center gap-2 bg-transparent border border-[#1C1C20] text-[#F5F5F5] font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto hover:bg-[#1C1C20]/50 hover:border-[#2A2A30]"
+            >
+              <MessageCircle className="w-5 h-5" />
+              <span>WhatsApp</span>
+              <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </MagneticButton>
           </motion.div>
+          <motion.p variants={itemVariant} className="mt-6 text-[#71717A] font-body text-sm opacity-80">
+            Respondo pessoalmente — sem intermediários, sem formulário longo.
+          </motion.p>
 
           <motion.div variants={itemVariant} className="mt-16 flex items-center justify-center gap-6">
             <a 
