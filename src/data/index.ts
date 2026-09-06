@@ -22,7 +22,7 @@ export const SITE_DATA = {
     },
     {
       name: 'Backend & APIs',
-      techs: ['Node.js', 'Express', 'Python', 'Supabase', 'PostgreSQL']
+      techs: ['Java', 'Spring Boot', 'Python', 'Node.js', 'PostgreSQL', 'Supabase']
     },
     {
       name: 'Styling & UI',
@@ -31,6 +31,10 @@ export const SITE_DATA = {
     {
       name: 'Tools & DevOps',
       techs: ['Git', 'GitHub', 'Vite', 'Vercel']
+    },
+    {
+      name: 'Infra & OS',
+      techs: ['Linux Mint', 'Zorin OS', 'Docker', 'AWS']
     }
   ],
   projects: [

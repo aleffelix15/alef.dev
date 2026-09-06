@@ -107,3 +107,4 @@ export const DrawerModal: React.FC<DrawerModalProps> = ({ children, isOpen, clas
     </AnimatePresence>
   );
 };
+
