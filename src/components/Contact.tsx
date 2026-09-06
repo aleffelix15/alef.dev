@@ -3,18 +3,20 @@ import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { SITE_DATA } from '../data';
 
+import { HTMLMotionProps } from 'framer-motion';
+
+type MagneticButtonProps = HTMLMotionProps<"a"> & {
+  children: React.ReactNode;
+  className?: string;
+};
+
 const MagneticButton = ({
   children,
   className,
   onClick,
   href,
   ...props
-}: {
-  children: React.ReactNode;
-  className?: string;
-  onClick?: () => void;
-  href?: string;
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+}: MagneticButtonProps) => {
   const ref = useRef<HTMLAnchorElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const shouldReduceMotion = useReducedMotion();
