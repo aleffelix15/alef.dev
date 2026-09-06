@@ -10,7 +10,7 @@ export const Stack: React.FC = () => {
   const getCategoryStyles = (name: string) => {
     switch (name) {
       case 'Frontend': return { dotColor: "bg-[#3B82F6]", spotlight: "rgba(59, 130, 246, 0.15)" }; // Blue
-      case 'Backend & APIs': return { dotColor: "bg-[#00C853]", spotlight: "rgba(0, 200, 83, 0.15)" }; // Neon Green
+      case 'Backend & APIs': return { dotColor: "bg-accent", spotlight: "rgba(0, 102, 255, 0.15)" }; // Accent (Blue)
       case 'Styling & UI': return { dotColor: "bg-[#A855F7]", spotlight: "rgba(168, 85, 247, 0.15)" }; // Purple
       case 'Tools & DevOps': return { dotColor: "bg-[#F97316]", spotlight: "rgba(249, 115, 22, 0.15)" }; // Orange
       case 'Infra & OS': return { dotColor: "bg-[#FFD700]", spotlight: "rgba(255, 215, 0, 0.15)" }; // Gold

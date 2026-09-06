@@ -28,7 +28,7 @@ export const Education: React.FC = () => {
             className="mb-20"
           >
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-[#00C853] animate-pulse">·</span>
+              <span className="text-accent animate-pulse">·</span>
               <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
                 Educação
               </span>
@@ -46,7 +46,7 @@ export const Education: React.FC = () => {
             {/* Linha Animada via Scroll */}
             <motion.div
               style={shouldReduceMotion ? {} : { scaleY: scrollYProgress }}
-              className="absolute left-[7px] md:left-[23px] top-2 bottom-0 w-[2px] bg-[#00C853] origin-top rounded-full z-10 shadow-[0_0_10px_rgba(0,200,83,0.5)]"
+              className="absolute left-[7px] md:left-[23px] top-2 bottom-0 w-[2px] bg-accent origin-top rounded-full z-10 shadow-[0_0_10px_rgba(0,102,255,0.5)]"
             />
 
             {/* Ponto / Nó da Linha do Tempo */}
@@ -55,7 +55,7 @@ export const Education: React.FC = () => {
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="absolute left-[2.5px] md:left-[18.5px] top-2 w-3 h-3 bg-[#0A0A0C] border-2 border-[#00C853] rounded-full z-20 shadow-[0_0_12px_rgba(0,200,83,0.6)]" 
+              className="absolute left-[2.5px] md:left-[18.5px] top-2 w-3 h-3 bg-[#0A0A0C] border-2 border-accent rounded-full z-20 shadow-[0_0_12px_rgba(0,102,255,0.6)]" 
             />
 
             {/* Conteúdo */}
@@ -70,7 +70,7 @@ export const Education: React.FC = () => {
                 <span className="font-mono text-[0.7rem] font-semibold text-[#E0E0E0] uppercase tracking-widest bg-[#1C1C20] px-3 py-1 rounded-sm border border-[#2A2A30]">
                   2027 — FUTURO
                 </span>
-                <span className="font-mono text-[0.65rem] text-[#00C853] uppercase tracking-wider font-bold">
+                <span className="font-mono text-[0.65rem] text-accent uppercase tracking-wider font-bold">
                   A iniciar
                 </span>
               </div>
@@ -84,7 +84,7 @@ export const Education: React.FC = () => {
                 UniAlfa
               </h4>
               
-              <div className="bg-[#0A0A0C] border border-[#1C1C20] hover:border-[#00C853]/30 hover:shadow-[0_0_15px_rgba(0,200,83,0.05)] rounded-xl p-6 md:p-8 transition-colors duration-500">
+              <div className="bg-[#0A0A0C] border border-[#1C1C20] hover:border-accent/30 hover:shadow-[0_0_15px_theme(colors.accent.glow)] rounded-xl p-6 md:p-8 transition-colors duration-500">
                 <p className="font-body text-[#9A9A9A] leading-[1.8] max-w-2xl text-sm md:text-base">
                   Estudando os fundamentos da ciência da computação, engenharia de software e práticas de desenvolvimento de sistemas. Aplicando ativamente os conhecimentos acadêmicos na construção de projetos reais, com forte foco em arquitetura de software escalável, segurança de dados e experiência do usuário (UX/UI).
                 </p>

@@ -71,7 +71,7 @@ export const Contact: React.FC = () => {
       
       {/* Background sutil */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00C853] rounded-full mix-blend-screen filter blur-[150px] opacity-[0.03]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent rounded-full mix-blend-screen filter blur-[150px] opacity-[0.03]" />
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
@@ -83,7 +83,7 @@ export const Contact: React.FC = () => {
           className="max-w-2xl mx-auto text-center"
         >
           <motion.div variants={itemVariant} className="flex items-center justify-center gap-2 mb-6">
-            <span className="text-[#00C853] animate-pulse">·</span>
+            <span className="text-accent animate-pulse">·</span>
             <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
               Próximos Passos
             </span>
@@ -94,7 +94,7 @@ export const Contact: React.FC = () => {
               <motion.span variants={itemVariant} className="inline-block">Vamos transformar uma</motion.span>
             </span>
             <span className="overflow-hidden pb-1">
-              <motion.span variants={itemVariant} className="inline-block text-[#00C853] drop-shadow-[0_0_15px_rgba(0,200,83,0.2)]">ideia em projeto?</motion.span>
+              <motion.span variants={itemVariant} className="inline-block text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]">ideia em projeto?</motion.span>
             </span>
           </h2>
           
@@ -105,7 +105,7 @@ export const Contact: React.FC = () => {
           <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <MagneticButton 
               href={`mailto:${SITE_DATA.profile.email}`}
-              className="group relative overflow-hidden flex items-center justify-center gap-2 bg-[#00C853] text-[#050505] font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_rgba(0,200,83,0.3)] hover:shadow-[0_0_40px_rgba(0,200,83,0.5)] hover:bg-[#00E676]"
+              className="group relative overflow-hidden flex items-center justify-center gap-2 bg-accent text-white font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_theme(colors.accent.glow)] hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:bg-accent-hover"
             >
               <Mail className="w-5 h-5" />
               <span>Iniciar conversa</span>
@@ -119,7 +119,7 @@ export const Contact: React.FC = () => {
               target="_blank" 
               rel="noopener noreferrer"
               aria-label="GitHub Profile"
-              className="text-[#71717A] hover:text-[#00C853] transition-colors p-2 hover:bg-[#00C853]/10 hover:shadow-[0_0_15px_rgba(0,200,83,0.2)] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C853]"
+              className="text-[#71717A] hover:text-accent transition-colors p-2 hover:bg-accent/10 hover:shadow-[0_0_15px_theme(colors.accent.glow)] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <Github className="w-6 h-6" />
             </a>
@@ -129,7 +129,7 @@ export const Contact: React.FC = () => {
               target="_blank" 
               rel="noopener noreferrer"
               aria-label="LinkedIn Profile"
-              className="text-[#71717A] hover:text-[#00C853] transition-colors p-2 hover:bg-[#00C853]/10 hover:shadow-[0_0_15px_rgba(0,200,83,0.2)] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00C853]"
+              className="text-[#71717A] hover:text-accent transition-colors p-2 hover:bg-accent/10 hover:shadow-[0_0_15px_theme(colors.accent.glow)] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <Linkedin className="w-6 h-6" />
             </a>
