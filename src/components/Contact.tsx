@@ -3,12 +3,12 @@ import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { SITE_DATA } from '../data';
 
-import { HTMLMotionProps } from 'framer-motion';
-
-type MagneticButtonProps = HTMLMotionProps<"a"> & {
+type MagneticButtonProps = {
   children: React.ReactNode;
   className?: string;
-};
+  onClick?: () => void;
+  href?: string;
+} & Pick<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'target' | 'rel' | 'aria-label'>;
 
 const MagneticButton = ({
   children,
