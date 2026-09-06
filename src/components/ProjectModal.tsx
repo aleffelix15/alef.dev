@@ -31,10 +31,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   const gradientColors = () => {
     switch(project.demoType) {
       case 'decode': return 'from-[#FF3B30]/30';
-      case 'banking': return 'from-[#00C853]/30';
+      case 'banking': return 'from-accent/30';
       case 'geekfilme': return 'from-[#E50914]/30';
       case 'vertice': return 'from-[#9b4dff]/30';
-      default: return 'from-[#0066FF]/30';
+      default: return 'from-accent/30';
     }
   };
 
@@ -58,7 +58,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div className="flex flex-col gap-4 max-w-3xl">
             <motion.span 
               layoutId={`category-${project.id}`}
-              className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-[#0066FF] border border-[#0066FF]/20 bg-[#0066FF]/10 px-2 py-1 rounded w-fit"
+              className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
             >
               {project.category}
             </motion.span>
@@ -72,7 +72,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               </motion.h2>
               <motion.p 
                 layoutId={`subtitle-${project.id}`}
-                className="font-body text-base md:text-lg text-[#0066FF] font-medium"
+                className="font-body text-base md:text-lg text-accent font-medium"
               >
                 {project.subtitle}
               </motion.p>

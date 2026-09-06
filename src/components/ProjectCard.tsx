@@ -10,20 +10,20 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
   // Define custom glow and border colors based on demoType
-  const getColors = (type?: string) => {
+    const getColors = (type?: string) => {
     switch(type) {
       case 'decode': return 'hover:border-[#FF3B30] hover:shadow-[0_0_20px_rgba(255,59,48,0.2)]';
-      case 'banking': return 'hover:border-[#00C853] hover:shadow-[0_0_20px_rgba(0,200,83,0.2)]';
+      case 'banking': return 'hover:border-accent hover:shadow-[0_0_20px_theme(colors.accent.glow)]';
       case 'geekfilme': return 'hover:border-[#E50914] hover:shadow-[0_0_20px_rgba(229,9,20,0.2)]';
       case 'vertice': return 'hover:border-[#9b4dff] hover:shadow-[0_0_20px_rgba(155,77,255,0.2)]';
-      default: return 'hover:border-[#0066FF] hover:shadow-[0_0_20px_rgba(0,102,255,0.2)]';
+      default: return 'hover:border-accent hover:shadow-[0_0_20px_theme(colors.accent.glow)]';
     }
   };
 
   const getSpotlightColor = (type?: string) => {
     switch(type) {
       case 'decode': return 'rgba(255,59,48,0.15)';
-      case 'banking': return 'rgba(0,200,83,0.15)';
+      case 'banking': return 'rgba(0,102,255,0.15)';
       case 'geekfilme': return 'rgba(229,9,20,0.15)';
       case 'vertice': return 'rgba(155,77,255,0.15)';
       default: return 'rgba(0,102,255,0.15)';
@@ -40,7 +40,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
         
         <motion.span 
           layoutId={`category-${project.id}`}
-          className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-[#0066FF] border border-[#0066FF]/20 bg-[#0066FF]/10 px-2 py-1 rounded w-fit"
+          className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
         >
           {project.category}
         </motion.span>
@@ -54,7 +54,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
           </motion.h3>
           <motion.p 
             layoutId={`subtitle-${project.id}`}
-            className="font-body text-sm text-[#0066FF] font-medium"
+            className="font-body text-sm text-accent font-medium"
           >
             {project.subtitle}
           </motion.p>

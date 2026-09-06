@@ -19,7 +19,7 @@ echo Criando commit...
 git commit -m "fix: resolve lint errors, remove unused imports and polish portfolio code"
 
 echo Enviando para o GitHub (main)...
-git push -u origin main --force
+git push -u origin main
 
 echo.
 if %ERRORLEVEL%==0 (
