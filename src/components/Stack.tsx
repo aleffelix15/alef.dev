@@ -37,12 +37,11 @@ export const Stack: React.FC = () => {
         {/* Grid Unificado: Scroll horizontal para TODOS os cards no Mobile, Grid no Desktop */}
         <div className="flex overflow-x-auto snap-x snap-mandatory pb-6 -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           
-          {/* Main Categories Grid */}
           {mainCategories.map((category, index) => {
             const styles = getCategoryStyles(category.name);
             return (
-              <FadeInWhenVisible key={index} delay={index * 0.1} className="min-w-[85%] sm:min-w-[45%] md:min-w-0 snap-center flex-shrink-0 flex">
-                <SpotlightCard spotlightColor={styles.spotlight} className="w-full bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-6">
+              <FadeInWhenVisible key={index} delay={index * 0.1} className="w-[85vw] sm:w-[45vw] md:w-full snap-center flex-shrink-0 flex">
+                <SpotlightCard spotlightColor={styles.spotlight} className="h-full w-full bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-6">
                   <div className="mb-6 flex items-center gap-3">
                     <span className={`w-2 h-2 rounded-full ${styles.dotColor} shadow-[0_0_10px_currentColor]`} />
                     <h3 className="font-mono text-xs font-bold text-[#E0E0E0] uppercase tracking-wider">
@@ -66,8 +65,8 @@ export const Stack: React.FC = () => {
 
           {/* Infra & OS Secondary Grid */}
           {infraCategory && (
-            <FadeInWhenVisible delay={0.4} className="min-w-[85%] sm:min-w-[45%] md:min-w-0 md:col-span-2 lg:col-span-4 snap-center flex-shrink-0 flex">
-              <SpotlightCard spotlightColor={getCategoryStyles('Infra & OS').spotlight} className="w-full bg-[#0A0A0C] border border-[#1C1C20] p-6 sm:p-8 rounded-xl">
+            <FadeInWhenVisible delay={0.4} className="w-[85vw] sm:w-[45vw] md:w-full md:col-span-2 lg:col-span-4 snap-center flex-shrink-0 flex">
+              <SpotlightCard spotlightColor={getCategoryStyles('Infra & OS').spotlight} className="h-full w-full bg-[#0A0A0C] border border-[#1C1C20] p-6 sm:p-8 rounded-xl">
                 <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12 h-full">
                   <div className="flex items-center gap-3 whitespace-nowrap">
                     <span className={`w-2 h-2 rounded-full ${getCategoryStyles('Infra & OS').dotColor} shadow-[0_0_10px_currentColor] animate-pulse`} />
