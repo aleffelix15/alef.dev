@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { InteractiveCard } from './Animations';
-
+import { SpotlightCard } from './SpotlightCard';
 import { ProjectType } from './Project';
 
 interface ProjectCardProps {
@@ -21,9 +20,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
     }
   };
 
+  const getSpotlightColor = (type?: string) => {
+    switch(type) {
+      case 'decode': return 'rgba(255,59,48,0.15)';
+      case 'banking': return 'rgba(0,200,83,0.15)';
+      case 'geekfilme': return 'rgba(229,9,20,0.15)';
+      case 'vertice': return 'rgba(155,77,255,0.15)';
+      default: return 'rgba(0,102,255,0.15)';
+    }
+  };
+
   return (
-    <InteractiveCard 
+    <SpotlightCard 
       onClick={onClick}
+      spotlightColor={getSpotlightColor(project.demoType)}
       className={`h-full bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-6 md:p-8 flex flex-col transition-colors duration-300 ${getColors(project.demoType)}`}
     >
       <motion.div layoutId={`card-container-${project.id}`} className="flex flex-col h-full gap-4 relative z-10">
@@ -70,6 +80,6 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
           )}
         </div>
       </motion.div>
-    </InteractiveCard>
+    </SpotlightCard>
   );
 };

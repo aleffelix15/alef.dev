@@ -31,3 +31,4 @@ export const MaskTextReveal = ({ text, className = "" }: { text: string, classNa
     </motion.div>
   );
 };
+
