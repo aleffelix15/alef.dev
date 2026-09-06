@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ChevronRight, ArrowDown } from 'lucide-react';
+import { HeroSectionWrapper } from './Animations';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,12 +15,12 @@ export const Hero: React.FC = () => {
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div 
-          className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] opacity-[0.03] blur-[120px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #0066FF 0%, transparent 70%)' }}
+          className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] opacity-[0.05] blur-[120px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #00C853 0%, transparent 70%)' }}
         />
       </div>
 
-      <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center z-10">
+      <HeroSectionWrapper className="w-full max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center z-10">
         
         <motion.div 
           initial="hidden"
@@ -38,9 +39,10 @@ export const Hero: React.FC = () => {
             className="flex items-center gap-3 mb-6"
           >
             <div className="relative flex h-2 w-2 items-center justify-center">
-              <span className="relative h-2 w-2 rounded-full bg-[#00C853]" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[#00C853] opacity-75 animate-ping" />
+              <span className="relative h-2 w-2 rounded-full bg-[#00C853] shadow-[0_0_8px_#00C853]" />
             </div>
-            <span className="font-mono text-[0.65rem] font-semibold text-[#9A9A9A] tracking-[0.2em] uppercase">Disponível para novos desafios</span>
+            <span className="font-mono text-[0.65rem] font-semibold text-[#00C853] tracking-[0.2em] uppercase drop-shadow-[0_0_5px_rgba(0,200,83,0.3)]">Disponível para novos desafios</span>
           </motion.div>
 
           <motion.h1
@@ -52,7 +54,7 @@ export const Hero: React.FC = () => {
           >
             DESENVOLVEDOR <span className="text-[#333333]">&amp;</span><br />
             ESTUDANTE DE<br />
-            <span className="text-[#9A9A9A]">ENGENHARIA DE</span><br />
+            <span className="text-[#00C853] drop-shadow-[0_0_15px_rgba(0,200,83,0.2)]">ENGENHARIA DE</span><br />
             SOFTWARE
           </motion.h1>
 
@@ -61,18 +63,21 @@ export const Hero: React.FC = () => {
               hidden: { opacity: 0, y: 15 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
             }}
-            className="font-body text-base md:text-lg text-[#71717A] max-w-md leading-relaxed mb-10"
+            className="font-body text-base md:text-lg text-[#A1A1AA] max-w-md leading-relaxed mb-10"
           >
             Transformando ideias em soluções digitais escaláveis. Código limpo, design inteligente e performance.
-          </motion.p><motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4"><a
+          </motion.p>
+          
+          <motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4">
+            <a
               href="#projeto"
-              className="group inline-flex items-center justify-center gap-2 bg-[#F5F5F5] text-[#050505] hover:bg-white font-body text-[0.9375rem] font-semibold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
+              className="group inline-flex items-center justify-center gap-2 bg-[#00C853] text-[#050505] hover:bg-[#00E676] hover:shadow-[0_0_20px_rgba(0,200,83,0.4)] font-body text-[0.9375rem] font-bold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               Ver projetos <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
               href="#sobre"
-              className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-[#0D0D0F] hover:border-[#2A2A30] font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
+              className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-[#00C853]/10 hover:border-[#00C853]/30 hover:text-[#00C853] font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               Sobre mim <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
@@ -86,7 +91,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: shouldReduceMotion ? 0 : 0.65, delay: shouldReduceMotion ? 0 : 0.38, ease: 'easeOut' }}
           className="hidden lg:block w-full"
         >
-          <div className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl overflow-hidden shadow-2xl">
+          <div className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl overflow-hidden shadow-2xl hover:border-[#00C853]/30 transition-colors duration-500">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1C1C20] bg-[#050505]">
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#FF3B30]/80" />
@@ -98,25 +103,25 @@ export const Hero: React.FC = () => {
             <div className="p-6 overflow-x-auto">
               <pre className="font-mono text-[13px] leading-[1.7]">
                 <code>
-                  <span className="text-[#0066FF]">const</span> <span className="text-[#F5F5F5]">developer</span> <span className="text-[#0066FF]">=</span> {'{'}<br/>
-                  {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#00C853]">'ÁLEF FELIX'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#00C853]">'Desenvolvedor Full Stack'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#00C853]">'React'</span>, <span className="text-[#00C853]">'Node.js'</span>, <span className="text-[#00C853]">'TypeScript'</span>],<br/>
-                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#00C853]">'Todos os dias'</span><br/>
+                  <span className="text-[#00C853]">const</span> <span className="text-[#F5F5F5]">developer</span> <span className="text-[#00C853]">=</span> {'{'}<br/>
+                  {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#FFD700]">'ÁLEF FELIX'</span>,<br/>
+                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#FFD700]">'Desenvolvedor Full Stack'</span>,<br/>
+                  {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#FFD700]">'React'</span>, <span className="text-[#FFD700]">'Node.js'</span>, <span className="text-[#FFD700]">'TypeScript'</span>],<br/>
+                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#FFD700]">'Todos os dias'</span><br/>
                   {'}'}<br/><br/>
-                  <span className="text-[#0066FF]">function</span> <span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FF9500]">ideia</span>) {'{'}<br/>
-                  {'  '}<span className="text-[#0066FF]">return</span> <span className="text-[#00C853]">{`/* -> código -> solução -> impacto */`}</span>;<br/>
+                  <span className="text-[#00C853]">function</span> <span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FF9500]">ideia</span>) {'{'}<br/>
+                  {'  '}<span className="text-[#00C853]">return</span> <span className="text-[#71717A]">{`/* -> código -> solução -> impacto */`}</span>;<br/>
                   {'}'}<br/><br/>
-                  <span className="text-[#F5F5F5]">console</span>.<span className="text-[#0066FF]">log</span>(<span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#00C853]">'Sua ideia!'</span>));<br/>
+                  <span className="text-[#F5F5F5]">console</span>.<span className="text-[#00C853]">log</span>(<span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FFD700]">'Sua ideia!'</span>));<br/>
                   <span className="text-[#71717A]">// Vamos construir algo incrível juntos! 🚀</span>
-                  <span aria-hidden="true" className="terminal-cursor" />
+                  <span aria-hidden="true" className="terminal-cursor bg-[#00C853]" />
                 </code>
               </pre>
             </div>
           </div>
         </motion.div>
 
-      </div>
+      </HeroSectionWrapper>
     </section>
   );
 };
