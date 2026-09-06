@@ -11,10 +11,10 @@ type Movie = {
 };
 
 const movies: Movie[] = [
-  { id: 1, title: 'Iron Man', image: '/geekfilme/ironman-poster.webp', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo.' },
-  { id: 2, title: 'WandaVision', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-poster.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.' },
-  { id: 3, title: 'Thor', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-poster.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.' },
-  { id: 4, title: 'B99', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-poster.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.' },
+  { id: 1, title: 'Iron Man', image: '/geekfilme/ironman-poster-new.jpg', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo.' },
+  { id: 2, title: 'WandaVision', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-banner.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.' },
+  { id: 3, title: 'Thor', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-banner.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.' },
+  { id: 4, title: 'B99', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-banner.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.' },
 ];
 
 export const GeekFilmeDemo: React.FC = () => {
@@ -137,7 +137,7 @@ export const GeekFilmeDemo: React.FC = () => {
                           <div className="absolute inset-0 p-2 flex flex-col justify-end">
                             <Play className={`w-5 h-5 text-white fill-white mb-auto self-center mt-4 transition-all duration-300 ${hoveredMovie === movie.id ? "scale-100 opacity-100" : "scale-50 opacity-0"}`} />
                             <motion.div initial={{ y: 5, opacity: 0 }} animate={{ y: hoveredMovie === movie.id ? 0 : 5, opacity: hoveredMovie === movie.id ? 1 : 0 }} className="flex flex-col gap-0.5">
-                              <span className="text-white font-bold text-[0.55rem] leading-tight line-clamp-1">{movie.title}</span>
+                              <span className="text-white font-bold text-[0.65rem] leading-tight line-clamp-1">{movie.title}</span>
                             </motion.div>
                           </div>
                         </div>
