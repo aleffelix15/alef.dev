@@ -1,11 +1,17 @@
 import React, { useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { ChevronRight, ArrowDown } from 'lucide-react';
 import { HeroSectionWrapper } from './Animations';
+import { MaskTextReveal } from './MaskTextReveal';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // --- LÓGICA DO PARALLAX ---
+  const { scrollY } = useScroll();
+  const parallaxCodeBlock = useTransform(scrollY, [0, 500], [0, -100]);
+  const parallaxBackground = useTransform(scrollY, [0, 500], [0, 100]);
 
   return (
     <section
@@ -13,12 +19,16 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       className="relative min-h-[100dvh] bg-[#050505] pt-32 pb-16 flex flex-col justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Background Parallax */}
+      <motion.div 
+        style={shouldReduceMotion ? {} : { y: parallaxBackground }}
+        className="absolute inset-0 pointer-events-none overflow-hidden z-0"
+      >
         <div 
           className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] opacity-[0.05] blur-[120px] rounded-full"
           style={{ background: 'radial-gradient(circle, #00C853 0%, transparent 70%)' }}
         />
-      </div>
+      </motion.div>
 
       <HeroSectionWrapper className="w-full max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center z-10">
         
@@ -45,18 +55,12 @@ export const Hero: React.FC = () => {
             <span className="font-mono text-[0.65rem] font-semibold text-[#00C853] tracking-[0.2em] uppercase drop-shadow-[0_0_5px_rgba(0,200,83,0.3)]">Disponível para novos desafios</span>
           </motion.div>
 
-          <motion.h1
-            variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
-              hidden: { opacity: 0, y: 15 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
-            }}
-            className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold text-[#F5F5F5] tracking-tight mb-5 sm:mb-6"
-          >
-            DESENVOLVEDOR <span className="text-[#333333]">&amp;</span><br />
-            ESTUDANTE DE<br />
-            <span className="text-[#00C853] drop-shadow-[0_0_15px_rgba(0,200,83,0.2)]">ENGENHARIA DE</span><br />
-            SOFTWARE
-          </motion.h1>
+          <div className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold tracking-tight mb-5 sm:mb-6 flex flex-col items-start">
+            <MaskTextReveal text="DESENVOLVEDOR &" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="ESTUDANTE DE" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="ENGENHARIA DE" className="text-[#00C853] drop-shadow-[0_0_15px_rgba(0,200,83,0.2)]" />
+            <MaskTextReveal text="SOFTWARE" className="text-[#F5F5F5]" />
+          </div>
 
           <motion.p
             variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {
@@ -84,14 +88,15 @@ export const Hero: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Code Block - Desktop Only */}
+        {/* Code Block - Desktop Only com Parallax */}
         <motion.div 
+          style={shouldReduceMotion ? {} : { y: parallaxCodeBlock }}
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.985 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.65, delay: shouldReduceMotion ? 0 : 0.38, ease: 'easeOut' }}
           className="hidden lg:block w-full"
         >
-          <div className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl overflow-hidden shadow-2xl hover:border-[#00C853]/30 transition-colors duration-500">
+          <div className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl overflow-hidden shadow-[0_0_30px_rgba(0,200,83,0.08)] hover:shadow-[0_0_40px_rgba(0,200,83,0.15)] hover:border-[#00C853]/30 transition-all duration-500">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1C1C20] bg-[#050505]">
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#FF3B30]/80" />
