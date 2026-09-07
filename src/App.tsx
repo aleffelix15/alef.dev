@@ -5,6 +5,7 @@ import { About } from './components/About'
 import { Stack } from './components/Stack'
 import { Project } from './components/Project'
 import { Education } from './components/Education'
+import { HowItWorks } from './components/HowItWorks'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 
@@ -32,6 +33,7 @@ export default function App() {
         <Education />
         <Project />
         <Stack />
+        <HowItWorks />
         <Contact />
       </main>
 
