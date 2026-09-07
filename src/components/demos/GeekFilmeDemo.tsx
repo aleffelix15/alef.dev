@@ -12,24 +12,18 @@ type Movie = {
   year: string;
   rating: string;
   duration: string;
+  voteAverage: number;
 };
 
-const CATOLOG: Movie[] = [
-  // Ação & Aventura
-  { id: 1, title: 'Neon Vanguard', category: 'Ação', year: '2026', rating: '16', duration: '2h 15min', image: 'https://picsum.photos/seed/1/200/300', banner: 'https://picsum.photos/seed/1/800/400', desc: 'Em uma metrópole cibernética, um ex-agente precisa infiltrar-se na última fortaleza de IA para recuperar a consciência de sua irmã.' },
-  { id: 2, title: 'The Last Cipher', category: 'Ação', year: '2024', rating: '14', duration: '1h 58min', image: 'https://picsum.photos/seed/2/200/300', banner: 'https://picsum.photos/seed/2/800/400', desc: 'Um historiador descobre um código antigo que pode abrir as portas de uma cidade perdida no deserto do Saara.' },
-  { id: 3, title: 'Shadow Protocol', category: 'Ação', year: '2025', rating: '16', duration: '2h 05min', image: 'https://picsum.photos/seed/3/200/300', banner: 'https://picsum.photos/seed/3/800/400', desc: 'Espiões de três nações rivais são forçados a cooperar quando um satélite de vigilância global é sequestrado.' },
-  { id: 4, title: 'Iron Zenith', category: 'Ação', year: '2027', rating: '12', duration: '2h 30min', image: 'https://picsum.photos/seed/4/200/300', banner: 'https://picsum.photos/seed/4/800/400', desc: 'A luta pela supremacia aérea atinge seu ápice quando robôs sentinelas começam a questionar suas ordens.' },
-  // Ficção Científica
-  { id: 5, title: 'Quantum Echoes', category: 'Sci-Fi', year: '2026', rating: '14', duration: '2h 10min', image: 'https://picsum.photos/seed/5/200/300', banner: 'https://picsum.photos/seed/5/800/400', desc: 'Viagens temporais são possíveis, mas cada salto apaga uma memória preciosa do viajante. Vale a pena salvar o mundo?' },
-  { id: 6, title: 'Nebula Drift', category: 'Sci-Fi', year: '2023', rating: 'L', duration: '1h 45min', image: 'https://picsum.photos/seed/6/200/300', banner: 'https://picsum.photos/seed/6/800/400', desc: 'Uma tripulação de mineiros espaciais encontra um artefato orgânico que começa a reescrever a biologia da nave.' },
-  { id: 7, title: 'Siren of Andromeda', category: 'Sci-Fi', year: '2025', rating: '16', duration: '2h 20min', image: 'https://picsum.photos/seed/7/200/300', banner: 'https://picsum.photos/seed/7/800/400', desc: 'Um sinal misterioso vindo de Andrômeda atrai a humanidade para uma armadilha intergaláctica.' },
-  { id: 8, title: 'Chronos Key', category: 'Sci-Fi', year: '2024', rating: '14', duration: '1h 50min', image: 'https://picsum.photos/seed/8/200/300', banner: 'https://picsum.photos/seed/8/800/400', desc: 'A chave para controlar o tempo foi encontrada, mas ela pertence a uma civilização que já extinguiu a própria espécie.' },
-  // Comédia & Drama
-  { id: 9, title: 'City of Echoes', category: 'Drama', year: '2022', rating: '14', duration: '2h 02min', image: 'https://picsum.photos/seed/9/200/300', banner: 'https://picsum.photos/seed/9/800/400', desc: 'Um músico falido descobre que pode ouvir as conversas do passado nas paredes de seu novo apartamento.' },
-  { id: 10, title: 'Paper Dreams', category: 'Comédia', year: '2023', rating: 'L', duration: '1h 30min', image: 'https://picsum.photos/seed/10/200/300', banner: 'https://picsum.photos/seed/10/800/400', desc: 'Dois rivais em uma agência de publicidade descobrem que são a única coisa que mantém a empresa viva.' },
-  { id: 11, title: 'The Quiet Hour', category: 'Drama', year: '2025', rating: '16', duration: '1h 55min', image: 'https://picsum.photos/seed/11/200/300', banner: 'https://picsum.photos/seed/11/800/400', desc: 'Em um mundo onde falar custa dinheiro, uma jovem decide gastar todas as suas economias em uma única frase.' },
-  { id: 12, title: 'Lunar Laughs', category: 'Comédia', year: '2026', rating: '12', duration: '1h 40min', image: 'https://picsum.photos/seed/12/200/300', banner: 'https://picsum.photos/seed/12/800/400', desc: 'A primeira tentativa de montar um clube de comédia na Lua enfrenta problemas técnicos... e gravitacionais.' },
+const API_KEY = (import.meta as any).env?.VITE_TMDB_API_KEY;
+const BASE_URL = 'https://api.themoviedb.org/3';
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
+
+const FALLBACK_MOVIES: Movie[] = [
+  { id: 1, title: 'Iron Man (Simulação)', category: 'Ação', year: '2008', rating: '12', duration: '2h 06min', image: '/geekfilme/ironman-poster-new.jpg', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo. (Configure a chave da API TMDB para ver os dados reais).', voteAverage: 8.0 },
+  { id: 2, title: 'WandaVision (Simulação)', category: 'Série', year: '2021', rating: '14', duration: '1 Temporada', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-banner.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.', voteAverage: 7.9 },
+  { id: 3, title: 'Thor (Simulação)', category: 'Ação', year: '2011', rating: '12', duration: '1h 55min', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-banner.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.', voteAverage: 7.0 },
+  { id: 4, title: 'B99 (Simulação)', category: 'Série', year: '2013', rating: '14', duration: '8 Temporadas', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-banner.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.', voteAverage: 8.4 },
 ];
 
 const MovieCard = memo(({ movie, onClick }: { movie: Movie; onClick: (m: Movie) => void }) => {
@@ -60,6 +54,7 @@ const MovieCard = memo(({ movie, onClick }: { movie: Movie; onClick: (m: Movie) 
 MovieCard.displayName = 'MovieCard';
 
 const MovieRow = memo(({ title, movies, onSelect }: { title: string; movies: Movie[]; onSelect: (m: Movie) => void }) => {
+  if (movies.length === 0) return null;
   return (
     <div className="mb-6">
       <h3 className="text-[#E5E5E5] font-bold text-[0.7rem] mb-2 flex items-center gap-2">
@@ -76,29 +71,119 @@ const MovieRow = memo(({ title, movies, onSelect }: { title: string; movies: Mov
 
 MovieRow.displayName = 'MovieRow';
 
-const GeekFilmeComponent: React.FC = () => {
+export const GeekFilmeDemo: React.FC = memo(() => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeMovie, setActiveMovie] = useState<Movie>(CATOLOG[0]);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [activeMovie, setActiveMovie] = useState<Movie | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
+    const loadMovies = async () => {
+      if (!API_KEY) {
+        setMovies(FALLBACK_MOVIES);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const genresRes = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=pt-BR`);
+        const genresData = await genresRes.json();
+        const genreMap = new Map(genresData.genres?.map((g: any) => [g.id, g.name]) || []);
+
+        const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-BR`);
+        const data = await response.json();
+
+        const mappedMovies = data.results.map((m: any) => ({
+          id: m.id,
+          title: m.title,
+          image: `${IMAGE_BASE_URL}w500${m.poster_path}`,
+          banner: `${IMAGE_BASE_URL}original${m.backdrop_path}`,
+          desc: m.overview,
+          category: m.genre_ids && m.genre_ids.length > 0 ? genreMap.get(m.genre_ids[0]) || 'Filmes' : 'Filmes',
+          year: m.release_date ? m.release_date.split('-')[0] : 'N/A',
+          rating: '14',
+          duration: '2h 00min',
+          voteAverage: m.vote_average,
+        })).filter((m: any) => m.image && !m.image.endsWith('null') && m.banner && !m.banner.endsWith('null'));
+
+        setMovies(mappedMovies);
+        if (mappedMovies.length > 0) setActiveMovie(mappedMovies[0]);
+      } catch (err) {
+        setMovies(FALLBACK_MOVIES);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadMovies();
   }, []);
 
-  const filteredMovies = useMemo(() =>
-    CATOLOG.filter(m => m.title.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery]
-  );
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+    if (!query) {
+      setIsSearching(false);
+      return;
+    }
 
-  const categories = useMemo(() =>
-    Array.from(new Set(CATOLOG.map(m => m.category))),
-    []
-  );
+    setIsSearching(true);
+    if (!API_KEY) return;
+
+    try {
+      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR`);
+      const data = await response.json();
+
+      const mapped = data.results.map((m: any) => ({
+        id: m.id,
+        title: m.title,
+        image: `${IMAGE_BASE_URL}w500${m.poster_path}`,
+        banner: `${IMAGE_BASE_URL}original${m.backdrop_path}`,
+        desc: m.overview,
+        category: 'Busca',
+        year: m.release_date ? m.release_date.split('-')[0] : 'N/A',
+        rating: '14',
+        duration: '2h 00min',
+        voteAverage: m.vote_average,
+      }));
+      setMovies(mapped);
+    } catch (err) {
+      console.error("Search error:", err);
+    }
+  };
+
+  const playTrailer = async (movie: Movie) => {
+    if (!API_KEY) return;
+
+    try {
+      const response = await fetch(`${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`);
+      const data = await response.json();
+      const trailer = data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube' && v.official) 
+                   || data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
+                   || data.results.find((v: any) => v.site === 'YouTube');
+
+      if (trailer) {
+        setTrailerKey(trailer.key);
+        setIsPlaying(true);
+      } else {
+        alert("Trailer não disponível para este título.");
+      }
+    } catch (err) {
+      console.error("Trailer error:", err);
+    }
+  };
+
+  const moviesByCategory = useMemo(() => {
+    const grouped: Record<string, Movie[]> = {};
+    movies.forEach(m => {
+      if (!grouped[m.category]) grouped[m.category] = [];
+      grouped[m.category].push(m);
+    });
+    // Sort so categories with more movies appear first, or alphabetically
+    return Object.entries(grouped).sort((a, b) => b[1].length - a[1].length);
+  }, [movies]);
 
   if (isLoading) {
     return (
@@ -118,6 +203,7 @@ const GeekFilmeComponent: React.FC = () => {
 
   return (
     <div className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
+      {/* Header */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-b from-black/90 to-transparent absolute top-0 left-0 right-0 z-40">
         <div className="flex items-center gap-4">
           <span className="font-black text-[#E50914] text-[0.8rem] tracking-tighter">GEEKFILME</span>
@@ -141,11 +227,11 @@ const GeekFilmeComponent: React.FC = () => {
                   autoFocus
                   placeholder="Títulos..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="bg-transparent text-[10px] text-white w-full outline-none px-1"
                   aria-label="Buscar títulos"
                 />
-                <button onClick={() => { setIsSearching(false); setSearchQuery(''); }} className="focus:outline-none">
+                <button onClick={() => { setIsSearching(false); handleSearch(''); }} className="focus:outline-none">
                   <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white" />
                 </button>
               </motion.div>
@@ -163,33 +249,35 @@ const GeekFilmeComponent: React.FC = () => {
         <AnimatePresence mode="wait">
           {!isPlaying ? (
             <motion.div key="catalog" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-4">
-              <div className="relative h-[150px] sm:h-[160px] w-full rounded-xl overflow-hidden mb-6 group">
-                <img src={activeMovie.banner} alt={activeMovie.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/40 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-transparent to-transparent opacity-90" />
+              {activeMovie && (
+                <div className="relative h-[150px] sm:h-[160px] w-full rounded-xl overflow-hidden mb-6 group">
+                  <img src={activeMovie.banner} alt={activeMovie.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-transparent to-transparent opacity-90" />
 
-                <div className="absolute inset-0 p-4 flex flex-col justify-end max-w-[300px]">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-accent text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">{activeMovie.category}</span>
-                    <span className="text-white/70 text-[8px] font-medium flex items-center gap-1"><Calendar className="w-2 h-2" /> {activeMovie.year}</span>
-                    <span className="text-white/70 text-[8px] font-medium flex items-center gap-1"><Clock className="w-2 h-2" /> {activeMovie.duration}</span>
-                    <span className="border border-white/30 text-white text-[8px] px-1 rounded font-bold">{activeMovie.rating}</span>
+                  <div className="absolute inset-0 p-4 flex flex-col justify-end max-w-[300px]">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-accent text-white text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">{activeMovie.category}</span>
+                      <span className="text-white/70 text-[8px] font-medium flex items-center gap-1"><Calendar className="w-2 h-2" /> {activeMovie.year}</span>
+                      <span className="border border-white/30 text-white text-[8px] px-1 rounded font-bold">{activeMovie.rating}</span>
+                      <span className="text-white/70 text-[8px] font-bold flex items-center gap-1">⭐ {activeMovie.voteAverage.toFixed(1)}</span>
+                    </div>
+                    <h2 className="text-white font-black text-xl sm:text-2xl mb-2 uppercase tracking-tight drop-shadow-md">{activeMovie.title}</h2>
+                    <p className="text-gray-300 text-[0.6rem] mb-3 line-clamp-2 font-medium leading-relaxed">{activeMovie.desc}</p>
+                    <button onClick={() => playTrailer(activeMovie)} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 w-fit hover:-translate-y-px active:scale-[0.98] transition-all focus:outline-none">
+                      <Play className="w-2.5 h-2.5 fill-current" /> Assistir
+                    </button>
                   </div>
-                  <h2 className="text-white font-black text-xl sm:text-2xl mb-2 uppercase tracking-tight drop-shadow-md">{activeMovie.title}</h2>
-                  <p className="text-gray-300 text-[0.6rem] mb-3 line-clamp-2 font-medium leading-relaxed">{activeMovie.desc}</p>
-                  <button onClick={() => { setIsPaused(false); setIsPlaying(true); }} className="bg-white hover:bg-gray-200 text-black px-3 py-1 rounded-sm text-[0.65rem] font-bold flex items-center gap-1.5 w-fit hover:-translate-y-px active:scale-[0.98] transition-all focus:outline-none">
-                    <Play className="w-2.5 h-2.5 fill-current" /> Assistir
-                  </button>
                 </div>
-              </div>
+              )}
 
               <div aria-live="polite">
                 {isSearching ? (
                   <div className="mt-4">
                     <h3 className="text-[#E5E5E5] font-bold text-[0.7rem] mb-2">Resultados da busca</h3>
                     <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x items-end pb-1">
-                      {filteredMovies.length > 0 ? (
-                        filteredMovies.map(movie => (
+                      {movies.length > 0 ? (
+                        movies.map(movie => (
                           <MovieCard key={movie.id} movie={movie} onClick={setActiveMovie} />
                         ))
                       ) : (
@@ -198,47 +286,56 @@ const GeekFilmeComponent: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <>
-                    <MovieRow title="Populares" movies={CATOLOG.slice(0, 4)} onSelect={setActiveMovie} />
-                    {categories.map(cat => (
-                      <MovieRow
-                        key={cat}
-                        title={cat}
-                        movies={CATOLOG.filter(m => m.category === cat)}
-                        onSelect={setActiveMovie}
-                      />
+                  <div className="flex flex-col gap-2 pb-4">
+                    {moviesByCategory.map(([category, catMovies]) => (
+                      <MovieRow key={category} title={category} movies={catMovies} onSelect={setActiveMovie} />
                     ))}
-                  </>
+                  </div>
                 )}
               </div>
             </motion.div>
           ) : (
             <motion.div key="player" initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} transition={{ duration: 0.25 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
-              <div className="absolute inset-0 opacity-20"><img src={activeMovie.banner} alt="" loading="lazy" className="w-full h-full object-cover blur-md" /></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                 <div className="flex flex-col items-center gap-3">
-                   {isPaused ? <Play className="w-6 h-6 text-white fill-white" /> : <div className="w-6 h-6 border-2 border-white/20 border-t-[#E50914] rounded-full" />}
-                   <span className="text-gray-300 font-medium text-[0.65rem] drop-shadow-md tracking-wide">{isPaused ? 'Pausado' : 'Reproduzindo...'}</span>
+              <div className="absolute inset-0 opacity-20">
+                {activeMovie && <img src={activeMovie.banner} alt="" loading="lazy" className="w-full h-full object-cover blur-md" />}
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center p-4">
+                 <div className="w-full h-full max-w-2xl aspect-video rounded-lg overflow-hidden shadow-2xl">
+                   {trailerKey ? (
+                     <iframe
+                      src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                      title="YouTube trailer player"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                     />
+                   ) : (
+                     <div className="w-full h-full flex items-center justify-center bg-[#1C1C20] text-gray-400 text-xs font-medium">
+                       Trailer não disponível para este título.
+                     </div>
+                   )}
                  </div>
               </div>
               <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
-                 <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden"><motion.div animate={{ scaleX: isPaused ? 0.22 : 0.3 }} transition={{ duration: shouldReduceMotion ? 0 : 0.25 }} style={{ transformOrigin: 'left' }} className="h-full bg-[#E50914]" /></div>
-                 <div className="flex items-center gap-3">
-                   <button onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-all focus:outline-none">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m15 18-6-6 6-6"/></svg>
-                   </button>
-                   <button onClick={() => setIsPaused(v => !v)} className="text-white hover:text-gray-300 active:scale-[0.95] transition-all focus:outline-none">
-                     {isPaused ? <Play className="w-3.5 h-3.5 fill-white" /> : <Pause className="w-3.5 h-3.5 fill-white" />}
-                   </button>
-                   <span className="text-white font-bold text-[0.65rem]">{activeMovie.title}</span>
+                 <div className="flex items-center justify-between">
+                   <div className="flex items-center gap-3">
+                     <button onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-all focus:outline-none">
+                       <X className="w-5 h-5 text-white" />
+                     </button>
+                     <span className="text-white font-bold text-[0.65rem]">{activeMovie?.title}</span>
+                   </div>
+                   <button onClick={() => setIsPlaying(false)} className="text-white/70 hover:text-white text-[0.6rem] font-medium">Fechar</button>
                  </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+      <div className="w-full text-center py-1 border-t border-[#1C1C20]/30 bg-black/20">
+        <span className="text-[10px] text-[#71717A] opacity-60 leading-tight">
+          Dados e imagens fornecidos por The Movie Database (TMDB). Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.
+        </span>
+      </div>
     </div>
   );
-};
-
-export const GeekFilmeDemo = memo(GeekFilmeComponent);
+});
