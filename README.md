@@ -33,4 +33,10 @@ npm run build
 - **LinkedIn:** [ÁLEF FELIX Teixeira](https://www.linkedin.com/in/alef-felix-teixeira-a5030b236)
 - **GitHub:** [@aleffelix15](https://github.com/aleffelix15)
 - **E-mail:** aleffelix81@gmail.com
-"# alef.dev" 
+
+## 🖼️ Open Graph (og:image)
+
+Se o arquivo `public/og-image.svg` for alterado, regere o `og-image.png` rodando:
+```bash
+node scripts/generate-og-image.js
+```
