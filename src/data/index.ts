@@ -3,8 +3,8 @@ export const SITE_DATA = {
     name: "ÁLEF FELIX",
     title: "Desenvolvedor Full Stack Freelance",
     heroDesc: "Construindo minha carreira em Engenharia de Software e desenvolvendo projetos próprios para impactar pessoas através da tecnologia.",
-    aboutDesc1: "Sou o ÁLEF FELIX — desenvolvedor que encontrou na tecnologia não só uma profissão, mas uma forma de pensar. Gosto de entender como as coisas funcionam por dentro, quebrar problemas em partes menores e construir soluções que realmente fazem sentido. Programação pra mim é mais do que escrever código: é criar algo que não existia antes.",
-    aboutDesc2: "Trabalho com desenvolvimento web e mobile, exploro inteligência artificial e estou sempre aprendendo algo novo. Venho me dedicando aos estudos desde 2025 e, em 2027, iniciarei minha graduação na UNIFALFA. Acredito que os melhores produtos nascem da curiosidade, e é isso que me move: transformar ideias em experiências que funcionam no mundo real.",
+    aboutDesc1: "Sou o ÁLEF FELIX — desenvolvedor que encontrou na tecnologia não só uma profissão, mas uma forma de resolver problemas reais. Gosto de entender como as coisas funcionam por dentro, quebrar desafios complexos em partes menores e construir soluções que entregam valor desde o primeiro dia. Programação, pra mim, é traduzir a necessidade de um negócio em produtos escaláveis e confiáveis.",
+    aboutDesc2: "Minha experiência prática se reflete nos projetos que construo: desde vitrines de e-commerce otimizadas e motores de busca instantâneos, até APIs estruturadas com rigor financeiro e plataformas interativas de impacto social. Trabalho com desenvolvimento web e mobile, e em 2027 iniciarei minha graduação na UNIFALFA para aprofundar as bases teóricas daquilo que já construo e testo todos os dias no mundo real.",
     email: "aleffelix81@gmail.com",
     github: "https://github.com/aleffelix15",
     linkedin: "https://www.linkedin.com/in/alef-felix-teixeira-a5030b236" 

@@ -116,9 +116,14 @@ export const Contact: React.FC = () => {
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </MagneticButton>
             <MagneticButton
-              href="https://wa.me/5562985163672?text=Ol%C3%A1%20Alef!%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto."
+              href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20quero%20conversar%20sobre%20um%20projeto."
+              onClick={() => {
+                // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
+                window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'contact_section' } }));
+              }}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Entre em contato via WhatsApp"
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-transparent border border-[#1C1C20] text-[#F5F5F5] font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto hover:bg-[#1C1C20]/50 hover:border-[#2A2A30]"
             >
               <MessageCircle className="w-5 h-5" />

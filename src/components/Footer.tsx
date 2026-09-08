@@ -34,7 +34,11 @@ export function Footer() {
             <Linkedin className="w-5 h-5" />
           </a>
           <a
-            href="https://wa.me/5562985163672?text=Ol%C3%A1%20Alef!%20Vi%20seu%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto."
+            href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20quero%20conversar%20sobre%20um%20projeto."
+            onClick={() => {
+              // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
+              window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'footer' } }));
+            }}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp"

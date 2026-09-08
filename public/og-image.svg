@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#050505" />
+  
+  <!-- Text Content -->
+  <text x="600" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">
+    ÁLEF FELIX
+  </text>
+  <text x="600" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="500" fill="#0066FF" text-anchor="middle">
+    Desenvolvedor Full Stack Freelance
+  </text>
+</svg>
+
