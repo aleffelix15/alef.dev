@@ -125,7 +125,7 @@ export const Contact: React.FC = () => {
               }}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Entre em contato via WhatsApp"
+              aria-label={t.contact.whatsappBtn}
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-transparent border border-[#1C1C20] text-[#F5F5F5] font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto hover:bg-[#1C1C20]/50 hover:border-[#2A2A30]"
             >
               <MessageCircle className="w-5 h-5" />

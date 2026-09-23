@@ -47,7 +47,7 @@ export const Stack: React.FC = () => {
                   <div className="mb-6 flex items-center gap-3">
                     <span className={`w-2 h-2 rounded-full ${styles.dotColor} shadow-[0_0_10px_currentColor]`} />
                     <h3 className="font-mono text-xs font-bold text-[#E0E0E0] uppercase tracking-wider">
-                      {category.name}
+                      {t.stackCategories[category.name] || category.name}
                     </h3>
                   </div>
                   <div className="flex flex-wrap gap-2.5">
@@ -73,7 +73,7 @@ export const Stack: React.FC = () => {
                   <div className="flex items-center gap-3 whitespace-nowrap">
                     <span className={`w-2 h-2 rounded-full ${getCategoryStyles('Infra & OS').dotColor} shadow-[0_0_10px_currentColor] animate-pulse`} />
                     <h3 className="font-mono text-xs font-bold text-[#E0E0E0] uppercase tracking-wider">
-                      {infraCategory.name}
+                      {t.stackCategories[infraCategory.name] || infraCategory.name}
                     </h3>
                   </div>
                   <div className="flex flex-wrap items-center gap-2.5">

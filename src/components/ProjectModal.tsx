@@ -20,6 +20,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
   const { t } = useLanguage();
   if (!project) return null;
 
+  const pData = t.projectsData[project.id] || project;
+
   const renderDemo = () => {
     switch(project.demoType) {
       case 'decode': return <DecodeDemo />;
@@ -62,14 +64,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               layoutId={`category-${project.id}`}
               className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
             >
-              {project.category}
+              {pData.category}
             </motion.span>
-            {project.metric && (
+            {pData.metric && (
               <motion.span
                 className="flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.05em] text-[#F5F5F5] border border-[#1C1C20] bg-[#050505] px-2 py-1 rounded w-fit"
               >
                 <CheckCircle2 className="w-3 h-3 text-accent" />
-                {project.metric}
+                {pData.metric}
               </motion.span>
             )}
             
@@ -84,7 +86,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
                 layoutId={`subtitle-${project.id}`}
                 className="font-body text-base md:text-lg text-accent font-medium"
               >
-                {project.subtitle}
+                {pData.subtitle}
               </motion.p>
             </div>
             
@@ -92,7 +94,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               layoutId={`desc-${project.id}`}
               className="font-body text-base text-[#A1A1AA] leading-relaxed"
             >
-              {project.desc}
+              {pData.desc}
             </motion.p>
           </div>
 
@@ -116,28 +118,28 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-[#1C1C20]"
           >
             <div className="md:col-span-2 flex flex-col gap-6">
-              {project.whyCreated && (
+              {pData.whyCreated && (
                 <div>
                   <h4 className="text-white font-bold mb-2">{t.projectModal.whyCreated}</h4>
-                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whyCreated}</p>
+                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{pData.whyCreated}</p>
                 </div>
               )}
-              {project.whatItIsFor && (
+              {pData.whatItIsFor && (
                 <div>
                   <h4 className="text-white font-bold mb-2">{t.projectModal.whatItIsFor}</h4>
-                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whatItIsFor}</p>
+                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{pData.whatItIsFor}</p>
                 </div>
               )}
-              {project.whatIDeveloped && (
+              {pData.whatIDeveloped && (
                 <div>
                   <h4 className="text-white font-bold mb-2">{t.projectModal.whatIDeveloped}</h4>
-                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whatIDeveloped}</p>
+                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{pData.whatIDeveloped}</p>
                 </div>
               )}
-              {project.results && (
+              {pData.results && (
                 <div>
                   <h4 className="text-white font-bold mb-2">{t.projectModal.results}</h4>
-                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.results}</p>
+                  <p className="text-[#9A9A9A] text-sm leading-relaxed">{pData.results}</p>
                 </div>
               )}
             </div>

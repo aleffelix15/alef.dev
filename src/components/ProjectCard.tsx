@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { SpotlightCard } from './SpotlightCard';
 import { ProjectType } from './Project';
 import { CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -10,6 +11,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
+  const { t } = useLanguage();
+  const pData = t.projectsData[project.id] || project;
   // Define custom glow and border colors based on demoType
     const getColors = (type?: string) => {
     switch(type) {
@@ -43,14 +46,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
           layoutId={`category-${project.id}`}
           className="font-mono text-[0.65rem] tracking-[0.1em] uppercase text-accent border border-accent/20 bg-accent/10 px-2 py-1 rounded w-fit"
         >
-          {project.category}
+          {pData.category}
         </motion.span>
-        {project.metric && (
+        {pData.metric && (
           <motion.span
             className="flex items-center gap-1.5 font-mono text-[0.65rem] tracking-[0.05em] text-[#F5F5F5] border border-[#1C1C20] bg-[#050505] px-2 py-1 rounded w-fit"
           >
             <CheckCircle2 className="w-3 h-3 text-accent" />
-            {project.metric}
+            {pData.metric}
           </motion.span>
         )}
         
@@ -65,7 +68,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
             layoutId={`subtitle-${project.id}`}
             className="font-body text-sm text-accent font-medium"
           >
-            {project.subtitle}
+            {pData.subtitle}
           </motion.p>
         </div>
 
@@ -73,7 +76,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
           layoutId={`desc-${project.id}`}
           className="font-body text-sm text-[#9A9A9A] leading-relaxed flex-1 mt-2 line-clamp-3"
         >
-          {project.desc}
+          {pData.desc}
         </motion.p>
 
         <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-[#1C1C20]">

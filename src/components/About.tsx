@@ -40,15 +40,15 @@ export const About: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-[60fr_40fr] gap-16 items-start lg:items-center">
           <div className="flex flex-col gap-6">
             <motion.p variants={itemVariants} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8]">
-              {SITE_DATA.profile.aboutDesc1}
+              {t.about.desc1}
             </motion.p>
             <motion.p variants={itemVariants} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8]">
-              {SITE_DATA.profile.aboutDesc2}
+              {t.about.desc2}
             </motion.p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {SITE_DATA.stats.map((stat, index) => (
+            {t.statsData.map((stat: any, index: number) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
