@@ -1,26 +1,10 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-
-const steps = [
-  {
-    title: "Conversa inicial",
-    description: "Você me conta o problema, eu entendo o contexto do seu negócio antes de falar em solução.",
-  },
-  {
-    title: "Proposta",
-    description: "Envio um escopo claro: o que será feito, prazo estimado e valor — sem letras miúdas.",
-  },
-  {
-    title: "Desenvolvimento",
-    description: "Construo o projeto com atualizações periódicas, para você acompanhar o progresso.",
-  },
-  {
-    title: "Entrega",
-    description: "Entrego funcionando, com um período de ajustes incluído.",
-  },
-];
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const HowItWorks: React.FC = () => {
+  const { t } = useLanguage();
+  const steps = t.howItWorks.steps;
   const shouldReduceMotion = useReducedMotion();
 
   const containerVariants = shouldReduceMotion
@@ -44,11 +28,11 @@ export const HowItWorks: React.FC = () => {
           <div className="flex items-center justify-center gap-2 mb-6">
             <span className="text-accent">·</span>
             <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Processo de Trabalho
+              {t.howItWorks.label}
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-[#F5F5F5] tracking-tight leading-tight">
-            Como funciona a parceria
+            {t.howItWorks.title}
           </h2>
         </motion.div>
 

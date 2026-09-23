@@ -4,10 +4,12 @@ import { SITE_DATA } from '../data';
 import { FadeInWhenVisible } from './Animations';
 import { ProjectCard } from './ProjectCard';
 import { ProjectModal } from './ProjectModal';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export type ProjectType = typeof SITE_DATA.projects[0];
 
 export const Project: React.FC = () => {
+  const { t } = useLanguage();
   const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null);
   
   const highlightedProjects = SITE_DATA.projects.filter(p => p.isHighlight);
@@ -23,15 +25,15 @@ export const Project: React.FC = () => {
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-[#0066FF]">■</span>
                 <span className="font-mono text-[0.65rem] font-semibold tracking-[0.1em] uppercase text-[#0066FF]">
-                  Projetos
+                  {t.projects.label}
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5F5] tracking-tight">
-                Projetos & Construções
+                {t.projects.title}
               </h2>
             </div>
             <p className="font-body text-[0.9375rem] text-[#71717A] max-w-sm md:text-right">
-              Aplicações reais, arquiteturas escaláveis e experiências interativas. Clique nos cards para testar as demonstrações.
+              {t.projects.subtitle}
             </p>
           </div>
         </FadeInWhenVisible>

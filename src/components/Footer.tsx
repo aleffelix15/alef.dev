@@ -1,13 +1,15 @@
 import { Github, Linkedin, MessageCircle } from 'lucide-react'
 import { SITE_DATA } from '../data'
+import { useLanguage } from '../i18n/LanguageContext'
 
 export function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="bg-[#050505] border-t border-[#1C1C20] py-8">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
         <div className="flex flex-col gap-1">
           <p className="font-body text-[0.8125rem] font-medium text-[#71717A]">
-            Feito com dedicação por {SITE_DATA.profile.name}
+            {t.footer.madeBy} {SITE_DATA.profile.name}
           </p>
           <p className="font-body text-[0.8125rem] font-medium text-[#71717A]">
             &copy; {new Date().getFullYear()}
@@ -34,7 +36,7 @@ export function Footer() {
             <Linkedin className="w-5 h-5" />
           </a>
           <a
-            href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre%20uma%20oportunidade."
+            href={`https://wa.me/5562985163672?text=${encodeURIComponent(t.footer.whatsappMsg)}`}
             onClick={() => {
               // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
               window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'footer' } }));

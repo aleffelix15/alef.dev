@@ -2,15 +2,17 @@ import React from 'react';
 import { SITE_DATA } from '../data';
 import { FadeInWhenVisible } from './Animations';
 import { SpotlightCard } from './SpotlightCard';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Stack: React.FC = () => {
+  const { t } = useLanguage();
   const mainCategories = SITE_DATA.stackCategories.filter(c => c.name !== 'Infra & OS');
   const infraCategory = SITE_DATA.stackCategories.find(c => c.name === 'Infra & OS');
 
   const getCategoryStyles = (name: string) => {
     switch (name) {
-      case 'Frontend': return { dotColor: "bg-[#3B82F6]", spotlight: "rgba(59, 130, 246, 0.15)" }; // Blue
       case 'Backend & APIs': return { dotColor: "bg-accent", spotlight: "rgba(0, 102, 255, 0.15)" }; // Accent (Blue)
+      case 'Frontend (Complementar)': return { dotColor: "bg-[#3B82F6]", spotlight: "rgba(59, 130, 246, 0.15)" }; // Blue
       case 'Styling & UI': return { dotColor: "bg-[#A855F7]", spotlight: "rgba(168, 85, 247, 0.15)" }; // Purple
       case 'Tools & DevOps': return { dotColor: "bg-[#F97316]", spotlight: "rgba(249, 115, 22, 0.15)" }; // Orange
       case 'Infra & OS': return { dotColor: "bg-[#FFD700]", spotlight: "rgba(255, 215, 0, 0.15)" }; // Gold
@@ -26,11 +28,11 @@ export const Stack: React.FC = () => {
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[#00C853] animate-pulse">·</span>
             <span className="font-body text-xs font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Tecnologias & Ferramentas
+              {t.stack.label}
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#F5F5F5] tracking-tight">
-            Meu Ecossistema
+            {t.stack.title}
           </h2>
         </FadeInWhenVisible>
 

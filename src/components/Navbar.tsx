@@ -3,21 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 import { SITE_DATA } from '../data';
-
-const navLinks = [
-  { name: 'Início', href: '#hero' },
-  { name: 'Sobre', href: '#sobre' },
-  { name: 'Trajetória', href: '#trajetoria' },
-  { name: 'Projetos', href: '#projeto' },
-  { name: 'Ecossistema', href: '#stack' },
-  { name: 'Contato', href: '#contato' }
-];
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Navbar: React.FC = () => {
+  const { t, language, setLanguage } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = React.useRef(0);
+
+  const navLinks = [
+    { name: t.nav.home, href: '#hero' },
+    { name: t.nav.about, href: '#sobre' },
+    { name: t.nav.trajectory, href: '#trajetoria' },
+    { name: t.nav.projects, href: '#projeto' },
+    { name: t.nav.ecosystem, href: '#stack' },
+    { name: t.nav.contact, href: '#contato' }
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,10 +29,8 @@ export const Navbar: React.FC = () => {
       if (currentScrollY <= 80) {
         setIsVisible(true);
       } else if (diff > 8) {
-        // Scrolling down -> hide navbar
         setIsVisible(false);
       } else if (diff < -8) {
-        // Scrolling up -> show navbar
         setIsVisible(true);
       }
 
@@ -65,6 +65,10 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const toggleLanguage = () => {
+    setLanguage(language === 'pt-br' ? 'en' : 'pt-br');
+  };
+
   return (
     <>
       <nav
@@ -85,7 +89,7 @@ export const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);
-              const isContact = link.name === 'Contato';
+              const isContact = link.name === t.nav.contact;
 
               if (isContact) {
                 return (
@@ -94,7 +98,7 @@ export const Navbar: React.FC = () => {
                     href={link.href}
                     className="relative overflow-hidden group font-body font-medium text-xs uppercase tracking-wider text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] hover:bg-[#111114] hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] px-3.5 py-1.5 rounded-lg transition-[transform,background-color,border-color]"
                   >
-                    <span className="relative z-10">Contato</span>
+                    <span className="relative z-10">{t.nav.contact}</span>
                   </a>
                 );
               }
@@ -116,6 +120,15 @@ export const Navbar: React.FC = () => {
                 </a>
               );
             })}
+
+            {/* Language Selector */}
+            <button
+              onClick={toggleLanguage}
+              className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] px-2.5 py-1.5 rounded-md transition-all uppercase tracking-wider"
+              aria-label="Toggle language"
+            >
+              {language === 'pt-br' ? '🇺🇸 EN' : '🇧🇷 PT'}
+            </button>
           </div>
 
           {/* Mobile Toggle */}
@@ -143,13 +156,23 @@ export const Navbar: React.FC = () => {
               <span className="font-display font-semibold text-sm text-[#F5F5F5] tracking-[0.04em] uppercase">
                 {SITE_DATA.profile.name}
               </span>
-              <button
-                className="text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg p-1.5 border border-[#1C1C20] bg-[#0D0D0F]"
-                onClick={closeMenu}
-                aria-label="Close menu"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Mobile Language Selector */}
+                <button
+                  onClick={toggleLanguage}
+                  className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] px-2.5 py-1.5 rounded-md transition-all uppercase tracking-wider"
+                  aria-label="Toggle language"
+                >
+                  {language === 'pt-br' ? '🇺🇸 EN' : '🇧🇷 PT'}
+                </button>
+                <button
+                  className="text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg p-1.5 border border-[#1C1C20] bg-[#0D0D0F]"
+                  onClick={closeMenu}
+                  aria-label="Close menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             <div className="flex flex-col w-full max-w-xs mx-auto space-y-4 my-auto">

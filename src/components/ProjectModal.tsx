@@ -9,6 +9,7 @@ import { GeekFilmeDemo } from './demos/GeekFilmeDemo';
 import { VerticeDemo } from './demos/VerticeDemo';
 
 import { ProjectType } from './Project';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ProjectModalProps {
   project: ProjectType | null;
@@ -16,6 +17,7 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+  const { t } = useLanguage();
   if (!project) return null;
 
   const renderDemo = () => {
@@ -24,7 +26,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       case 'banking': return <BankingDemo />;
       case 'geekfilme': return <GeekFilmeDemo />;
       case 'vertice': return <VerticeDemo />;
-      default: return <div className="text-[#71717A] text-sm italic">Área de Demonstração Interativa</div>;
+      default: return <div className="text-[#71717A] text-sm italic">{t.projectModal.demoFallback}</div>;
     }
   };
 
@@ -116,25 +118,25 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             <div className="md:col-span-2 flex flex-col gap-6">
               {project.whyCreated && (
                 <div>
-                  <h4 className="text-white font-bold mb-2">Por que foi criado?</h4>
+                  <h4 className="text-white font-bold mb-2">{t.projectModal.whyCreated}</h4>
                   <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whyCreated}</p>
                 </div>
               )}
               {project.whatItIsFor && (
                 <div>
-                  <h4 className="text-white font-bold mb-2">Para que serve?</h4>
+                  <h4 className="text-white font-bold mb-2">{t.projectModal.whatItIsFor}</h4>
                   <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whatItIsFor}</p>
                 </div>
               )}
               {project.whatIDeveloped && (
                 <div>
-                  <h4 className="text-white font-bold mb-2">O que desenvolvi?</h4>
+                  <h4 className="text-white font-bold mb-2">{t.projectModal.whatIDeveloped}</h4>
                   <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.whatIDeveloped}</p>
                 </div>
               )}
               {project.results && (
                 <div>
-                  <h4 className="text-white font-bold mb-2">Resultados</h4>
+                  <h4 className="text-white font-bold mb-2">{t.projectModal.results}</h4>
                   <p className="text-[#9A9A9A] text-sm leading-relaxed">{project.results}</p>
                 </div>
               )}
@@ -142,7 +144,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
             <div className="flex flex-col gap-6">
               <div>
-                <h4 className="text-white font-bold mb-3">Ecossistema</h4>
+                <h4 className="text-white font-bold mb-3">{t.projectModal.ecosystem}</h4>
                 <div className="flex gap-2 flex-wrap">
                   {project.tech.map((t: string) => (
                     <span key={t} className="font-mono text-[0.65rem] text-[#E0E0E0] bg-[#1C1C20] border border-[#2A2A30] px-3 py-1.5 rounded">
@@ -155,12 +157,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <div className="flex flex-col gap-3 mt-4">
                 {project.demoUrl && (
                   <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-black py-2.5 rounded-lg font-bold text-sm transition-colors">
-                    <ExternalLink className="w-4 h-4" /> Acessar Aplicação
+                    <ExternalLink className="w-4 h-4" /> {t.projectModal.accessApp}
                   </a>
                 )}
                 {project.githubUrl && (
                   <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#1C1C20] hover:bg-[#2A2A30] text-white py-2.5 rounded-lg font-bold text-sm transition-colors border border-[#3F3F46]">
-                    <Github className="w-4 h-4" /> Código Fonte
+                    <Github className="w-4 h-4" /> {t.projectModal.sourceCode}
                   </a>
                 )}
               </div>

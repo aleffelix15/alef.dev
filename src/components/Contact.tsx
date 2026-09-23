@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useReducedMotion, Variants } from 'framer-motion';
 import { ArrowUpRight, Github, Linkedin, Mail, MessageCircle } from 'lucide-react';
 import { SITE_DATA } from '../data';
+import { useLanguage } from '../i18n/LanguageContext';
 
 type MagneticButtonProps = {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ const MagneticButton = ({
 };
 
 export const Contact: React.FC = () => {
+  const { t } = useLanguage();
   const shouldReduceMotion = useReducedMotion();
 
   const containerVariant = (shouldReduceMotion ? {} : {
@@ -89,21 +91,21 @@ export const Contact: React.FC = () => {
           <motion.div variants={itemVariant} className="flex items-center justify-center gap-2 mb-6">
             <span className="text-accent animate-pulse">·</span>
             <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Contato
+              {t.contact.label}
             </span>
           </motion.div>
           
           <h2 className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1] flex flex-col items-center text-center">
             <span className="overflow-hidden pb-1">
-              <motion.span variants={itemVariant} className="inline-block">Buscando desenvolvedor</motion.span>
+              <motion.span variants={itemVariant} className="inline-block">{t.contact.titleLine1}</motion.span>
             </span>
             <span className="overflow-hidden pb-1">
-              <motion.span variants={itemVariant} className="inline-block text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]">para o seu time?</motion.span>
+              <motion.span variants={itemVariant} className="inline-block text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]">{t.contact.titleLine2}</motion.span>
             </span>
           </h2>
           
           <motion.p variants={itemVariant} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8] mb-12 max-w-lg mx-auto">
-            Estou aberto a oportunidades (CLT ou PJ) para atuar na construção de produtos escaláveis.
+            {t.contact.subtitle}
           </motion.p>
           
           <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -112,11 +114,11 @@ export const Contact: React.FC = () => {
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-accent text-white font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_theme(colors.accent.glow)] hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:bg-accent-hover"
             >
               <Mail className="w-5 h-5" />
-              <span>Enviar e-mail</span>
+              <span>{t.contact.emailBtn}</span>
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </MagneticButton>
             <MagneticButton
-              href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre%20uma%20oportunidade."
+              href={`https://wa.me/5562985163672?text=${encodeURIComponent(t.contact.whatsappMsg)}`}
               onClick={() => {
                 // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
                 window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'contact_section' } }));
@@ -127,12 +129,12 @@ export const Contact: React.FC = () => {
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-transparent border border-[#1C1C20] text-[#F5F5F5] font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto hover:bg-[#1C1C20]/50 hover:border-[#2A2A30]"
             >
               <MessageCircle className="w-5 h-5" />
-              <span>WhatsApp</span>
+              <span>{t.contact.whatsappBtn}</span>
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </MagneticButton>
           </motion.div>
           <motion.p variants={itemVariant} className="mt-6 text-[#71717A] font-body text-sm opacity-80">
-            Respondo pessoalmente — sem intermediários, sem formulário longo.
+            {t.contact.footnote}
           </motion.p>
 
           <motion.div variants={itemVariant} className="mt-16 flex items-center justify-center gap-6">

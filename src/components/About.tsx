@@ -2,9 +2,11 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Counter } from './Counter';
 import { SITE_DATA } from '../data';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const About: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
+  const { t } = useLanguage();
 
   const containerVariants = shouldReduceMotion 
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
@@ -27,11 +29,11 @@ export const About: React.FC = () => {
           <div className="flex items-center gap-2">
             <span className="text-[#0066FF]">·</span>
             <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Sobre mim
+              {t.about.label}
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-[3rem] font-bold text-[#F5F5F5] tracking-[-0.02em] mt-4">
-            Quem está por trás do código
+            {t.about.title}
           </h2>
         </motion.div>
 

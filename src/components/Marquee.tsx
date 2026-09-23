@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Marquee: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
-  const text = "SOFTWARE ENGINEERING • CREATIVE TECHNOLOGY • UI/UX DESIGN • FULLSTACK DEVELOPMENT • ";
+  const { t } = useLanguage();
+  const text = t.marquee.text;
   
   return (
     <div className="w-full overflow-hidden bg-transparent py-4 mt-20 mb-12 border-y border-[#1C1C20]">

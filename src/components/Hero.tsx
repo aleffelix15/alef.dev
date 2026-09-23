@@ -3,10 +3,12 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { ChevronRight, ArrowDown } from 'lucide-react';
 import { HeroSectionWrapper } from './Animations';
 import { MaskTextReveal } from './MaskTextReveal';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+  const { t } = useLanguage();
 
   // --- LÓGICA DO PARALLAX ---
   const { scrollY } = useScroll();
@@ -52,14 +54,14 @@ export const Hero: React.FC = () => {
               <span className="absolute inline-flex h-full w-full rounded-full bg-success opacity-75 animate-ping" />
               <span className="relative h-2 w-2 rounded-full bg-success shadow-[0_0_8px_theme(colors.success)]" />
             </div>
-            <span className="font-mono text-[0.65rem] font-semibold text-success tracking-[0.2em] uppercase drop-shadow-[0_0_5px_rgba(0,200,83,0.3)]">Disponível para novos desafios</span>
+            <span className="font-mono text-[0.65rem] font-semibold text-success tracking-[0.2em] uppercase drop-shadow-[0_0_5px_rgba(0,200,83,0.3)]">{t.hero.available}</span>
           </motion.div>
 
           <div className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold tracking-tight mb-5 sm:mb-6 flex flex-col items-start">
-            <MaskTextReveal text="DESENVOLVEDOR" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="BACKEND" className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
-            <MaskTextReveal text="FOCADO EM" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="ARQUITETURA" className="text-[#F5F5F5]" />
+            <MaskTextReveal text={t.hero.line1} className="text-[#F5F5F5]" />
+            <MaskTextReveal text={t.hero.line2} className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
+            <MaskTextReveal text={t.hero.line3} className="text-[#F5F5F5]" />
+            <MaskTextReveal text={t.hero.line4} className="text-[#F5F5F5]" />
           </div>
 
           <motion.p
@@ -69,7 +71,7 @@ export const Hero: React.FC = () => {
             }}
             className="font-body text-base md:text-lg text-[#A1A1AA] max-w-md leading-relaxed mb-10"
           >
-            Construindo sistemas robustos, APIs seguras e garantindo escalabilidade e integridade dos dados.
+            {t.hero.subtitle}
           </motion.p>
           
           <motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4">
@@ -77,13 +79,13 @@ export const Hero: React.FC = () => {
               href="#projeto"
               className="group inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-hover hover:shadow-[0_0_20px_theme(colors.accent.glow)] font-body text-[0.9375rem] font-bold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Ver projetos <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+              {t.hero.cta1} <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
               href="#contato"
               className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-accent/10 hover:border-accent/30 hover:text-accent font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Entrar em contato <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              {t.hero.cta2} <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
           </motion.div>
         </motion.div>
@@ -110,15 +112,15 @@ export const Hero: React.FC = () => {
                 <code>
                   <span className="text-accent">const</span> <span className="text-[#F5F5F5]">developer</span> <span className="text-accent">=</span> {'{'}<br/>
                   {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#FFD700]">'ÁLEF FELIX'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#FFD700]">'Backend Developer'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#FFD700]">'Java'</span>, <span className="text-[#FFD700]">'Spring Boot'</span>, <span className="text-[#FFD700]">'PostgreSQL'</span>],<br/>
-                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#FFD700]">'Cloud & Scalability'</span><br/>
+                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#FFD700]">'{t.hero.codeRole}'</span>,<br/>
+                  {'  '}<span className="text-[#71717A]">focus:</span> {t.hero.codeFocus},<br/>
+                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#FFD700]">'{t.hero.codeLearning}'</span><br/>
                   {'}'}<br/><br/>
-                  <span className="text-accent">function</span> <span className="text-[#F5F5F5]">architectSystem</span>(<span className="text-[#FF9500]">requirements</span>) {'{'}<br/>
-                  {'  '}<span className="text-accent">return</span> <span className="text-[#71717A]">{`/* -> robustez -> escalabilidade -> segurança */`}</span>;<br/>
+                  <span className="text-accent">function</span> <span className="text-[#F5F5F5]">{t.hero.codeFnName}</span>(<span className="text-[#FF9500]">{t.hero.codeFnParam}</span>) {'{'}<br/>
+                  {'  '}<span className="text-accent">return</span> <span className="text-[#71717A]">{t.hero.codeFnReturn}</span>;<br/>
                   {'}'}<br/><br/>
-                  <span className="text-[#F5F5F5]">console</span>.<span className="text-accent">log</span>(<span className="text-[#F5F5F5]">architectSystem</span>(<span className="text-[#FFD700]">'Seu projeto'</span>));<br/>
-                  <span className="text-[#71717A]">// Pronto para construir arquiteturas sólidas 🚀</span>
+                  <span className="text-[#F5F5F5]">console</span>.<span className="text-accent">log</span>(<span className="text-[#F5F5F5]">{t.hero.codeFnName}</span>(<span className="text-[#FFD700]">'{t.hero.codeConsoleArg}'</span>));<br/>
+                  <span className="text-[#71717A]">// {t.hero.codeComment}</span>
                   <span aria-hidden="true" className="terminal-cursor bg-accent" />
                 </code>
               </pre>
