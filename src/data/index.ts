@@ -1,10 +1,10 @@
 export const SITE_DATA = {
   profile: {
     name: "ÁLEF FELIX",
-    title: "Desenvolvedor Full Stack Freelance",
-    heroDesc: "Construindo minha carreira em Engenharia de Software e desenvolvendo projetos próprios para impactar pessoas através da tecnologia.",
-    aboutDesc1: "Sou o ÁLEF FELIX — desenvolvedor que encontrou na tecnologia não só uma profissão, mas uma forma de resolver problemas reais. Gosto de entender como as coisas funcionam por dentro, quebrar desafios complexos em partes menores e construir soluções que entregam valor desde o primeiro dia. Programação, pra mim, é traduzir a necessidade de um negócio em produtos escaláveis e confiáveis.",
-    aboutDesc2: "Minha experiência prática se reflete nos projetos que construo: desde vitrines de e-commerce otimizadas e motores de busca instantâneos, até APIs estruturadas com rigor financeiro e plataformas interativas de impacto social. Trabalho com desenvolvimento web e mobile, e em 2027 iniciarei minha graduação na UNIFALFA para aprofundar as bases teóricas daquilo que já construo e testo todos os dias no mundo real.",
+    title: "Backend Developer",
+    heroDesc: "Estudante de Engenharia de Software na UNIALFA. Desenvolvo arquiteturas robustas, APIs seguras e soluções escaláveis.",
+    aboutDesc1: "Sou o ÁLEF FELIX — desenvolvedor focado no backend que encontrou na tecnologia uma forma de resolver problemas complexos. Gosto de entender como as coisas funcionam por baixo dos panos, projetar bancos de dados eficientes e construir APIs seguras que entregam valor desde o primeiro dia. Programação, pra mim, é traduzir regras de negócio críticas em sistemas escaláveis e confiáveis.",
+    aboutDesc2: "Minha experiência prática se reflete nos projetos que construo: APIs estruturadas com rigor financeiro, bancos de dados relacionais bem modelados e arquiteturas limpas. Tenho o frontend como habilidade complementar, o que me permite entender a aplicação de ponta a ponta. Atualmente, estudo Engenharia de Software na UNIALFA para aprofundar as bases teóricas daquilo que já aplico na prática.",
     email: "aleffelix81@gmail.com",
     github: "https://github.com/aleffelix15",
     linkedin: "https://www.linkedin.com/in/alef-felix-teixeira-a5030b236" 
@@ -12,32 +12,48 @@ export const SITE_DATA = {
   stats: [
     { value: 'Engenharia', label: 'Formação', isNumber: false, prefix: '' },
     { value: 10, prefix: '+', label: 'Tecnologias', isNumber: true },
-    { value: 'Em evolução', label: 'Carreira', isNumber: false, prefix: '' },
+    { value: 'Backend', label: 'Foco principal', isNumber: false, prefix: '' },
     { value: 10, prefix: '+', label: 'Projetos', isNumber: true }
   ],
   stackCategories: [
     {
-      name: 'Frontend',
-      techs: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'React Native']
-    },
-    {
       name: 'Backend & APIs',
-      techs: ['Java', 'Spring Boot', 'Python', 'Node.js', 'PostgreSQL', 'Supabase']
+      techs: ['Java', 'Spring Boot', 'Python', 'Node.js', 'PostgreSQL', 'H2', 'JWT']
     },
     {
-      name: 'Styling & UI',
-      techs: ['Tailwind CSS', 'Framer Motion', 'Zustand']
+      name: 'Infra & OS',
+      techs: ['Docker', 'Linux Mint', 'Zorin OS', 'AWS']
     },
     {
       name: 'Tools & DevOps',
       techs: ['Git', 'GitHub', 'Vite', 'Vercel']
     },
     {
-      name: 'Infra & OS',
-      techs: ['Linux Mint', 'Zorin OS', 'Docker', 'AWS']
+      name: 'Frontend (Complementar)',
+      techs: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React']
+    },
+    {
+      name: 'Styling & UI',
+      techs: ['Tailwind CSS', 'Framer Motion', 'Zustand']
     }
   ],
   projects: [
+    {
+      id: "banking-api",
+      name: "Banking System API",
+      subtitle: "Arquitetura robusta para operações financeiras",
+      category: "Backend · API REST",
+      isHighlight: true,
+      metric: "12+ endpoints REST com autenticação",
+      demoType: "banking",
+      desc: "Uma API RESTful completa desenvolvida em Java e Spring Boot que simula as operações essenciais e o fluxo de dados de um banco digital moderno.",
+      whyCreated: "Sistemas financeiros não perdoam erro: um bug de arredondamento ou uma falha de autenticação pode custar dinheiro real e confiança do cliente.",
+      whatItIsFor: "Uma API que sustenta as operações centrais de um banco digital — cadastro, autenticação, depósito, saque e transferência — com regras que impedem saldo inconsistente mesmo sob uso simultâneo.",
+      whatIDeveloped: "Arquitetura em Java 17 + Spring Boot com Spring Security para autenticação, JPA/Hibernate sobre MySQL para persistência confiável, e um histórico auditável de cada transação — a mesma base que qualquer sistema com dinheiro real exige.",
+      results: "12+ endpoints testados e documentados, prontos para integrar num app ou sistema interno sem expor o negócio a risco de inconsistência de dados.",
+      tech: ["Java 17", "Spring Boot", "Spring Security", "JPA/Hibernate", "MySQL"],
+      githubUrl: "https://github.com/aleffelix15/banking-system-api",
+    },
     {
       id: "decode",
       name: "DECODE",
@@ -54,22 +70,6 @@ export const SITE_DATA = {
       tech: ['React', 'TypeScript', 'Tailwind', 'Framer Motion'],
       demoUrl: "https://decode-ochre.vercel.app",
       githubUrl: "https://github.com/aleffelix15/decode",
-    },
-    {
-      id: "banking-api",
-      name: "Banking System API",
-      subtitle: "Arquitetura robusta para operações financeiras",
-      category: "Backend · API REST",
-      isHighlight: true,
-      metric: "12+ endpoints REST com autenticação",
-      demoType: "banking",
-      desc: "Uma API RESTful completa desenvolvida em Java e Spring Boot que simula as operações essenciais e o fluxo de dados de um banco digital moderno.",
-      whyCreated: "Sistemas financeiros não perdoam erro: um bug de arredondamento ou uma falha de autenticação pode custar dinheiro real e confiança do cliente.",
-      whatItIsFor: "Uma API que sustenta as operações centrais de um banco digital — cadastro, autenticação, depósito, saque e transferência — com regras que impedem saldo inconsistente mesmo sob uso simultâneo.",
-      whatIDeveloped: "Arquitetura em Java 17 + Spring Boot com Spring Security para autenticação, JPA/Hibernate sobre MySQL para persistência confiável, e um histórico auditável de cada transação — a mesma base que qualquer sistema com dinheiro real exige.",
-      results: "12+ endpoints testados e documentados, prontos para integrar num app ou sistema interno sem expor o negócio a risco de inconsistência de dados.",
-      tech: ["Java 17", "Spring Boot", "Spring Security", "JPA/Hibernate", "MySQL"],
-      githubUrl: "https://github.com/aleffelix15/banking-system-api",
     },
     {
       id: "geekfilme",
@@ -104,18 +104,10 @@ export const SITE_DATA = {
       githubUrl: "https://github.com/aleffelix15/VERTICE67"
     },
     {
-      id: "hub-harmony",
-      name: "Hub Harmony",
-      category: "PWA · Multi-tenant",
-      status: "Em desenvolvimento",
-      desc: "Plataforma multi-tenant para gestão de equipes de louvor e técnicas: escalas, banco de cifras com motor próprio de transposição e controle de acesso.",
-      tech: ["TanStack Start", "Supabase", "PostgreSQL", "Tailwind v4"]
-    },
-    {
       id: "fitsync",
       name: "FitSync",
       category: "App Mobile · Fitness",
-      status: "Em desenvolvimento",
+      status: "Coming soon",
       desc: "App de fitness mobile com biblioteca de exercícios e alimentos, treinos guiados, timer de descanso e integração de IA para orientação segura.",
       tech: ["React Native", "Expo", "Supabase", "Zustand"]
     },
@@ -123,7 +115,7 @@ export const SITE_DATA = {
       id: "techjob-ai",
       name: "TechJob AI",
       category: "Web · Job Board",
-      status: "Em desenvolvimento",
+      status: "Coming soon",
       desc: "Plataforma de vagas de TI no Brasil, com agregação automática de vagas e analisador de currículo por IA.",
       tech: ["React", "TypeScript", "Supabase", "Claude API"]
     },
@@ -131,7 +123,7 @@ export const SITE_DATA = {
       id: "menteviva",
       name: "MenteViva",
       category: "Web · Bem-estar",
-      status: "Em desenvolvimento",
+      status: "Coming soon",
       desc: "Aplicativo de autoajuda para registro de humor, metas e conquistas pessoais.",
       tech: ["React", "TypeScript", "Supabase"]
     }

@@ -56,10 +56,10 @@ export const Hero: React.FC = () => {
           </motion.div>
 
           <div className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4rem] leading-[1.1] font-bold tracking-tight mb-5 sm:mb-6 flex flex-col items-start">
-            <MaskTextReveal text="DESENVOLVEDOR &" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="FULL STACK" className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
-            <MaskTextReveal text="FREELANCE" className="text-[#F5F5F5]" />
-            <MaskTextReveal text="& CRIADOR DE" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="DESENVOLVEDOR" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="BACKEND" className="text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]" />
+            <MaskTextReveal text="FOCADO EM" className="text-[#F5F5F5]" />
+            <MaskTextReveal text="ARQUITETURA" className="text-[#F5F5F5]" />
           </div>
 
           <motion.p
@@ -69,7 +69,7 @@ export const Hero: React.FC = () => {
             }}
             className="font-body text-base md:text-lg text-[#A1A1AA] max-w-md leading-relaxed mb-10"
           >
-            Transformando ideias em soluções digitais escaláveis. Código limpo, design inteligente e performance.
+            Construindo sistemas robustos, APIs seguras e garantindo escalabilidade e integridade dos dados.
           </motion.p>
           
           <motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4">
@@ -77,13 +77,13 @@ export const Hero: React.FC = () => {
               href="#projeto"
               className="group inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-hover hover:shadow-[0_0_20px_theme(colors.accent.glow)] font-body text-[0.9375rem] font-bold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Ver o que já construí <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
+              Ver projetos <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
             </a>
             <a
               href="#contato"
               className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-accent/10 hover:border-accent/30 hover:text-accent font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
-              Solicitar orçamento <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              Entrar em contato <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </a>
           </motion.div>
         </motion.div>
@@ -110,15 +110,15 @@ export const Hero: React.FC = () => {
                 <code>
                   <span className="text-accent">const</span> <span className="text-[#F5F5F5]">developer</span> <span className="text-accent">=</span> {'{'}<br/>
                   {'  '}<span className="text-[#71717A]">name:</span> <span className="text-[#FFD700]">'ÁLEF FELIX'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#FFD700]">'Desenvolvedor Full Stack'</span>,<br/>
-                  {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#FFD700]">'React'</span>, <span className="text-[#FFD700]">'Node.js'</span>, <span className="text-[#FFD700]">'TypeScript'</span>],<br/>
-                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#FFD700]">'Todos os dias'</span><br/>
+                  {'  '}<span className="text-[#71717A]">role:</span> <span className="text-[#FFD700]">'Backend Developer'</span>,<br/>
+                  {'  '}<span className="text-[#71717A]">focus:</span> [<span className="text-[#FFD700]">'Java'</span>, <span className="text-[#FFD700]">'Spring Boot'</span>, <span className="text-[#FFD700]">'PostgreSQL'</span>],<br/>
+                  {'  '}<span className="text-[#71717A]">learning:</span> <span className="text-[#FFD700]">'Cloud & Scalability'</span><br/>
                   {'}'}<br/><br/>
-                  <span className="text-accent">function</span> <span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FF9500]">ideia</span>) {'{'}<br/>
-                  {'  '}<span className="text-accent">return</span> <span className="text-[#71717A]">{`/* -> código -> solução -> impacto */`}</span>;<br/>
+                  <span className="text-accent">function</span> <span className="text-[#F5F5F5]">architectSystem</span>(<span className="text-[#FF9500]">requirements</span>) {'{'}<br/>
+                  {'  '}<span className="text-accent">return</span> <span className="text-[#71717A]">{`/* -> robustez -> escalabilidade -> segurança */`}</span>;<br/>
                   {'}'}<br/><br/>
-                  <span className="text-[#F5F5F5]">console</span>.<span className="text-accent">log</span>(<span className="text-[#F5F5F5]">transformarIdeia</span>(<span className="text-[#FFD700]">'Sua ideia!'</span>));<br/>
-                  <span className="text-[#71717A]">// Vamos construir algo incrível juntos! 🚀</span>
+                  <span className="text-[#F5F5F5]">console</span>.<span className="text-accent">log</span>(<span className="text-[#F5F5F5]">architectSystem</span>(<span className="text-[#FFD700]">'Seu projeto'</span>));<br/>
+                  <span className="text-[#71717A]">// Pronto para construir arquiteturas sólidas 🚀</span>
                   <span aria-hidden="true" className="terminal-cursor bg-accent" />
                 </code>
               </pre>

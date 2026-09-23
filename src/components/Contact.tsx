@@ -89,21 +89,21 @@ export const Contact: React.FC = () => {
           <motion.div variants={itemVariant} className="flex items-center justify-center gap-2 mb-6">
             <span className="text-accent animate-pulse">·</span>
             <span className="font-body text-[0.8125rem] font-semibold tracking-[0.08em] uppercase text-[#71717A]">
-              Próximos Passos
+              Contato
             </span>
           </motion.div>
           
           <h2 className="font-display text-[2.25rem] min-[390px]:text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-[#F5F5F5] mb-6 tracking-tight leading-[1.1] flex flex-col items-center text-center">
             <span className="overflow-hidden pb-1">
-              <motion.span variants={itemVariant} className="inline-block">Vamos transformar uma</motion.span>
+              <motion.span variants={itemVariant} className="inline-block">Buscando desenvolvedor</motion.span>
             </span>
             <span className="overflow-hidden pb-1">
-              <motion.span variants={itemVariant} className="inline-block text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]">ideia em projeto?</motion.span>
+              <motion.span variants={itemVariant} className="inline-block text-accent drop-shadow-[0_0_15px_theme(colors.accent.glow)]">para o seu time?</motion.span>
             </span>
           </h2>
           
           <motion.p variants={itemVariant} className="font-body text-[1.125rem] text-[#9A9A9A] leading-[1.8] mb-12 max-w-lg mx-auto">
-            Estou sempre aberto a novos desafios e conversas interessantes sobre tecnologia e desenvolvimento de produtos.
+            Estou aberto a oportunidades (CLT ou PJ) para atuar na construção de produtos escaláveis.
           </motion.p>
           
           <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -112,11 +112,11 @@ export const Contact: React.FC = () => {
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-accent text-white font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_theme(colors.accent.glow)] hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:bg-accent-hover"
             >
               <Mail className="w-5 h-5" />
-              <span>Iniciar conversa</span>
+              <span>Enviar e-mail</span>
               <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </MagneticButton>
             <MagneticButton
-              href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20quero%20conversar%20sobre%20um%20projeto."
+              href="https://wa.me/5562985163672?text=Olá%20Alef!%20Vi%20seu%20portfólio%20e%20gostaria%20de%20conversar%20sobre%20uma%20oportunidade."
               onClick={() => {
                 // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
                 window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'contact_section' } }));
