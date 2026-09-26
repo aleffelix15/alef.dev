@@ -68,7 +68,7 @@ export const SITE_DATA = {
       whatIDeveloped: 'Aplicação fullstack com React + Vite no frontend e Supabase (PostgreSQL + Auth + Realtime) no backend. Sistema de autenticação, CRUD de flashcards e quizzes, engine de quiz com scoring em tempo real, dashboard de progresso com gráficos por disciplina e período.',
       results: 'Plataforma funcional e pronta para uso, com autenticação segura, persistência em nuvem e interface responsiva — um produto real, não um protótipo.',
       tech: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'Tailwind CSS', 'Framer Motion'],
-      githubUrl: 'https://github.com/aleffelix15/biostudy',
+      githubUrl: 'https://github.com/aleffelix15/biomed',
       demoUrl: 'https://biomed-af.web.app',
       status: ''
     },
