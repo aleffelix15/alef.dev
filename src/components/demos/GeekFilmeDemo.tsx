@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, memo } from 'react';
+import React, { useState, useEffect, useMemo, memo, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, Search, ChevronRight, Pause, X, Clock, Calendar, Plus, Check } from 'lucide-react';
 
@@ -82,7 +82,27 @@ export const GeekFilmeDemo: React.FC = memo(() => {
   const [myList, setMyList] = useState<Movie[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
+  const [trailerMovie, setTrailerMovie] = useState<Movie | null>(null);
+  const [apiError, setApiError] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchAbortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (isPlaying) setIsPlaying(false);
+        else if (selectedDetailsMovie) setSelectedDetailsMovie(null);
+        else if (isSearching) {
+          setIsSearching(false);
+          handleSearch('');
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPlaying, selectedDetailsMovie, isSearching]);
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -116,6 +136,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
         setMovies(mappedMovies);
         if (mappedMovies.length > 0) setActiveMovie(mappedMovies[0]);
       } catch (err) {
+        setApiError(true);
         setMovies(FALLBACK_MOVIES);
       } finally {
         setIsLoading(false);
@@ -125,11 +146,13 @@ export const GeekFilmeDemo: React.FC = memo(() => {
     loadMovies();
   }, []);
 
-  const handleSearch = async (query: string) => {
+  const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (!query) {
       setIsSearching(false);
       setIsSearchingLoading(false);
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      if (searchAbortControllerRef.current) searchAbortControllerRef.current.abort();
       return;
     }
 
@@ -140,32 +163,47 @@ export const GeekFilmeDemo: React.FC = memo(() => {
       return;
     }
 
-    try {
-      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR`);
-      const data = await response.json();
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    if (searchAbortControllerRef.current) searchAbortControllerRef.current.abort();
 
-      const mapped = data.results.map((m: any) => ({
-        id: m.id,
-        title: m.title,
-        image: `${IMAGE_BASE_URL}w500${m.poster_path}`,
-        banner: `${IMAGE_BASE_URL}original${m.backdrop_path}`,
-        desc: m.overview,
-        category: 'Busca',
-        year: m.release_date ? m.release_date.split('-')[0] : 'N/A',
-        rating: '14',
-        duration: '2h 00min',
-        voteAverage: m.vote_average,
-      }));
-      setMovies(mapped);
-    } catch (err) {
-      console.error("Search error:", err);
-    } finally {
-      setIsSearchingLoading(false);
-    }
+    searchTimeoutRef.current = setTimeout(async () => {
+      searchAbortControllerRef.current = new AbortController();
+      try {
+        const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR`, {
+          signal: searchAbortControllerRef.current.signal
+        });
+        const data = await response.json();
+
+        const mapped = data.results.map((m: any) => ({
+          id: m.id,
+          title: m.title,
+          image: `${IMAGE_BASE_URL}w500${m.poster_path}`,
+          banner: `${IMAGE_BASE_URL}original${m.backdrop_path}`,
+          desc: m.overview,
+          category: 'Busca',
+          year: m.release_date ? m.release_date.split('-')[0] : 'N/A',
+          rating: '14',
+          duration: '2h 00min',
+          voteAverage: m.vote_average,
+        }));
+        setMovies(mapped);
+      } catch (err: any) {
+        if (err.name !== 'AbortError') {
+          console.error("Search error:", err);
+        }
+      } finally {
+        setIsSearchingLoading(false);
+      }
+    }, 400);
   };
 
   const playTrailer = async (movie: Movie) => {
-    if (!API_KEY) return;
+    if (!API_KEY) {
+      setTrailerMovie(movie);
+      setTrailerKey(null);
+      setIsPlaying(true);
+      return;
+    }
 
     try {
       const response = await fetch(`${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`);
@@ -174,14 +212,18 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                    || data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
                    || data.results.find((v: any) => v.site === 'YouTube');
 
+      setTrailerMovie(movie);
       if (trailer) {
         setTrailerKey(trailer.key);
-        setIsPlaying(true);
       } else {
-        alert("Trailer não disponível para este título.");
+        setTrailerKey(null);
       }
+      setIsPlaying(true);
     } catch (err) {
       console.error("Trailer error:", err);
+      setTrailerMovie(movie);
+      setTrailerKey(null);
+      setIsPlaying(true);
     }
   };
 
@@ -218,11 +260,12 @@ export const GeekFilmeDemo: React.FC = memo(() => {
         <div className="flex items-center gap-4">
           <span className="font-black text-[#E50914] text-[0.8rem] tracking-tighter">GEEKFILME</span>
           <div className="hidden sm:flex gap-3 text-[0.6rem] text-[#E5E5E5] font-medium">
-            <span className="font-bold cursor-pointer">Início</span>
-            <span className="text-[#B3B3B3] hover:text-[#E5E5E5] cursor-pointer">Categorias</span>
+            <span className="font-bold cursor-pointer" onClick={() => scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}>Início</span>
+            <span className="text-[#B3B3B3]">Categorias</span>
           </div>
         </div>
         <div className="flex items-center gap-3 text-[#E5E5E5]">
+          {apiError && <span className="text-[8px] bg-red-500/20 text-red-400 border border-red-500/30 rounded px-1.5 py-0.5">FALHA NA API</span>}
           <span className="text-[8px] text-white/40 border border-white/20 rounded px-1.5 py-0.5">DEMO</span>
           <AnimatePresence>
             {isSearching ? (
@@ -256,7 +299,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
         </div>
       </motion.div>
 
-      <div className="flex-1 bg-[#141414] overflow-y-auto scrollbar-hide flex flex-col relative pt-12 pb-4">
+      <div ref={scrollRef} className="flex-1 bg-[#141414] overflow-y-auto scrollbar-hide flex flex-col relative pt-12 pb-4">
         <AnimatePresence mode="wait">
           {!isPlaying ? (
             <motion.div key="catalog" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="px-4">
@@ -324,12 +367,14 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                     className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
                   >
                     <motion.div
+                      role="dialog"
+                      aria-modal="true"
                       initial={{ scale: 0.9, opacity: 0, y: 20 }}
                       animate={{ scale: 1, opacity: 1, y: 0 }}
                       exit={{ scale: 0.9, opacity: 0, y: 20 }}
                       className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]"
                     >
-                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-3 right-3 z-10 p-1.5 bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none">
+                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-3 right-3 z-10 p-1.5 bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
                         <X className="w-5 h-5" />
                       </button>
                       <div className="relative h-[200px] w-full shrink-0">
@@ -348,7 +393,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                         </div>
                         <p className="text-white/90 text-sm leading-relaxed">{selectedDetailsMovie.desc}</p>
                         <div className="flex items-center gap-3 mt-2">
-                          <button onClick={() => { playTrailer(selectedDetailsMovie); setSelectedDetailsMovie(null); }} className="flex-1 bg-white hover:bg-gray-200 text-black py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors">
+                          <button onClick={() => { playTrailer(selectedDetailsMovie); setSelectedDetailsMovie(null); }} className="flex-1 bg-white hover:bg-gray-200 text-black py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors focus:outline-none">
                             <Play className="w-4 h-4 fill-current" /> Assistir
                           </button>
                           <button onClick={() => {
@@ -357,7 +402,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                             } else {
                               setMyList([...myList, selectedDetailsMovie]);
                             }
-                          }} className="flex-1 bg-[#2A2A2A] hover:bg-[#3A3A3A] text-white py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors border border-white/10">
+                          }} className="flex-1 bg-[#2A2A2A] hover:bg-[#3A3A3A] text-white py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors border border-white/10 focus:outline-none">
                             {myList.some(m => m.id === selectedDetailsMovie.id) ? (
                               <><Check className="w-4 h-4" /> Na Lista</>
                             ) : (
@@ -372,9 +417,9 @@ export const GeekFilmeDemo: React.FC = memo(() => {
               </AnimatePresence>
             </motion.div>
           ) : (
-            <motion.div key="player" initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} transition={{ duration: 0.25 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
+            <motion.div role="dialog" aria-modal="true" key="player" initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} transition={{ duration: 0.25 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
               <div className="absolute inset-0 opacity-20">
-                {activeMovie && <img src={activeMovie.banner} alt="" loading="lazy" className="w-full h-full object-cover blur-md" />}
+                {trailerMovie && <img src={trailerMovie.banner} alt="" loading="lazy" className="w-full h-full object-cover blur-md" />}
               </div>
               <div className="absolute inset-0 flex items-center justify-center p-4">
                  <div className="w-full h-full max-w-2xl aspect-video rounded-lg overflow-hidden shadow-2xl">
@@ -396,12 +441,12 @@ export const GeekFilmeDemo: React.FC = memo(() => {
               <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
                  <div className="flex items-center justify-between">
                    <div className="flex items-center gap-3">
-                     <button onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-all focus:outline-none">
+                     <button onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-all focus:outline-none" aria-label="Fechar trailer">
                        <X className="w-5 h-5 text-white" />
                      </button>
-                     <span className="text-white font-bold text-[0.65rem]">{activeMovie?.title}</span>
+                     <span className="text-white font-bold text-[0.65rem]">{trailerMovie?.title}</span>
                    </div>
-                   <button onClick={() => setIsPlaying(false)} className="text-white/70 hover:text-white text-[0.6rem] font-medium">Fechar</button>
+                   <button onClick={() => setIsPlaying(false)} className="text-white/70 hover:text-white text-[0.6rem] font-medium focus:outline-none">Fechar</button>
                  </div>
               </div>
             </motion.div>
