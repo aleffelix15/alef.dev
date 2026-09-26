@@ -187,6 +187,7 @@ export const VerticeDemo: React.FC = () => {
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   className="absolute -top-1.5 -right-2 bg-[#9b4dff] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(155,77,255,0.4)]"
                 >
                   {cartCount}
@@ -263,21 +264,29 @@ export const VerticeDemo: React.FC = () => {
 
           {/* Products List */}
           <div className="flex flex-col gap-3">
-            {activeTab === 'Categorias' && (
-              <div className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
-                {['Camisetas', 'Calças', 'Agasalhos', 'Acessórios', 'Calçados'].map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
-                    className={`whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-medium transition-colors ${
-                      activeCategory === cat ? 'bg-[#9b4dff] text-white' : 'bg-[#151518] text-[#A1A1AA] border border-[#2A2A30] hover:text-white hover:border-[#9b4dff]/50'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {activeTab === 'Categorias' && (
+                <motion.div 
+                  initial={{ height: 0, opacity: 0 }} 
+                  animate={{ height: 'auto', opacity: 1 }} 
+                  exit={{ height: 0, opacity: 0 }} 
+                  className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden"
+                >
+                  {['Camisetas', 'Calças', 'Agasalhos', 'Acessórios', 'Calçados'].map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
+                      className={`whitespace-nowrap px-3 py-1 rounded-full text-[10px] font-medium transition-colors relative ${
+                        activeCategory === cat ? 'text-white' : 'bg-[#151518] text-[#A1A1AA] border border-[#2A2A30] hover:text-white hover:border-[#9b4dff]/50'
+                      }`}
+                    >
+                      {activeCategory === cat && <motion.span layoutId="vertice-cat-pill" className="absolute inset-0 bg-[#9b4dff] rounded-full z-[-1]" />}
+                      {cat}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-semibold text-[#F5F5F5]">
                 {searchQuery ? `Resultados para "${searchQuery}"` : activeTab}
@@ -444,11 +453,32 @@ export const VerticeDemo: React.FC = () => {
                     R$ {cartSubtotal.toFixed(2).replace('.', ',')}
                   </span>
                 </div>
-                {orderConfirmed ? (
-                  <div className="w-full bg-green-600 text-white text-[11px] font-bold py-2.5 rounded shadow-lg flex items-center justify-center gap-2">
-                    Pedido confirmado!
-                  </div>
-                ) : (
+                <AnimatePresence mode="wait">
+                  {orderConfirmed ? (
+                    <motion.div 
+                      key="confirmed"
+                      initial={{ opacity: 0, scale: 0.9 }} 
+                      animate={{ opacity: 1, scale: 1 }} 
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      className="w-full bg-green-600 text-white text-[11px] font-bold py-2.5 rounded shadow-lg flex items-center justify-center gap-2 overflow-hidden relative"
+                    >
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2">
+                        <motion.path 
+                          initial={{ pathLength: 0 }} 
+                          animate={{ pathLength: 1 }} 
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                          d="M20 6L9 17l-5-5" 
+                        />
+                      </svg>
+                      Pedido confirmado!
+                      <motion.div 
+                        initial={{ x: "-100%" }} 
+                        animate={{ x: "0%" }} 
+                        transition={{ duration: 2, ease: "linear" }}
+                        className="absolute bottom-0 left-0 h-0.5 bg-white/40 w-full" 
+                      />
+                    </motion.div>
+                  ) : (
                   <button 
                     onClick={() => {
                       setOrderConfirmed(true);
@@ -463,7 +493,8 @@ export const VerticeDemo: React.FC = () => {
                   >
                     <ShoppingBag className="w-3.5 h-3.5" /> Finalizar Compra
                   </button>
-                )}
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </>

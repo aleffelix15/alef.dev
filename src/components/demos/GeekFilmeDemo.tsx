@@ -30,6 +30,7 @@ const MovieCard = memo(({ movie, onClick }: { movie: Movie; onClick: (m: Movie) 
   return (
     <motion.div
       layout
+      whileHover={{ scale: 1.03 }}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(movie); }}
@@ -53,10 +54,16 @@ const MovieCard = memo(({ movie, onClick }: { movie: Movie; onClick: (m: Movie) 
 
 MovieCard.displayName = 'MovieCard';
 
-const MovieRow = memo(({ title, movies, onSelect }: { title: string; movies: Movie[]; onSelect: (m: Movie) => void }) => {
+const MovieRow = memo(({ title, movies, onSelect, index = 0 }: { title: string; movies: Movie[]; onSelect: (m: Movie) => void; index?: number }) => {
+  const shouldReduceMotion = useReducedMotion();
   if (movies.length === 0) return null;
   return (
-    <div className="mb-6">
+    <motion.div 
+      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ delay: shouldReduceMotion ? 0 : index * 0.1, duration: 0.4 }}
+      className="mb-6"
+    >
       <h3 className="text-[#E5E5E5] font-bold text-[0.7rem] mb-2 flex items-center gap-2">
         {title} <ChevronRight className="w-3 h-3 text-[#54B9C5] opacity-50" />
       </h3>
@@ -65,7 +72,7 @@ const MovieRow = memo(({ title, movies, onSelect }: { title: string; movies: Mov
           <MovieCard key={movie.id} movie={movie} onClick={onSelect} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 });
 
@@ -253,24 +260,35 @@ export const GeekFilmeDemo: React.FC = memo(() => {
     return Object.entries(grouped).sort((a, b) => b[1].length - a[1].length);
   }, [movies]);
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative p-4">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-20 h-4 bg-[#1C1C20] rounded animate-pulse" />
-          <div className="w-32 h-4 bg-[#1C1C20] rounded animate-pulse" />
-        </div>
-        <div className="grid grid-cols-4 gap-4">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="aspect-[2/3] bg-[#1C1C20] rounded animate-pulse" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none">
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <motion.div
+          key="skeleton"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative p-4"
+        >
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-20 h-4 bg-[#1C1C20] rounded animate-pulse" />
+            <div className="w-32 h-4 bg-[#1C1C20] rounded animate-pulse" />
+          </div>
+          <div className="grid grid-cols-4 gap-4">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="aspect-[2/3] bg-[#1C1C20] rounded animate-pulse" />
+            ))}
+          </div>
+        </motion.div>
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="w-full h-full min-h-[300px] md:min-h-[350px] max-h-[360px] md:max-h-[420px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none"
+        >
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-b from-black/90 to-transparent absolute top-0 left-0 right-0 z-40">
         <div className="flex items-center gap-4">
@@ -281,7 +299,18 @@ export const GeekFilmeDemo: React.FC = memo(() => {
           </div>
         </div>
         <div className="flex items-center gap-3 text-[#E5E5E5]">
-          {apiError && <span className="text-[8px] bg-red-500/20 text-red-400 border border-red-500/30 rounded px-1.5 py-0.5">FALHA NA API</span>}
+          <AnimatePresence>
+            {apiError && (
+              <motion.span 
+                initial={{ opacity: 0, scale: 0.8 }} 
+                animate={{ opacity: 1, scale: 1 }} 
+                exit={{ opacity: 0, scale: 0.8 }} 
+                className="text-[8px] bg-red-500/20 text-red-400 border border-red-500/30 rounded px-1.5 py-0.5"
+              >
+                FALHA NA API
+              </motion.span>
+            )}
+          </AnimatePresence>
           <span className="text-[8px] text-white/40 border border-white/20 rounded px-1.5 py-0.5">DEMO</span>
           <AnimatePresence>
             {isSearching ? (
@@ -366,10 +395,10 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                 ) : (
                   <div className="flex flex-col gap-2 pb-4">
                     {myList.length > 0 && (
-                      <MovieRow title="Minha Lista" movies={myList} onSelect={setSelectedDetailsMovie} />
+                      <MovieRow title="Minha Lista" movies={myList} onSelect={setSelectedDetailsMovie} index={0} />
                     )}
-                    {moviesByCategory.map(([category, catMovies]) => (
-                      <MovieRow key={category} title={category} movies={catMovies} onSelect={setSelectedDetailsMovie} />
+                    {moviesByCategory.map(([category, catMovies], i) => (
+                      <MovieRow key={category} title={category} movies={catMovies} onSelect={setSelectedDetailsMovie} index={myList.length > 0 ? i + 1 : i} />
                     ))}
                   </div>
                 )}
@@ -478,6 +507,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
           Dados e imagens fornecidos por The Movie Database (TMDB). Este produto usa a API do TMDB, mas não é endossado ou certificado pelo TMDB.
         </span>
       </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 });

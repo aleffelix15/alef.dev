@@ -75,18 +75,20 @@ export const Hero: React.FC = () => {
           </motion.p>
           
           <motion.div variants={shouldReduceMotion ? { visible: { opacity: 1 } } : {hidden: { opacity: 0, y: 15 },visible: { opacity: 1, y: 0 }}} className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4">
-            <a
+            <motion.a
               href="#projeto"
+              whileTap={{ scale: 0.97 }}
               className="group inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-hover hover:shadow-[0_0_20px_theme(colors.accent.glow)] font-body text-[0.9375rem] font-bold px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               {t.hero.cta1} <ArrowDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="#contato"
+              whileTap={{ scale: 0.97 }}
               className="group inline-flex items-center justify-center gap-2 bg-transparent text-[#E0E0E0] border border-[#1C1C20] hover:bg-accent/10 hover:border-accent/30 hover:text-accent font-body text-[0.9375rem] font-medium px-6 py-3.5 sm:py-3 rounded-md transition-all active:scale-95 w-full sm:w-auto"
             >
               {t.hero.cta2} <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </a>
+            </motion.a>
           </motion.div>
         </motion.div>
 

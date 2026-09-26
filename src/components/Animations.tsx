@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 // ============================================================================
 // 1. HeroSectionWrapper (Animação de entrada principal)
@@ -10,13 +10,14 @@ interface HeroSectionWrapperProps {
 }
 
 export const HeroSectionWrapper: React.FC<HeroSectionWrapperProps> = ({ children, className = '' }) => {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+      initial={shouldReduceMotion ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 30, filter: 'blur(8px)' }}
       animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       transition={{ 
-        duration: 0.6, 
+        duration: shouldReduceMotion ? 0 : 0.6, 
         ease: [0.16, 1, 0.3, 1] // cubic-bezier(0.16, 1, 0.3, 1)
       }}
     >
@@ -35,16 +36,17 @@ interface FadeInWhenVisibleProps {
 }
 
 export const FadeInWhenVisible: React.FC<FadeInWhenVisibleProps> = ({ children, className = '', delay = 0 }) => {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 40 }}
+      initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ 
-        duration: 0.55, 
+        duration: shouldReduceMotion ? 0 : 0.55, 
         ease: [0.25, 1, 0.5, 1], 
-        delay: delay 
+        delay: shouldReduceMotion ? 0 : delay 
       }}
     >
       {children}
@@ -62,12 +64,13 @@ interface InteractiveCardProps {
 }
 
 export const InteractiveCard: React.FC<InteractiveCardProps> = ({ children, className = '', onClick }) => {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <motion.div
       className={`cursor-pointer ${className}`}
       onClick={onClick}
-      whileHover={{ scale: 1.02, y: -4 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={shouldReduceMotion ? {} : { scale: 1.02, y: -4 }}
+      whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
       transition={{ 
         duration: 0.2, 
         ease: 'easeInOut' 
@@ -88,14 +91,15 @@ interface DrawerModalProps {
 }
 
 export const DrawerModal: React.FC<DrawerModalProps> = ({ children, isOpen, className = '' }) => {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           className={className}
-          initial={{ opacity: 0, scale: 0.95, y: -10 }}
+          initial={shouldReduceMotion ? { opacity: 0, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -10 }}
+          exit={shouldReduceMotion ? { opacity: 0, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: -10 }}
           transition={{ 
             duration: 0.4, 
             ease: [0.16, 1, 0.3, 1] 

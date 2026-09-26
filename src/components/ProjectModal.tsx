@@ -161,14 +161,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
               <div className="flex flex-col gap-3 mt-4">
                 {project.demoUrl && (
-                  <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-black py-2.5 rounded-lg font-bold text-sm transition-colors">
+                  <motion.a whileTap={{ scale: 0.97 }} href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#F5F5F5] hover:bg-white text-black py-2.5 rounded-lg font-bold text-sm transition-colors">
                     <ExternalLink className="w-4 h-4" /> {t.projectModal.accessApp}
-                  </a>
+                  </motion.a>
                 )}
                 {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#1C1C20] hover:bg-[#2A2A30] text-white py-2.5 rounded-lg font-bold text-sm transition-colors border border-[#3F3F46]">
+                  <motion.a whileTap={{ scale: 0.97 }} href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#1C1C20] hover:bg-[#2A2A30] text-white py-2.5 rounded-lg font-bold text-sm transition-colors border border-[#3F3F46]">
                     <Github className="w-4 h-4" /> {t.projectModal.sourceCode}
-                  </a>
+                  </motion.a>
                 )}
               </div>
             </div>
