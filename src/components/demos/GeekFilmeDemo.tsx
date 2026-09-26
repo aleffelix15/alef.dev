@@ -372,7 +372,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                       initial={{ scale: 0.9, opacity: 0, y: 20 }}
                       animate={{ scale: 1, opacity: 1, y: 0 }}
                       exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                      className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]"
+                      className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-full"
                     >
                       <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-3 right-3 z-10 p-1.5 bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
                         <X className="w-5 h-5" />
@@ -438,7 +438,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                    )}
                  </div>
               </div>
-              <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5">
+              <div className="relative z-10 w-full p-4 bg-gradient-to-t from-black to-transparent mt-auto flex flex-col gap-2.5 shrink-0">
                  <div className="flex items-center justify-between">
                    <div className="flex items-center gap-3">
                      <button onClick={() => setIsPlaying(false)} className="hover:bg-white/20 active:scale-[0.95] p-1 rounded transition-all focus:outline-none" aria-label="Fechar trailer">

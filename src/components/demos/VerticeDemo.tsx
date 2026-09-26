@@ -391,7 +391,7 @@ export const VerticeDemo: React.FC = () => {
               aria-modal="true"
               aria-label="Carrinho de Compras"
             >
-              <div className="p-4 border-b border-[#1C1C20] flex items-center justify-between">
+              <div className="p-4 border-b border-[#1C1C20] flex items-center justify-between shrink-0">
                 <h2 className="text-sm font-bold text-[#F5F5F5] flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4" /> Sacola ({cartCount})
                 </h2>
@@ -437,7 +437,7 @@ export const VerticeDemo: React.FC = () => {
                 )}
               </div>
 
-              <div className="p-4 border-t border-[#1C1C20] bg-[#151518]">
+              <div className="p-4 border-t border-[#1C1C20] bg-[#151518] shrink-0">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[11px] text-[#A1A1AA]">Subtotal</span>
                   <span className="text-sm font-bold text-[#F5F5F5]">
@@ -485,13 +485,13 @@ export const VerticeDemo: React.FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: shouldReduceMotion ? 1 : 0.98, y: shouldReduceMotion ? 0 : 10 }}
               transition={{ duration: 0.2 }}
-              className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl w-full max-w-sm overflow-hidden flex flex-col"
+              className="bg-[#0A0A0C] border border-[#1C1C20] rounded-xl w-full max-w-sm max-h-full overflow-hidden flex flex-col"
               onClick={e => e.stopPropagation()}
               role="dialog"
               aria-modal="true"
               aria-label="Detalhes do Produto"
             >
-              <div className="relative aspect-video">
+              <div className="relative aspect-video shrink-0">
                 <img src={selectedProduct.image} alt={selectedProduct.name} loading="lazy" className="w-full h-full object-cover" />
                 <button
                   onClick={() => setSelectedProduct(null)}
@@ -501,7 +501,7 @@ export const VerticeDemo: React.FC = () => {
                   <X className="w-3 h-3" />
                 </button>
               </div>
-              <div className="p-4 flex flex-col gap-2">
+              <div className="p-4 flex flex-col gap-2 overflow-y-auto">
                 <div>
                   <div className="flex justify-between items-start">
                     <h3 className="text-sm font-bold text-[#F5F5F5]">{selectedProduct.name}</h3>
