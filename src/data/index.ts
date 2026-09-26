@@ -69,7 +69,7 @@ export const SITE_DATA = {
       results: 'Plataforma funcional e pronta para uso, com autenticação segura, persistência em nuvem e interface responsiva — um produto real, não um protótipo.',
       tech: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'Tailwind CSS', 'Framer Motion'],
       githubUrl: 'https://github.com/aleffelix15/biostudy',
-      demoUrl: '',
+      demoUrl: 'https://biomed-af.web.app',
       status: ''
     },
     {
