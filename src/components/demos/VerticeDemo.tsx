@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Search, User, ShoppingCart, ArrowRight, Heart, ShoppingBag, X } from 'lucide-react';
+import { Search, User, ShoppingCart, ArrowRight, Heart, ShoppingBag, X, Star, Minus, Plus, Trash2 } from 'lucide-react';
 
 type Product = {
   id: number;
@@ -9,27 +9,73 @@ type Product = {
   price: string;
   tag: string;
   image: string;
+  rating: number;
+  reviewCount: number;
 };
 
 const products: Product[] = [
-  { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
-  { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
-  { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
-  { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.webp" },
+  { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80", rating: 4.8, reviewCount: 124 },
+  { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80", rating: 4.5, reviewCount: 89 },
+  { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80", rating: 4.9, reviewCount: 210 },
+  { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.webp", rating: 4.2, reviewCount: 45 },
+  { id: 5, name: "T-Shirt — Basic", category: "Camisetas", price: "R$ 149,90", tag: "Categorias", image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&h=600&fit=crop&q=80", rating: 4.6, reviewCount: 156 },
+  { id: 6, name: "Jacket — Urban", category: "Agasalhos", price: "R$ 549,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&h=600&fit=crop&q=80", rating: 4.7, reviewCount: 67 },
+  { id: 7, name: "Sneakers — Velocity", category: "Calçados", price: "R$ 699,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=600&fit=crop&q=80", rating: 4.9, reviewCount: 342 },
+  { id: 8, name: "Beanie — Core", category: "Acessórios", price: "R$ 89,90", tag: "Categorias", image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500&h=600&fit=crop&q=80", rating: 4.3, reviewCount: 28 },
+  { id: 9, name: "Shorts — Motion", category: "Calças", price: "R$ 199,90", tag: "Categorias", image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&h=600&fit=crop&q=80", rating: 4.4, reviewCount: 92 },
+  { id: 10, name: "Socks — Essential", category: "Acessórios", price: "R$ 49,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=500&h=600&fit=crop&q=80", rating: 4.8, reviewCount: 415 }
 ];
 
 export const VerticeDemo: React.FC = () => {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState<{ product: Product; qty: number; size: string }[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('Novidades');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [sortOrder, setSortOrder] = useState('Relevância');
+  const [selectedSize, setSelectedSize] = useState<string>('');
   const shouldReduceMotion = useReducedMotion();
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
+
+  const cartSubtotal = cartItems.reduce((acc, item) => {
+    const priceNum = parseFloat(item.product.price.replace('R$ ', '').replace(',', '.'));
+    return acc + (priceNum * item.qty);
+  }, 0);
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product, size: string) => {
     e.stopPropagation();
-    setCartCount(prev => prev + 1);
+    if (!size) return;
+    
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.product.id === product.id && item.size === size);
+      if (existingItem) {
+        return prev.map(item => 
+          (item.product.id === product.id && item.size === size) 
+            ? { ...item, qty: item.qty + 1 } 
+            : item
+        );
+      }
+      return [...prev, { product, qty: 1, size }];
+    });
+  };
+
+  const updateCartItemQty = (productId: number, size: string, delta: number) => {
+    setCartItems(prev => {
+      return prev.map(item => {
+        if (item.product.id === productId && item.size === size) {
+          const newQty = item.qty + delta;
+          return newQty > 0 ? { ...item, qty: newQty } : item;
+        }
+        return item;
+      });
+    });
+  };
+
+  const removeCartItem = (productId: number, size: string) => {
+    setCartItems(prev => prev.filter(item => !(item.product.id === productId && item.size === size)));
   };
 
   const toggleFavorite = (e: React.MouseEvent, id: number) => {
@@ -38,12 +84,20 @@ export const VerticeDemo: React.FC = () => {
   };
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
+    let filtered = products.filter(p => {
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.category.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTab = activeTab === 'Categorias' ? true : p.tag === activeTab;
+      const matchesTab = activeTab === 'Categorias' ? true : activeTab === 'Favoritos' ? favorites.includes(p.id) : p.tag === activeTab;
       return matchesSearch && matchesTab;
     });
-  }, [searchQuery, activeTab]);
+
+    if (sortOrder === 'Menor preço') {
+      filtered.sort((a, b) => parseFloat(a.price.replace('R$ ', '').replace(',', '.')) - parseFloat(b.price.replace('R$ ', '').replace(',', '.')));
+    } else if (sortOrder === 'Maior preço') {
+      filtered.sort((a, b) => parseFloat(b.price.replace('R$ ', '').replace(',', '.')) - parseFloat(a.price.replace('R$ ', '').replace(',', '.')));
+    }
+
+    return filtered;
+  }, [searchQuery, activeTab, sortOrder, favorites]);
 
   return (
     <div className="vertice-demo w-full h-full min-h-[300px] max-h-[420px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none font-sans">
@@ -53,7 +107,7 @@ export const VerticeDemo: React.FC = () => {
         <div className="vertice-demo__nav-left flex items-center gap-4">
           <span className="text-[#F5F5F5] font-display font-bold text-sm tracking-widest uppercase">VÉRTICE</span>
           <div className="vertice-demo__categories hidden sm:flex items-center gap-3 text-[11px] text-[#A1A1AA] font-medium">
-            {['Categorias', 'Novidades', 'Promoções'].map(tab => (
+            {['Categorias', 'Novidades', 'Promoções', 'Favoritos'].map(tab => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -79,7 +133,7 @@ export const VerticeDemo: React.FC = () => {
             />
           </div>
           <User className="vertice-demo__user w-4 h-4 text-[#A1A1AA] hover:text-white cursor-pointer transition-colors" aria-label="Perfil" />
-          <div className="relative cursor-pointer group" onClick={(e) => e.stopPropagation()}>
+          <div className="relative cursor-pointer group" onClick={(e) => { e.stopPropagation(); setIsCartOpen(true); }}>
             <ShoppingCart className="w-4 h-4 text-[#A1A1AA] group-hover:text-white transition-colors" aria-label="Carrinho" />
             <AnimatePresence>
               {cartCount > 0 && (
@@ -115,7 +169,7 @@ export const VerticeDemo: React.FC = () => {
             />
           </div>
           <div className="flex gap-3 mt-3 text-[11px] text-[#A1A1AA] font-medium overflow-x-auto">
-            {['Categorias', 'Novidades', 'Promoções'].map(tab => (
+            {['Categorias', 'Novidades', 'Promoções', 'Favoritos'].map(tab => (
               <button 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -131,7 +185,7 @@ export const VerticeDemo: React.FC = () => {
         <div className="vertice-demo__content flex flex-col gap-6">
           
           {/* Hero Banner */}
-          {!searchQuery && (
+          {!searchQuery && activeTab !== 'Favoritos' && (
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -156,9 +210,21 @@ export const VerticeDemo: React.FC = () => {
 
           {/* Products List */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-semibold text-[#F5F5F5]">
-              {searchQuery ? `Resultados para "${searchQuery}"` : activeTab}
-            </h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-[#F5F5F5]">
+                {searchQuery ? `Resultados para "${searchQuery}"` : activeTab}
+              </h3>
+              
+              <select 
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="bg-[#151518] text-[#A1A1AA] text-[10px] border border-[#2A2A30] rounded px-2 py-1 outline-none"
+              >
+                <option>Relevância</option>
+                <option>Menor preço</option>
+                <option>Maior preço</option>
+              </select>
+            </div>
 
             <div className="grid grid-cols-2 gap-3 pb-4">
               <AnimatePresence>
@@ -172,7 +238,7 @@ export const VerticeDemo: React.FC = () => {
                     className="flex flex-col gap-2 group cursor-pointer"
                     onMouseEnter={() => setHoveredProduct(product.id)}
                     onMouseLeave={() => setHoveredProduct(null)}
-                    onClick={() => setSelectedProduct(product)}
+                    onClick={() => { setSelectedProduct(product); setSelectedSize(''); }}
                   >
                     <div className="relative aspect-[4/5] rounded-lg overflow-hidden bg-[#151518] border border-[#1C1C20] group-hover:border-[#9b4dff]/40 transition-colors">
                       <img 
@@ -198,11 +264,11 @@ export const VerticeDemo: React.FC = () => {
                             className="absolute inset-x-2 bottom-2"
                           >
                             <button 
-                              onClick={handleAddToCart}
-                              aria-label="Adicionar ao carrinho"
+                              onClick={(e) => { e.stopPropagation(); setSelectedProduct(product); setSelectedSize(''); }}
+                              aria-label="Ver detalhes"
                               className="w-full bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[10px] font-semibold py-1.5 rounded shadow-lg transition-colors flex items-center justify-center gap-1.5"
                             >
-                              <ShoppingBag className="w-3 h-3" /> Adicionar
+                              <ShoppingBag className="w-3 h-3" /> Ver detalhes
                             </button>
                           </motion.div>
                         )}
@@ -211,7 +277,13 @@ export const VerticeDemo: React.FC = () => {
                     
                     <div className="flex flex-col gap-0.5">
                       <h4 className="text-[11px] font-semibold text-[#E0E0E0] truncate">{product.name}</h4>
-                      <span className="text-[9px] text-[#71717A]">{product.category}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[9px] text-[#71717A] flex-1">{product.category}</span>
+                        <div className="flex items-center gap-0.5 text-[#EAB308]">
+                          <Star className="w-2.5 h-2.5 fill-current" />
+                          <span className="text-[9px] text-[#A1A1AA]">{product.rating} ({product.reviewCount})</span>
+                        </div>
+                      </div>
                       <span className="text-[11px] font-bold text-[#F5F5F5]">{product.price}</span>
                     </div>
                   </motion.div>
@@ -219,13 +291,99 @@ export const VerticeDemo: React.FC = () => {
               </AnimatePresence>
               {filteredProducts.length === 0 && (
                 <div className="col-span-2 text-center py-8 text-[#71717A] text-[11px]">
-                  Nenhum produto encontrado.
+                  {activeTab === 'Favoritos' && favorites.length === 0 
+                    ? "Nenhum favorito ainda." 
+                    : "Nenhum produto encontrado."}
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Cart Drawer */}
+      <AnimatePresence>
+        {isCartOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm z-40"
+              onClick={() => setIsCartOpen(false)}
+            />
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="absolute top-0 right-0 bottom-0 w-64 bg-[#0A0A0C] border-l border-[#1C1C20] shadow-2xl z-50 flex flex-col"
+            >
+              <div className="p-4 border-b border-[#1C1C20] flex items-center justify-between">
+                <h2 className="text-sm font-bold text-[#F5F5F5] flex items-center gap-2">
+                  <ShoppingCart className="w-4 h-4" /> Sacola ({cartCount})
+                </h2>
+                <button onClick={() => setIsCartOpen(false)} className="text-[#A1A1AA] hover:text-white">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+                {cartItems.length === 0 ? (
+                  <div className="flex-1 flex items-center justify-center text-[#71717A] text-[11px]">
+                    Sua sacola está vazia.
+                  </div>
+                ) : (
+                  cartItems.map((item) => (
+                    <div key={`${item.product.id}-${item.size}`} className="flex gap-3 bg-[#151518] p-2 rounded-lg border border-[#1C1C20]">
+                      <img src={item.product.image} alt={item.product.name} className="w-12 h-16 object-cover rounded bg-[#2A2A30]" />
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <div className="flex justify-between items-start">
+                            <h4 className="text-[10px] font-bold text-[#F5F5F5] leading-tight truncate max-w-[100px]">{item.product.name}</h4>
+                            <button onClick={() => removeCartItem(item.product.id, item.size)} className="text-[#71717A] hover:text-red-500">
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <span className="text-[9px] text-[#A1A1AA]">Tam: {item.size}</span>
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-[10px] font-bold text-[#9b4dff]">{item.product.price}</span>
+                          <div className="flex items-center gap-2 bg-[#0A0A0C] border border-[#2A2A30] rounded px-1">
+                            <button onClick={() => updateCartItemQty(item.product.id, item.size, -1)} className="text-[#A1A1AA] hover:text-white p-0.5">
+                              <Minus className="w-2 h-2" />
+                            </button>
+                            <span className="text-[9px] text-[#F5F5F5] font-medium min-w-[12px] text-center">{item.qty}</span>
+                            <button onClick={() => updateCartItemQty(item.product.id, item.size, 1)} className="text-[#A1A1AA] hover:text-white p-0.5">
+                              <Plus className="w-2 h-2" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="p-4 border-t border-[#1C1C20] bg-[#151518]">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[11px] text-[#A1A1AA]">Subtotal</span>
+                  <span className="text-sm font-bold text-[#F5F5F5]">
+                    R$ {cartSubtotal.toFixed(2).replace('.', ',')}
+                  </span>
+                </div>
+                <button 
+                  onClick={() => { setCartItems([]); setIsCartOpen(false); }}
+                  disabled={cartItems.length === 0}
+                  className="w-full bg-[#9b4dff] hover:bg-[#8a44e5] disabled:bg-[#2A2A30] disabled:text-[#71717A] text-white text-[11px] font-bold py-2.5 rounded shadow-lg transition-colors flex items-center justify-center gap-2"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" /> Finalizar Compra
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Quick View Modal */}
       <AnimatePresence>
@@ -257,18 +415,50 @@ export const VerticeDemo: React.FC = () => {
               </div>
               <div className="p-4 flex flex-col gap-2">
                 <div>
-                  <h3 className="text-sm font-bold text-[#F5F5F5]">{selectedProduct.name}</h3>
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-sm font-bold text-[#F5F5F5]">{selectedProduct.name}</h3>
+                    <div className="flex items-center gap-1 text-[#EAB308]">
+                      <Star className="w-3 h-3 fill-current" />
+                      <span className="text-[10px] text-[#A1A1AA]">{selectedProduct.rating}</span>
+                    </div>
+                  </div>
                   <span className="text-[10px] text-[#71717A]">{selectedProduct.category}</span>
                 </div>
+                
                 <p className="text-[10px] text-[#A1A1AA] leading-relaxed">
                   Peça exclusiva da nova coleção. Design moderno e materiais de alta qualidade para o máximo conforto no dia a dia.
                 </p>
+
+                <div className="mt-2">
+                  <span className="text-[10px] text-[#E0E0E0] mb-1.5 block">Tamanho:</span>
+                  <div className="flex gap-2">
+                    {['P', 'M', 'G', 'GG'].map(size => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={`w-8 h-8 rounded-full text-[10px] font-semibold flex items-center justify-center border transition-colors ${
+                          selectedSize === size 
+                            ? 'bg-[#9b4dff] border-[#9b4dff] text-white' 
+                            : 'bg-[#151518] border-[#2A2A30] text-[#A1A1AA] hover:border-[#9b4dff]/50 hover:text-white'
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#1C1C20]">
                   <span className="font-bold text-[#F5F5F5]">{selectedProduct.price}</span>
                   <button 
-                    onClick={(e) => { handleAddToCart(e); setSelectedProduct(null); }}
+                    onClick={(e) => { 
+                      handleAddToCart(e, selectedProduct, selectedSize); 
+                      setSelectedProduct(null); 
+                      setIsCartOpen(true);
+                    }}
+                    disabled={!selectedSize}
                     aria-label="Adicionar à sacola"
-                    className="bg-[#9b4dff] hover:bg-[#8a44e5] text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
+                    className={`bg-[#9b4dff] hover:bg-[#8a44e5] disabled:opacity-50 disabled:hover:bg-[#9b4dff] disabled:cursor-not-allowed text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#9b4dff]`}
                   >
                     <ShoppingBag className="w-3 h-3" /> Por na sacola
                   </button>
