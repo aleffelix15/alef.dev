@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Play, Search, ChevronRight, Pause, X, Clock, Calendar } from 'lucide-react';
+import { Play, Search, ChevronRight, Pause, X, Clock, Calendar, Plus, Check } from 'lucide-react';
 
 type Movie = {
   id: number;
@@ -74,9 +74,12 @@ MovieRow.displayName = 'MovieRow';
 export const GeekFilmeDemo: React.FC = memo(() => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
+  const [isSearchingLoading, setIsSearchingLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
   const [activeMovie, setActiveMovie] = useState<Movie | null>(null);
+  const [selectedDetailsMovie, setSelectedDetailsMovie] = useState<Movie | null>(null);
+  const [myList, setMyList] = useState<Movie[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -126,11 +129,16 @@ export const GeekFilmeDemo: React.FC = memo(() => {
     setSearchQuery(query);
     if (!query) {
       setIsSearching(false);
+      setIsSearchingLoading(false);
       return;
     }
 
     setIsSearching(true);
-    if (!API_KEY) return;
+    setIsSearchingLoading(true);
+    if (!API_KEY) {
+      setIsSearchingLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=pt-BR`);
@@ -151,6 +159,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
       setMovies(mapped);
     } catch (err) {
       console.error("Search error:", err);
+    } finally {
+      setIsSearchingLoading(false);
     }
   };
 
@@ -213,6 +223,7 @@ export const GeekFilmeDemo: React.FC = memo(() => {
           </div>
         </div>
         <div className="flex items-center gap-3 text-[#E5E5E5]">
+          <span className="text-[8px] text-white/40 border border-white/20 rounded px-1.5 py-0.5">DEMO</span>
           <AnimatePresence>
             {isSearching ? (
               <motion.div
@@ -275,24 +286,90 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                 {isSearching ? (
                   <div className="mt-4">
                     <h3 className="text-[#E5E5E5] font-bold text-[0.7rem] mb-2">Resultados da busca</h3>
-                    <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x items-end pb-1">
-                      {movies.length > 0 ? (
-                        movies.map(movie => (
-                          <MovieCard key={movie.id} movie={movie} onClick={setActiveMovie} />
-                        ))
-                      ) : (
-                        <span className="text-[#B3B3B3] text-[0.6rem] py-4">Nenhum título encontrado.</span>
-                      )}
-                    </div>
+                    {isSearchingLoading ? (
+                      <div className="flex gap-2 overflow-x-hidden">
+                        {[...Array(5)].map((_, i) => (
+                          <div key={i} className="w-[75px] sm:w-[85px] aspect-[2/3] bg-[#1C1C20] rounded animate-pulse shrink-0" />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x items-end pb-1">
+                        {movies.length > 0 ? (
+                          movies.map(movie => (
+                            <MovieCard key={movie.id} movie={movie} onClick={setSelectedDetailsMovie} />
+                          ))
+                        ) : (
+                          <span className="text-[#B3B3B3] text-[0.6rem] py-4">Nenhum título encontrado.</span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-2 pb-4">
+                    {myList.length > 0 && (
+                      <MovieRow title="Minha Lista" movies={myList} onSelect={setSelectedDetailsMovie} />
+                    )}
                     {moviesByCategory.map(([category, catMovies]) => (
-                      <MovieRow key={category} title={category} movies={catMovies} onSelect={setActiveMovie} />
+                      <MovieRow key={category} title={category} movies={catMovies} onSelect={setSelectedDetailsMovie} />
                     ))}
                   </div>
                 )}
               </div>
+              <AnimatePresence>
+                {selectedDetailsMovie && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                  >
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                      animate={{ scale: 1, opacity: 1, y: 0 }}
+                      exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                      className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]"
+                    >
+                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-3 right-3 z-10 p-1.5 bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none">
+                        <X className="w-5 h-5" />
+                      </button>
+                      <div className="relative h-[200px] w-full shrink-0">
+                        <img src={selectedDetailsMovie.banner} alt={selectedDetailsMovie.title} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] to-transparent" />
+                      </div>
+                      <div className="p-5 flex flex-col gap-4 overflow-y-auto scrollbar-hide">
+                        <div>
+                          <h2 className="text-white font-black text-2xl mb-2">{selectedDetailsMovie.title}</h2>
+                          <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400">
+                            <span className="text-green-500">{Math.round(selectedDetailsMovie.voteAverage * 10)}% Relevante</span>
+                            <span>{selectedDetailsMovie.year}</span>
+                            <span className="border border-gray-600 px-1 rounded">{selectedDetailsMovie.rating}</span>
+                            <span>{selectedDetailsMovie.duration}</span>
+                          </div>
+                        </div>
+                        <p className="text-white/90 text-sm leading-relaxed">{selectedDetailsMovie.desc}</p>
+                        <div className="flex items-center gap-3 mt-2">
+                          <button onClick={() => { playTrailer(selectedDetailsMovie); setSelectedDetailsMovie(null); }} className="flex-1 bg-white hover:bg-gray-200 text-black py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors">
+                            <Play className="w-4 h-4 fill-current" /> Assistir
+                          </button>
+                          <button onClick={() => {
+                            if (myList.some(m => m.id === selectedDetailsMovie.id)) {
+                              setMyList(myList.filter(m => m.id !== selectedDetailsMovie.id));
+                            } else {
+                              setMyList([...myList, selectedDetailsMovie]);
+                            }
+                          }} className="flex-1 bg-[#2A2A2A] hover:bg-[#3A3A3A] text-white py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors border border-white/10">
+                            {myList.some(m => m.id === selectedDetailsMovie.id) ? (
+                              <><Check className="w-4 h-4" /> Na Lista</>
+                            ) : (
+                              <><Plus className="w-4 h-4" /> Minha Lista</>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ) : (
             <motion.div key="player" initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.985 }} transition={{ duration: 0.25 }} className="absolute inset-0 z-30 bg-black flex flex-col justify-between">
