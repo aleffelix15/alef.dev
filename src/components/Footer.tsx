@@ -38,7 +38,9 @@ export function Footer() {
           <a
             href={`https://wa.me/5562985163672?text=${encodeURIComponent(t.footer.whatsappMsg)}`}
             onClick={() => {
-              // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
+              if (typeof window !== 'undefined' && (window as any).plausible) {
+                (window as any).plausible('WhatsApp Click', { props: { location: 'footer' } });
+              }
               window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'footer' } }));
             }}
             target="_blank"

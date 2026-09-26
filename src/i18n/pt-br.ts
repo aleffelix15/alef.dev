@@ -65,6 +65,17 @@ export const ptBR = {
       results: "12+ endpoints testados e documentados, prontos para integrar num app ou sistema interno sem expor o negócio a risco de inconsistência de dados.",
       status: ""
     },
+    "biostudy": {
+      subtitle: "Plataforma de Estudos para Biomedicina",
+      category: "Fullstack · Educação",
+      metric: "Quizzes, flashcards e progresso em tempo real",
+      desc: "Plataforma de estudos personalizada para estudantes de Biomedicina, com quizzes adaptativos, flashcards inteligentes e acompanhamento de progresso por disciplina.",
+      whyCreated: "Estudantes de Biomedicina lidam com um volume imenso de conteúdo técnico — microbiologia, bioquímica, parasitologia — mas a maioria dos apps de estudo é genérica demais para servir como ferramenta real de fixação. Não existe plataforma focada em ciências biomédicas que combine revisão ativa com métricas de desempenho.",
+      whatItIsFor: "Uma plataforma onde o estudante cria e revisa flashcards organizados por disciplina, faz quizzes com feedback imediato e acompanha sua evolução com gráficos de acerto por tema — tudo pensado para o fluxo de estudo real de quem está se preparando para provas e residências.",
+      whatIDeveloped: "Aplicação fullstack com React + Vite no frontend e Supabase (PostgreSQL + Auth + Realtime) no backend. Sistema de autenticação, CRUD de flashcards e quizzes, engine de quiz com scoring em tempo real, dashboard de progresso com gráficos por disciplina e período.",
+      results: "Plataforma funcional e pronta para uso, com autenticação segura, persistência em nuvem e interface responsiva — um produto real, não um protótipo.",
+      status: ""
+    },
     "decode": {
       subtitle: "Descriptografando a Violência",
       category: "Frontend · UX/UI",

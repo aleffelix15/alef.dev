@@ -20,6 +20,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
       case 'banking': return 'hover:border-accent hover:shadow-[0_0_20px_theme(colors.accent.glow)]';
       case 'geekfilme': return 'hover:border-[#E50914] hover:shadow-[0_0_20px_rgba(229,9,20,0.2)]';
       case 'vertice': return 'hover:border-[#9b4dff] hover:shadow-[0_0_20px_rgba(155,77,255,0.2)]';
+      case 'biostudy': return 'hover:border-[#22C55E] hover:shadow-[0_0_20px_rgba(34,197,94,0.2)]';
       default: return 'hover:border-accent hover:shadow-[0_0_20px_theme(colors.accent.glow)]';
     }
   };
@@ -30,6 +31,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
       case 'banking': return 'rgba(0,102,255,0.15)';
       case 'geekfilme': return 'rgba(229,9,20,0.15)';
       case 'vertice': return 'rgba(155,77,255,0.15)';
+      case 'biostudy': return 'rgba(34,197,94,0.15)';
       default: return 'rgba(0,102,255,0.15)';
     }
   };

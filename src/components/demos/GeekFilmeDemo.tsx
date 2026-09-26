@@ -20,10 +20,10 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
 const FALLBACK_MOVIES: Movie[] = [
-  { id: 1, title: 'Iron Man (Simulação)', category: 'Ação', year: '2008', rating: '12', duration: '2h 06min', image: '/geekfilme/ironman-poster-new.jpg', banner: '/geekfilme/ironman-banner.jpg', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo. (Configure a chave da API TMDB para ver os dados reais).', voteAverage: 8.0 },
-  { id: 2, title: 'WandaVision (Simulação)', category: 'Série', year: '2021', rating: '14', duration: '1 Temporada', image: '/geekfilme/wanda-poster.jpg', banner: '/geekfilme/wanda-banner.jpg', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.', voteAverage: 7.9 },
-  { id: 3, title: 'Thor (Simulação)', category: 'Ação', year: '2011', rating: '12', duration: '1h 55min', image: '/geekfilme/thor-poster.jpg', banner: '/geekfilme/thor-banner.jpg', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.', voteAverage: 7.0 },
-  { id: 4, title: 'B99 (Simulação)', category: 'Série', year: '2013', rating: '14', duration: '8 Temporadas', image: '/geekfilme/b99-poster.jpg', banner: '/geekfilme/b99-banner.jpg', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.', voteAverage: 8.4 },
+  { id: 1, title: 'Iron Man (Simulação)', category: 'Ação', year: '2008', rating: '12', duration: '2h 06min', image: '/geekfilme/ironman-poster-new.webp', banner: '/geekfilme/ironman-banner.webp', desc: 'Gênio, bilionário, playboy e filantropo cria uma armadura para salvar o mundo. (Configure a chave da API TMDB para ver os dados reais).', voteAverage: 8.0 },
+  { id: 2, title: 'WandaVision (Simulação)', category: 'Série', year: '2021', rating: '14', duration: '1 Temporada', image: '/geekfilme/wanda-poster.webp', banner: '/geekfilme/wanda-banner.webp', desc: 'Wanda Maximoff e Visão vivem uma vida suburbana ideal, mas começam a suspeitar que nem tudo é o que parece.', voteAverage: 7.9 },
+  { id: 3, title: 'Thor (Simulação)', category: 'Ação', year: '2011', rating: '12', duration: '1h 55min', image: '/geekfilme/thor-poster.webp', banner: '/geekfilme/thor-banner.webp', desc: 'O poderoso mas arrogante deus Thor é expulso de Asgard para viver entre os humanos na Terra.', voteAverage: 7.0 },
+  { id: 4, title: 'B99 (Simulação)', category: 'Série', year: '2013', rating: '14', duration: '8 Temporadas', image: '/geekfilme/b99-poster.webp', banner: '/geekfilme/b99-banner.webp', desc: 'O detetive Jake Peralta e seus colegas da 99ª delegacia do Brooklyn resolvem crimes com muito humor.', voteAverage: 8.4 },
 ];
 
 const MovieCard = memo(({ movie, onClick }: { movie: Movie; onClick: (m: Movie) => void }) => {

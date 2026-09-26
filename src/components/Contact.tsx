@@ -111,6 +111,11 @@ export const Contact: React.FC = () => {
           <motion.div variants={itemVariant} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <MagneticButton
               href={`mailto:${SITE_DATA.profile.email}`}
+              onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).plausible) {
+                  (window as any).plausible('Email Click', { props: { location: 'contact_section' } });
+                }
+              }}
               className="group relative overflow-hidden flex items-center justify-center gap-2 bg-accent text-white font-body text-[1.05rem] font-bold px-10 py-5 rounded-full transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] w-full sm:w-auto shadow-[0_0_20px_theme(colors.accent.glow)] hover:shadow-[0_0_40px_rgba(0,102,255,0.4)] hover:bg-accent-hover"
             >
               <Mail className="w-5 h-5" />
@@ -120,7 +125,9 @@ export const Contact: React.FC = () => {
             <MagneticButton
               href={`https://wa.me/5562985163672?text=${encodeURIComponent(t.contact.whatsappMsg)}`}
               onClick={() => {
-                // TODO: conectar com sistema de analytics escolhido (Plausible ou GA)
+                if (typeof window !== 'undefined' && (window as any).plausible) {
+                  (window as any).plausible('WhatsApp Click', { props: { location: 'contact_section' } });
+                }
                 window.dispatchEvent(new CustomEvent('whatsapp_click', { detail: { location: 'contact_section' } }));
               }}
               target="_blank"

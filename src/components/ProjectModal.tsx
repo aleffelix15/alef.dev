@@ -7,6 +7,7 @@ import { DecodeDemo } from './demos/DecodeDemo';
 import { BankingDemo } from './demos/BankingDemo';
 import { GeekFilmeDemo } from './demos/GeekFilmeDemo';
 import { VerticeDemo } from './demos/VerticeDemo';
+import { BioStudyDemo } from './demos/BioStudyDemo';
 
 import { ProjectType } from './Project';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -28,6 +29,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       case 'banking': return <BankingDemo />;
       case 'geekfilme': return <GeekFilmeDemo />;
       case 'vertice': return <VerticeDemo />;
+      case 'biostudy': return <BioStudyDemo />;
       default: return <div className="text-[#71717A] text-sm italic">{t.projectModal.demoFallback}</div>;
     }
   };
@@ -38,6 +40,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       case 'banking': return 'from-accent/30';
       case 'geekfilme': return 'from-[#E50914]/30';
       case 'vertice': return 'from-[#9b4dff]/30';
+      case 'biostudy': return 'from-[#22C55E]/30';
       default: return 'from-accent/30';
     }
   };

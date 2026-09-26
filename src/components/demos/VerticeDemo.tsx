@@ -15,7 +15,7 @@ const products: Product[] = [
   { id: 1, name: "Oversized Tee — Void", category: "Camisetas", price: "R$ 189,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&h=600&fit=crop&q=80" },
   { id: 2, name: "Cargo Jogger — Stealth", category: "Calças", price: "R$ 329,90", tag: "Novidades", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&h=600&fit=crop&q=80" },
   { id: 3, name: "Hoodie — Phantom", category: "Agasalhos", price: "R$ 419,90", tag: "Promoções", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=600&fit=crop&q=80" },
-  { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.jpg" },
+  { id: 4, name: "Cap — Signal", category: "Acessórios", price: "R$ 129,90", tag: "Categorias", image: "/vertice/cap-signal.webp" },
 ];
 
 export const VerticeDemo: React.FC = () => {
