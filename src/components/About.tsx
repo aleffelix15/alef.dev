@@ -48,9 +48,9 @@ export const About: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {t.statsData.map((stat: any, index: number) => (
+            {t.statsData.map((stat: any) => (
               <motion.div
-                key={index}
+                key={stat.label}
                 variants={itemVariants}
                 className="group relative overflow-hidden bg-[#0A0A0C] border border-[#1C1C20] rounded-xl p-4 sm:p-6 transition-all duration-300 hover:border-[#4D94FF]/50 hover:bg-[#0D0D0F] hover:-translate-y-1 shadow-sm hover:shadow-[#0066FF]/5"
               >

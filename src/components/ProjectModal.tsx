@@ -51,13 +51,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
       
       <motion.div 
         layoutId={`card-container-${project.id}`}
-        className="bg-[#050505] border border-[#1C1C20] rounded-2xl w-full max-w-5xl max-h-[95vh] overflow-y-auto overflow-x-hidden shadow-2xl relative z-10 flex flex-col [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#2A2A30] [&::-webkit-scrollbar-thumb]:rounded-full"
+        className="bg-[#050505] border border-[#1C1C20] rounded-2xl w-full max-w-5xl max-h-[95dvh] overflow-y-auto overflow-x-hidden shadow-2xl relative z-10 flex flex-col [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#2A2A30] [&::-webkit-scrollbar-thumb]:rounded-full"
       >
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#1C1C20] text-[#A1A1AA] hover:text-white hover:bg-[#2A2A30] transition-colors z-20"
+          className="absolute top-4 right-4 md:top-6 md:right-6 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-[#1C1C20] text-[#A1A1AA] hover:text-white hover:bg-[#2A2A30] transition-colors z-20"
         >
-          <X className="w-4 h-4" />
+          <X className="w-5 h-5" />
         </button>
 
         <div className="p-6 md:p-10 flex flex-col gap-8">

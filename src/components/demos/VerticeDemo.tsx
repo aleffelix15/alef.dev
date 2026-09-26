@@ -319,7 +319,7 @@ export const VerticeDemo: React.FC = () => {
                         onClick={(e) => toggleFavorite(e, product.id)}
                         whileTap={{ scale: shouldReduceMotion ? 1 : 0.9 }}
                         animate={{ scale: favorites.includes(product.id) ? 1.08 : 1 }}
-                        className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
+                        className="absolute top-2 right-2 w-10 h-10 md:w-8 md:h-8 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-black/60 transition-all focus:outline-none focus:ring-2 focus:ring-[#9b4dff]"
                         aria-label={favorites.includes(product.id) ? "Remover dos favoritos" : "Adicionar aos favoritos"}
                       >
                         <Heart className={`w-3 h-3 ${favorites.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} />
@@ -395,8 +395,8 @@ export const VerticeDemo: React.FC = () => {
                 <h2 className="text-sm font-bold text-[#F5F5F5] flex items-center gap-2">
                   <ShoppingCart className="w-4 h-4" /> Sacola ({cartCount})
                 </h2>
-                <button onClick={() => setIsCartOpen(false)} className="text-[#A1A1AA] hover:text-white">
-                  <X className="w-4 h-4" />
+                <button onClick={() => setIsCartOpen(false)} className="text-[#A1A1AA] hover:text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2">
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
@@ -422,12 +422,12 @@ export const VerticeDemo: React.FC = () => {
                         <div className="flex items-center justify-between mt-1">
                           <span className="text-[10px] font-bold text-[#9b4dff]">{item.product.price}</span>
                           <div className="flex items-center gap-2 bg-[#0A0A0C] border border-[#2A2A30] rounded px-1">
-                            <button onClick={() => updateCartItemQty(item.product.id, item.size, -1)} className="text-[#A1A1AA] hover:text-white p-0.5">
-                              <Minus className="w-2 h-2" />
+                            <button onClick={() => updateCartItemQty(item.product.id, item.size, -1)} className="text-[#A1A1AA] hover:text-white p-2 min-w-[32px] min-h-[32px] flex items-center justify-center">
+                              <Minus className="w-3 h-3" />
                             </button>
-                            <span className="text-[9px] text-[#F5F5F5] font-medium min-w-[12px] text-center">{item.qty}</span>
-                            <button onClick={() => updateCartItemQty(item.product.id, item.size, 1)} className="text-[#A1A1AA] hover:text-white p-0.5">
-                              <Plus className="w-2 h-2" />
+                            <span className="text-[10px] text-[#F5F5F5] font-medium min-w-[12px] text-center">{item.qty}</span>
+                            <button onClick={() => updateCartItemQty(item.product.id, item.size, 1)} className="text-[#A1A1AA] hover:text-white p-2 min-w-[32px] min-h-[32px] flex items-center justify-center">
+                              <Plus className="w-3 h-3" />
                             </button>
                           </div>
                         </div>
@@ -496,7 +496,7 @@ export const VerticeDemo: React.FC = () => {
                 <button
                   onClick={() => setSelectedProduct(null)}
                   aria-label="Fechar detalhes do produto"
-                  className="absolute top-2 right-2 w-6 h-6 bg-black/50 rounded-full flex items-center justify-center text-white focus:outline-none"
+                  className="absolute top-2 right-2 w-10 h-10 md:w-8 md:h-8 bg-black/50 rounded-full flex items-center justify-center text-white focus:outline-none"
                 >
                   <X className="w-3 h-3" />
                 </button>

@@ -100,7 +100,7 @@ export const BioStudyDemo = React.memo(() => {
             <span className="font-bold text-[#F5F5F5] tracking-tight">BIOSTUDY</span>
           </div>
           
-          <div className="flex flex-row md:flex-col gap-3 flex-1 min-w-min">
+          <div className="flex flex-row flex-wrap md:flex-col gap-3 flex-1">
             <div className="bg-[#141414] border border-[#1C1C20] rounded-xl p-3.5 flex-1 md:flex-none">
               <div className="text-xs text-[#A1A1AA] mb-2 flex items-center gap-2">
                 <div className="bg-blue-500/10 p-1 rounded-md">

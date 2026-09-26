@@ -105,6 +105,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
   }, [isPlaying, selectedDetailsMovie, isSearching]);
 
   useEffect(() => {
+    const abortController = new AbortController();
+    
     const loadMovies = async () => {
       if (!API_KEY) {
         setMovies(FALLBACK_MOVIES);
@@ -113,11 +115,11 @@ export const GeekFilmeDemo: React.FC = memo(() => {
       }
 
       try {
-        const genresRes = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=pt-BR`);
+        const genresRes = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=pt-BR`, { signal: abortController.signal });
         const genresData = await genresRes.json();
         const genreMap = new Map(genresData.genres?.map((g: any) => [g.id, g.name]) || []);
 
-        const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-BR`);
+        const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-BR`, { signal: abortController.signal });
         const data = await response.json();
 
         const mappedMovies = data.results.map((m: any) => ({
@@ -135,7 +137,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
 
         setMovies(mappedMovies);
         if (mappedMovies.length > 0) setActiveMovie(mappedMovies[0]);
-      } catch (err) {
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
         setApiError(true);
         setMovies(FALLBACK_MOVIES);
       } finally {
@@ -144,6 +147,10 @@ export const GeekFilmeDemo: React.FC = memo(() => {
     };
 
     loadMovies();
+    
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
   const handleSearch = (query: string) => {
@@ -197,6 +204,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
     }, 400);
   };
 
+  const playTrailerAbortControllerRef = useRef<AbortController | null>(null);
+
   const playTrailer = async (movie: Movie) => {
     if (!API_KEY) {
       setTrailerMovie(movie);
@@ -205,8 +214,14 @@ export const GeekFilmeDemo: React.FC = memo(() => {
       return;
     }
 
+    if (playTrailerAbortControllerRef.current) {
+      playTrailerAbortControllerRef.current.abort();
+    }
+    const abortController = new AbortController();
+    playTrailerAbortControllerRef.current = abortController;
+
     try {
-      const response = await fetch(`${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`);
+      const response = await fetch(`${BASE_URL}/movie/${movie.id}/videos?api_key=${API_KEY}`, { signal: abortController.signal });
       const data = await response.json();
       const trailer = data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube' && v.official) 
                    || data.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube')
@@ -219,7 +234,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
         setTrailerKey(null);
       }
       setIsPlaying(true);
-    } catch (err) {
+    } catch (err: any) {
+      if (err.name === 'AbortError') return;
       console.error("Trailer error:", err);
       setTrailerMovie(movie);
       setTrailerKey(null);
@@ -285,12 +301,12 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                   className="bg-transparent text-[10px] text-white w-full outline-none px-1"
                   aria-label="Buscar títulos"
                 />
-                <button onClick={() => { setIsSearching(false); handleSearch(''); }} className="focus:outline-none">
+                <button onClick={() => { setIsSearching(false); handleSearch(''); }} className="focus:outline-none p-1 min-w-[24px] min-h-[24px] flex items-center justify-center">
                   <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white" />
                 </button>
               </motion.div>
             ) : (
-              <button onClick={() => setIsSearching(true)} className="hidden sm:block focus:outline-none" aria-label="Abrir busca">
+              <button onClick={() => setIsSearching(true)} className="hidden sm:flex p-1 min-w-[24px] min-h-[24px] items-center justify-center focus:outline-none" aria-label="Abrir busca">
                 <Search className="w-3 h-3 cursor-pointer hover:text-white" />
               </button>
             )}
@@ -374,8 +390,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                       exit={{ scale: 0.9, opacity: 0, y: 20 }}
                       className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-full"
                     >
-                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-3 right-3 z-10 p-1.5 bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
-                        <X className="w-5 h-5" />
+                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-2 right-2 z-10 w-10 h-10 md:w-8 md:h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
+                        <X className="w-5 h-5 md:w-4 md:h-4" />
                       </button>
                       <div className="relative h-[200px] w-full shrink-0">
                         <img src={selectedDetailsMovie.banner} alt={selectedDetailsMovie.title} className="w-full h-full object-cover" />

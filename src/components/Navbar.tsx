@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
             {/* Language Selector */}
             <button
               onClick={toggleLanguage}
-              className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] px-2.5 py-1.5 rounded-md transition-all uppercase tracking-wider"
+              className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] hover:border-[#2A2A30] px-2.5 min-w-[44px] min-h-[44px] rounded-md transition-all uppercase tracking-wider flex items-center justify-center"
               aria-label="Toggle language"
             >
               {language === 'pt-br' ? '🇺🇸 EN' : '🇧🇷 PT'}
@@ -133,7 +133,7 @@ export const Navbar: React.FC = () => {
 
           {/* Mobile Toggle */}
           <button
-            className="md:hidden text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg p-1.5 border border-[#1C1C20] bg-[#0D0D0F]"
+            className="md:hidden text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg border border-[#1C1C20] bg-[#0D0D0F] min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open menu"
           >
@@ -150,9 +150,9 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 bg-[#050505]/[0.98] backdrop-blur-2xl flex flex-col justify-between p-8"
+            className="fixed inset-0 z-50 bg-[#050505]/[0.98] backdrop-blur-2xl flex flex-col justify-between p-8 overflow-y-auto"
           >
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full shrink-0">
               <span className="font-display font-semibold text-sm text-[#F5F5F5] tracking-[0.04em] uppercase">
                 {SITE_DATA.profile.name}
               </span>
@@ -160,13 +160,13 @@ export const Navbar: React.FC = () => {
                 {/* Mobile Language Selector */}
                 <button
                   onClick={toggleLanguage}
-                  className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] px-2.5 py-1.5 rounded-md transition-all uppercase tracking-wider"
+                  className="font-mono text-xs font-semibold text-[#9A9A9A] hover:text-[#F5F5F5] bg-[#0D0D0F] border border-[#1C1C20] px-2.5 min-w-[44px] min-h-[44px] rounded-md transition-all uppercase tracking-wider flex items-center justify-center"
                   aria-label="Toggle language"
                 >
                   {language === 'pt-br' ? '🇺🇸 EN' : '🇧🇷 PT'}
                 </button>
                 <button
-                  className="text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg p-1.5 border border-[#1C1C20] bg-[#0D0D0F]"
+                  className="text-[#F5F5F5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0066FF] rounded-lg border border-[#1C1C20] bg-[#0D0D0F] min-w-[44px] min-h-[44px] flex items-center justify-center"
                   onClick={closeMenu}
                   aria-label="Close menu"
                 >
@@ -175,7 +175,7 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col w-full max-w-xs mx-auto space-y-4 my-auto">
+            <div className="flex flex-col w-full max-w-xs mx-auto space-y-4 my-auto py-8">
               {navLinks.map((link, i) => {
                 const isActive = activeSection === link.href.substring(1);
                 return (
