@@ -301,13 +301,13 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                   className="bg-transparent text-[10px] text-white w-full outline-none px-1"
                   aria-label="Buscar títulos"
                 />
-                <button onClick={() => { setIsSearching(false); handleSearch(''); }} className="focus:outline-none p-1 min-w-[24px] min-h-[24px] flex items-center justify-center">
-                  <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white" />
+                <button onClick={() => { setIsSearching(false); handleSearch(''); }} className="focus:outline-none relative after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-10 after:h-10">
+                  <X className="w-3 h-3 min-w-[12px] cursor-pointer text-white/70 hover:text-white relative z-10" />
                 </button>
               </motion.div>
             ) : (
-              <button onClick={() => setIsSearching(true)} className="hidden sm:flex p-1 min-w-[24px] min-h-[24px] items-center justify-center focus:outline-none" aria-label="Abrir busca">
-                <Search className="w-3 h-3 cursor-pointer hover:text-white" />
+              <button onClick={() => setIsSearching(true)} className="hidden sm:block focus:outline-none relative after:content-[''] after:absolute after:top-1/2 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-10 after:h-10" aria-label="Abrir busca">
+                <Search className="w-3 h-3 cursor-pointer hover:text-white relative z-10" />
               </button>
             )}
           </AnimatePresence>
@@ -390,8 +390,8 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                       exit={{ scale: 0.9, opacity: 0, y: 20 }}
                       className="bg-[#141414] w-full max-w-lg rounded-xl overflow-hidden shadow-2xl relative flex flex-col max-h-full"
                     >
-                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-2 right-2 z-10 w-10 h-10 md:w-8 md:h-8 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
-                        <X className="w-5 h-5 md:w-4 md:h-4" />
+                      <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-2 right-2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
+                        <X className="w-5 h-5" />
                       </button>
                       <div className="relative h-[200px] w-full shrink-0">
                         <img src={selectedDetailsMovie.banner} alt={selectedDetailsMovie.title} className="w-full h-full object-cover" />
