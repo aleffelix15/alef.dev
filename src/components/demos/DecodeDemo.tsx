@@ -33,7 +33,6 @@ export const DecodeDemo: React.FC = () => {
   return (
     <div className="w-full h-full min-h-[300px] md:min-h-[350px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none">
       
-      {/* Header com Progress Tracker */}
       <div className="flex flex-col px-4 py-3 border-b border-[#1C1C20] bg-[#0A0A0C]">
         <div className="flex items-center justify-between mb-3">
           <div className="flex flex-col">
@@ -46,7 +45,6 @@ export const DecodeDemo: React.FC = () => {
           )}
         </div>
         
-        {/* Progress Line */}
         <div className="flex items-center justify-between relative">
           <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[1px] bg-[#1C1C20] z-0" />
           <motion.div 

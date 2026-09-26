@@ -39,8 +39,6 @@ export const BioStudyDemo = React.memo(() => {
   const handleSelect = (id: string) => {
     if (selectedAnswer !== null) return;
     setSelectedAnswer(id);
-    
-    // Simulate API/Validation delay for realistic app feel
     setTimeout(() => {
       setShowResult(true);
       if (id === question.correctAnswer) {
@@ -58,7 +56,6 @@ export const BioStudyDemo = React.memo(() => {
       setSelectedAnswer(null);
       setShowResult(false);
     } else {
-      // Reset quiz
       setCurrentQuestion(0);
       setSelectedAnswer(null);
       setShowResult(false);
@@ -72,7 +69,6 @@ export const BioStudyDemo = React.memo(() => {
   return (
     <div className="w-full h-full min-h-[400px] bg-[#0A0A0C] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden font-sans relative select-none shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]">
       
-      {/* Browser Bar */}
       <div className="w-full bg-[#141414] border-b border-[#1C1C20] px-4 py-2.5 flex items-center justify-between shrink-0">
         <div className="flex gap-1.5 shrink-0 w-[60px]">
           <div className="w-3 h-3 rounded-full bg-[#EF4444]/80"></div>
@@ -87,11 +83,10 @@ export const BioStudyDemo = React.memo(() => {
           </span>
         </div>
 
-        <div className="w-[60px] shrink-0"></div> {/* Spacer for balance */}
+        <div className="w-[60px] shrink-0"></div>
       </div>
 
       <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        {/* Sidebar - Stats */}
         <div className="w-full md:w-56 bg-[#0A0A0C] border-b md:border-b-0 md:border-r border-[#1C1C20] p-5 flex flex-row md:flex-col gap-5 shrink-0 z-10 overflow-x-auto md:overflow-y-auto scrollbar-hide">
           <div className="hidden md:flex items-center gap-2.5 mb-2">
             <div className="bg-[#22C55E]/20 p-1.5 rounded-lg">
@@ -142,12 +137,9 @@ export const BioStudyDemo = React.memo(() => {
           </div>
         </div>
 
-        {/* Main Content - Quiz */}
         <div className="flex-1 flex flex-col bg-[#0A0A0C] relative overflow-y-auto">
           
           <div className="p-6 md:p-10 flex-1 flex flex-col max-w-3xl mx-auto w-full">
-            
-            {/* Progress Bar */}
             <div className="w-full bg-[#1C1C20] h-1.5 rounded-full overflow-hidden mb-8">
               <motion.div 
                 className="h-full bg-gradient-to-r from-[#22C55E] to-[#10B981]"

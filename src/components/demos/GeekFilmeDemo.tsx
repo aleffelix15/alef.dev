@@ -203,7 +203,6 @@ export const GeekFilmeDemo: React.FC = memo(() => {
         setMovies(mapped);
       } catch (err: any) {
         if (err.name !== 'AbortError') {
-          console.error("Search error:", err);
         }
       } finally {
         setIsSearchingLoading(false);
@@ -243,7 +242,6 @@ export const GeekFilmeDemo: React.FC = memo(() => {
       setIsPlaying(true);
     } catch (err: any) {
       if (err.name === 'AbortError') return;
-      console.error("Trailer error:", err);
       setTrailerMovie(movie);
       setTrailerKey(null);
       setIsPlaying(true);

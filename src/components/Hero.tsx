@@ -9,8 +9,6 @@ export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const { t } = useLanguage();
-
-  // --- LÓGICA DO PARALLAX ---
   const { scrollY } = useScroll();
   const parallaxCodeBlock = useTransform(scrollY, [0, 500], [0, -100]);
   const parallaxBackground = useTransform(scrollY, [0, 500], [0, 100]);
@@ -21,7 +19,6 @@ export const Hero: React.FC = () => {
       ref={containerRef}
       className="relative min-h-[100dvh] bg-[#050505] pt-32 pb-16 flex flex-col justify-center overflow-hidden"
     >
-      {/* Background Parallax */}
       <motion.div 
         style={shouldReduceMotion ? {} : { y: parallaxBackground }}
         className="absolute inset-0 pointer-events-none overflow-hidden z-0"
@@ -91,8 +88,6 @@ export const Hero: React.FC = () => {
             </motion.a>
           </motion.div>
         </motion.div>
-
-        {/* Code Block - Desktop Only com Parallax */}
         <motion.div 
           style={shouldReduceMotion ? {} : { y: parallaxCodeBlock }}
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.985 }}

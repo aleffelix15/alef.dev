@@ -118,7 +118,6 @@ export const VerticeDemo: React.FC = () => {
   return (
     <div className="vertice-demo w-full h-full min-h-[300px] max-h-[420px] bg-[#050505] border border-[#1C1C20] rounded-xl flex flex-col overflow-hidden relative select-none font-sans">
       
-      {/* Navbar */}
       <div className="vertice-demo__nav flex flex-shrink-0 items-center justify-between border-b border-[#1C1C20] bg-[#0A0A0C] z-10 px-3 py-2">
         <div className="vertice-demo__nav-left flex items-center gap-4">
           <span className="text-[#F5F5F5] font-display font-bold text-sm tracking-widest uppercase">VÉRTICE</span>
@@ -197,11 +196,7 @@ export const VerticeDemo: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Main Scrollable Content */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#2A2A30] [&::-webkit-scrollbar-thumb]:rounded-full">
-        
-        {/* Mobile Search Bar */}
         <div className="vertice-demo__mobile-search sm:hidden mb-4">
           <div className="flex items-center bg-[#151518] border border-[#2A2A30] rounded-md px-3 py-2 w-full transition-colors focus-within:border-[#9b4dff]/50">
             <Search className="w-3.5 h-3.5 text-[#71717A] mr-2" />
@@ -229,8 +224,6 @@ export const VerticeDemo: React.FC = () => {
         </div>
 
         <div className="vertice-demo__content flex flex-col gap-6">
-          
-          {/* Hero Banner */}
           {!searchQuery && activeTab !== 'Favoritos' && (
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
@@ -261,8 +254,6 @@ export const VerticeDemo: React.FC = () => {
               </div>
             </motion.div>
           )}
-
-          {/* Products List */}
           <div className="flex flex-col gap-3">
             <AnimatePresence>
               {activeTab === 'Categorias' && (
@@ -378,8 +369,6 @@ export const VerticeDemo: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Cart Drawer */}
       <AnimatePresence>
         {isCartOpen && (
           <>
@@ -500,8 +489,6 @@ export const VerticeDemo: React.FC = () => {
           </>
         )}
       </AnimatePresence>
-
-      {/* Quick View Modal */}
       <AnimatePresence>
         {selectedProduct && (
           <motion.div 

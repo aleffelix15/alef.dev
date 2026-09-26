@@ -15,8 +15,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#050505] text-[#F5F5F5] overflow-x-hidden w-full relative">
       <PageReveal />
-      
-      {/* Grain texture overlay */}
       <div
         className="fixed inset-0 z-[9998] pointer-events-none opacity-[0.02]"
         style={{

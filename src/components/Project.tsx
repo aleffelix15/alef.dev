@@ -17,8 +17,6 @@ export const Project: React.FC = () => {
   return (
     <section id="projeto" className="bg-[#050505] py-24 md:py-32 overflow-hidden border-t border-[#1C1C20]/50 relative">
       <div className="w-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col gap-12">
-        
-        {/* HEADER */}
         <FadeInWhenVisible>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
@@ -37,8 +35,6 @@ export const Project: React.FC = () => {
             </p>
           </div>
         </FadeInWhenVisible>
-
-        {/* Dynamic Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {highlightedProjects.map((project, index) => (
             <FadeInWhenVisible key={project.id} delay={index * 0.1}>

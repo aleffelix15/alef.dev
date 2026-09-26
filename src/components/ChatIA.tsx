@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { askGemini } from '../../geminiService'; // Ajuste o caminho se necessário
+import { askGemini } from '../../geminiService';
 
 export function ChatIA() {
   const [mensagem, setMensagem] = useState('');
@@ -19,7 +19,6 @@ export function ChatIA() {
       const respostaIA = await askGemini(textoUsuario);
       setHistorico(prev => [...prev, { role: 'ia', text: respostaIA }]);
     } catch (error) {
-      console.error(error);
       setHistorico(prev => [...prev, { role: 'ia', text: "Ocorreu um erro ao comunicar com a IA." }]);
     } finally {
       setCarregando(false);
