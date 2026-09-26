@@ -393,21 +393,25 @@ export const GeekFilmeDemo: React.FC = memo(() => {
                       <button onClick={() => setSelectedDetailsMovie(null)} className="absolute top-2 right-2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 rounded-full text-white focus:outline-none" aria-label="Fechar">
                         <X className="w-5 h-5" />
                       </button>
-                      <div className="relative h-[200px] w-full shrink-0">
-                        <img src={selectedDetailsMovie.banner} alt={selectedDetailsMovie.title} className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] to-transparent" />
-                      </div>
-                      <div className="p-5 flex flex-col gap-4 overflow-y-auto scrollbar-hide">
-                        <div>
-                          <h2 className="text-white font-black text-2xl mb-2">{selectedDetailsMovie.title}</h2>
-                          <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400">
-                            <span className="text-green-500">{Math.round(selectedDetailsMovie.voteAverage * 10)}% Relevante</span>
-                            <span>{selectedDetailsMovie.year}</span>
-                            <span className="border border-gray-600 px-1 rounded">{selectedDetailsMovie.rating}</span>
-                            <span>{selectedDetailsMovie.duration}</span>
-                          </div>
+                      <div className="flex-1 overflow-y-auto min-h-0 flex flex-col scrollbar-hide">
+                        <div className="relative h-[200px] w-full shrink-0">
+                          <img src={selectedDetailsMovie.banner} alt={selectedDetailsMovie.title} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#141414] to-transparent" />
                         </div>
-                        <p className="text-white/90 text-sm leading-relaxed">{selectedDetailsMovie.desc}</p>
+                        <div className="p-5 flex flex-col gap-4 shrink-0">
+                          <div>
+                            <h2 className="text-white font-black text-2xl mb-2">{selectedDetailsMovie.title}</h2>
+                            <div className="flex items-center gap-3 text-[10px] font-bold text-gray-400">
+                              <span className="text-green-500">{Math.round(selectedDetailsMovie.voteAverage * 10)}% Relevante</span>
+                              <span>{selectedDetailsMovie.year}</span>
+                              <span className="border border-gray-600 px-1 rounded">{selectedDetailsMovie.rating}</span>
+                              <span>{selectedDetailsMovie.duration}</span>
+                            </div>
+                          </div>
+                          <p className="text-white/90 text-sm leading-relaxed">{selectedDetailsMovie.desc}</p>
+                        </div>
+                      </div>
+                      <div className="p-5 pt-0 shrink-0">
                         <div className="flex items-center gap-3 mt-2">
                           <button onClick={() => { playTrailer(selectedDetailsMovie); setSelectedDetailsMovie(null); }} className="flex-1 bg-white hover:bg-gray-200 text-black py-2 rounded font-bold flex items-center justify-center gap-2 transition-colors focus:outline-none">
                             <Play className="w-4 h-4 fill-current" /> Assistir

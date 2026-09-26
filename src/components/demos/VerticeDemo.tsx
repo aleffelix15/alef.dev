@@ -400,7 +400,7 @@ export const VerticeDemo: React.FC = () => {
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 flex flex-col gap-4">
                 {cartItems.length === 0 ? (
                   <div className="flex-1 flex items-center justify-center text-[#71717A] text-[11px]">
                     Sua sacola está vazia.
@@ -491,66 +491,68 @@ export const VerticeDemo: React.FC = () => {
               aria-modal="true"
               aria-label="Detalhes do Produto"
             >
-              <div className="relative aspect-video shrink-0">
-                <img src={selectedProduct.image} alt={selectedProduct.name} loading="lazy" className="w-full h-full object-cover" />
-                <button
-                  onClick={() => setSelectedProduct(null)}
-                  aria-label="Fechar detalhes do produto"
-                  className="absolute top-2 right-2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white focus:outline-none"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-              <div className="p-4 flex flex-col gap-2 overflow-y-auto">
-                <div>
-                  <div className="flex justify-between items-start">
-                    <h3 className="text-sm font-bold text-[#F5F5F5]">{selectedProduct.name}</h3>
-                    <div className="flex items-center gap-1 text-[#EAB308]">
-                      <Star className="w-3 h-3 fill-current" />
-                      <span className="text-[10px] text-[#A1A1AA]">{selectedProduct.rating}</span>
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-[#71717A]">{selectedProduct.category}</span>
-                </div>
-                
-                <p className="text-[10px] text-[#A1A1AA] leading-relaxed">
-                  Peça exclusiva da nova coleção. Design moderno e materiais de alta qualidade para o máximo conforto no dia a dia.
-                </p>
-
-                <div className="mt-2">
-                  <span className="text-[10px] text-[#E0E0E0] mb-1.5 block">Tamanho:</span>
-                  <div className="flex gap-2">
-                    {['P', 'M', 'G', 'GG'].map(size => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`w-8 h-8 rounded-full text-[10px] font-semibold flex items-center justify-center border transition-colors ${
-                          selectedSize === size 
-                            ? 'bg-[#9b4dff] border-[#9b4dff] text-white' 
-                            : 'bg-[#151518] border-[#2A2A30] text-[#A1A1AA] hover:border-[#9b4dff]/50 hover:text-white'
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-[#1C1C20]">
-                  <span className="font-bold text-[#F5F5F5]">{selectedProduct.price}</span>
-                  <button 
-                    onClick={(e) => { 
-                      handleAddToCart(e, selectedProduct, selectedSize); 
-                      setSelectedProduct(null); 
-                      setIsCartOpen(true);
-                    }}
-                    disabled={!selectedSize}
-                    aria-label="Adicionar à sacola"
-                    className={`bg-[#9b4dff] hover:bg-[#8a44e5] disabled:opacity-50 disabled:hover:bg-[#9b4dff] disabled:cursor-not-allowed text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#9b4dff]`}
+              <div className="flex-1 overflow-y-auto min-h-0 flex flex-col">
+                <div className="relative aspect-video shrink-0">
+                  <img src={selectedProduct.image} alt={selectedProduct.name} loading="lazy" className="w-full h-full object-cover" />
+                  <button
+                    onClick={() => setSelectedProduct(null)}
+                    aria-label="Fechar detalhes do produto"
+                    className="absolute top-2 right-2 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white focus:outline-none"
                   >
-                    <ShoppingBag className="w-3 h-3" /> Por na sacola
+                    <X className="w-3 h-3" />
                   </button>
                 </div>
+                <div className="p-4 flex flex-col gap-2 shrink-0">
+                  <div>
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-sm font-bold text-[#F5F5F5]">{selectedProduct.name}</h3>
+                      <div className="flex items-center gap-1 text-[#EAB308]">
+                        <Star className="w-3 h-3 fill-current" />
+                        <span className="text-[10px] text-[#A1A1AA]">{selectedProduct.rating}</span>
+                      </div>
+                    </div>
+                    <span className="text-[10px] text-[#71717A]">{selectedProduct.category}</span>
+                  </div>
+                  
+                  <p className="text-[10px] text-[#A1A1AA] leading-relaxed">
+                    Peça exclusiva da nova coleção. Design moderno e materiais de alta qualidade para o máximo conforto no dia a dia.
+                  </p>
+
+                  <div className="mt-2">
+                    <span className="text-[10px] text-[#E0E0E0] mb-1.5 block">Tamanho:</span>
+                    <div className="flex gap-2">
+                      {['P', 'M', 'G', 'GG'].map(size => (
+                        <button
+                          key={size}
+                          onClick={() => setSelectedSize(size)}
+                          className={`w-8 h-8 rounded-full text-[10px] font-semibold flex items-center justify-center border transition-colors ${
+                            selectedSize === size 
+                              ? 'bg-[#9b4dff] border-[#9b4dff] text-white' 
+                              : 'bg-[#151518] border-[#2A2A30] text-[#A1A1AA] hover:border-[#9b4dff]/50 hover:text-white'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 border-t border-[#1C1C20] bg-[#0A0A0C] shrink-0 flex items-center justify-between">
+                <span className="font-bold text-[#F5F5F5]">{selectedProduct.price}</span>
+                <button 
+                  onClick={(e) => { 
+                    handleAddToCart(e, selectedProduct, selectedSize); 
+                    setSelectedProduct(null); 
+                    setIsCartOpen(true);
+                  }}
+                  disabled={!selectedSize}
+                  aria-label="Adicionar à sacola"
+                  className={`bg-[#9b4dff] hover:bg-[#8a44e5] disabled:opacity-50 disabled:hover:bg-[#9b4dff] disabled:cursor-not-allowed text-white text-[10px] font-semibold py-1.5 px-3 rounded shadow transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#9b4dff]`}
+                >
+                  <ShoppingBag className="w-3 h-3" /> Por na sacola
+                </button>
               </div>
             </motion.div>
           </motion.div>
